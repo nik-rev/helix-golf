@@ -33,8 +33,10 @@ export default defineConfig({
       head: [
         {
           tag: "meta",
-          attrs: { property: "og:image" },
-          content: "/helix-golf/og.jpg",
+          attrs: {
+            property: "og:image",
+            content: "/helix-golf/og.jpg",
+          },
         },
       ],
       title: "Helix Golf ⛳",
