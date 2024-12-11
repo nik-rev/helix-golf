@@ -30,7 +30,7 @@ export default defineConfig({
   },
   integrations: [
     starlight({
-      title: "Helix Golf",
+      title: "Helix Golf ⛳",
       social: {
         github: "https://github.com/nikitarevenco/helix-golf",
       },
