@@ -30,6 +30,13 @@ export default defineConfig({
   },
   integrations: [
     starlight({
+      head: [
+        {
+          tag: "meta",
+          attrs: { property: "og:image" },
+          content: "/helix-golf/og.jpg",
+        },
+      ],
       title: "Helix Golf ⛳",
       social: {
         github: "https://github.com/nikitarevenco/helix-golf",
