@@ -19,6 +19,8 @@ hero:
 
 import { Card, CardGrid, Steps } from '@astrojs/starlight/components';
 
+*For all examples, we'll assume that your cursor is on the very first character*
+
 <CardGrid stagger>
 <Card title="Object into Array">
 
@@ -40,7 +42,7 @@ const palette = {
 `mr{[mi[s:<enter>r,t,;vgsms[lems"`
 </summary>
 
-1. Go inside of the object
+1. Go inside of the object with `j`
 1. `mr{[` to replace the surrounding `{` with `[`
 1. `mi[` to select inside the entire array
 1. `s` to enter select mode
@@ -68,13 +70,127 @@ const palette = [
 
 
 </Card>
-<Card title="Add new content">
-	Add Markdown or MDX files to `src/content/docs` to create new pages.
+<Card title="Fix Surroundings">
+
+**Before**
+
+```js
+var some_function = function {arg1, arg2} [
+	var some_array = (1, 2, 3, 4, 'foo');
+	for {var i in some_array} (
+		console.log(some_array, [{1 + (8 / 2)}, 'hello (world)');
+	)
+];
+```
+
+**Command**
+
+<details>
+
+<summary>
+`insert command here`
+</summary>
+
+1. Steps taken
+1. To perform the
+1. Transformation
+
+</details>
+
+**After**
+
+```js
+var some_function = function (arg1, arg2) {
+	var some_array = [1, 2, 3, 4, 'foo'];
+	for (var i in some_array) {
+		console.log(some_array, [(1 + (8 / 2)), 'hello (world)');
+	}
+};
+```
+
 </Card>
-<Card title="Configure your site">
-	Edit your `sidebar` and other config in `astro.config.mjs`.
+<Card title="Remove broken HTML Tags">
+
+Someone took all my angled brackets and replaced them with *parentheses*, thinking I won't notice :<
+
+Whatever, I didn't need them anyway...
+
+**Before**
+
+```html
+(html)
+  (head)(title)Basic HTML(/title)(/head)
+  (body)
+    (h1)Hello, world!(/h1)
+  (/body)
+(/html)
+```
+
+**Command**
+
+<details>
+
+<summary>
+`%sma(d<<`
+</summary>
+
+1. Select entire file with `%`
+1. `s` and then input `\)` to select all closing parentheses
+1. `ma(` to select all of the tags
+1. `d` to delete each of them
+1. `<<` to remove excess indentation
+
+</details>
+
+**After**
+
+```html
+
+Basic HTML
+
+Hello, world!
+
+
+```
+
 </Card>
-<Card title="Read the docs">
-	Learn more in [the Starlight Docs](https://starlight.astro.build/).
+<Card title="Format C">
+
+**Before**
+
+```c
+#include<stdio.h>
+int main(void){puts("Hello world!");return 0;}
+```
+
+**Command**
+
+<details>
+
+<summary>
+`t<a<space>]<space>t{a<enter><esc>jxs\{|;<enter>a<tab>ge<`
+</summary>
+
+1. `t<a` go into insert mode before angled bracket
+1. `Space` adds a space
+1. `Escape` to enter normal mode, then `j` to go to the line below
+1. `[` + `Space` to add a newline above
+1. `f{a` insert mode after the angle bracket, then add a newline with `Enter`
+1. `Escape` + `o` + `Escape` to enter normal mode, add newline below and exit normal mode again
+1. `t{a` place cursor before the next `{` and enter insert mode
+1. 
+1. Transformation
+
+</details>
+
+**After**
+
+```c
+#include<stdio.h>
+int main(void){
+puts("Hello world!");return 0;
+}
+```
+
 </Card>
 </CardGrid>
