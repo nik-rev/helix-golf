@@ -4,31 +4,75 @@ description: Get started building your docs site with Starlight.
 template: splash
 hero:
   tagline: Refactoring Examples for the <a href="https://github.com/helix-editor/helix">Helix Editor</a>
+  image:
+    alt: Helix logo
+    html: <img alt="Playing golf illustration" height="200px" src="/golf.svg" style="margin:auto;" />
   actions:
-    - text: Example Guide
-      link: /guides/example/
-      icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
+    - text: View on GitHub
+      link: https://github.com/nikitarevenco/helix-golf
+      icon: github
+    - text: Edit this Page
+      link: https://github.com/nikitarevenco/helix-golf
+      icon: pencil
       variant: minimal
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
-
-## Next steps
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
-	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</Card>
+<Card title="Object into Array">
+
+**Before**
+
+```js
+const palette = {
+	apricot: "#f47868",
+	lightning: "#ffcd1c",
+	delta: "6f44f0",
+};
+```
+
+<details>
+
+<summary>
+`mr{[mi[s:<enter>r,t,;vgsms[lems"`
+</summary>
+
+1. Go inside of the object
+1. `mr{[` to replace the surrounding `{` with `[`
+1. `mi[` to select inside the entire array
+1. `s` to enter select mode
+1. `:` + `Enter` will place a cursor on every `:`
+1. `r,` replaces each selection with a `,`
+1. `t,` moves the cursor on each line to the ending comma
+1. `;` collapses the selection around each cursor into a single selection
+1. `vgs` selects each line excluding the final comma
+1. `ms[` surrounds each individual selection with `[` to turn it into an array
+1. `l` moves 1 character forward, replacing the selection with just a 1-width selection
+1. `e` selects until the end of each word
+1. `ms"` surrounds the items with double quotes to make strings
+
+</details>
+
+**After**
+
+```js
+const palette = [
+	["apricot", "#f47868"],
+	["lightning", "#fccd1c"],
+	["delta", "6f44f0"],
+];
+```
+
+
+</Card>
+<Card title="Add new content">
+	Add Markdown or MDX files to `src/content/docs` to create new pages.
+</Card>
+<Card title="Configure your site">
+	Edit your `sidebar` and other config in `astro.config.mjs`.
+</Card>
+<Card title="Read the docs">
+	Learn more in [the Starlight Docs](https://starlight.astro.build/).
+</Card>
 </CardGrid>
