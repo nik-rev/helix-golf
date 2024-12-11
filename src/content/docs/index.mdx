@@ -18,6 +18,9 @@ hero:
 ---
 
 import { Card, CardGrid, Steps } from '@astrojs/starlight/components';
+import Hexagons from "../../Hexagons.astro";
+
+<Hexagons />
 
 *For all examples, we'll assume that your cursor is on the very first character*
 
@@ -64,89 +67,6 @@ const palette = [
 1. `l` moves 1 character forward, replacing the selection with just a 1-width selection
 1. `e` selects until the end of each word
 1. `ms"` surrounds the items with double quotes to make strings
-
-</details>
-
-#### Fix Surroundings
-
-##### Before
-
-```js
-var some_function = function {arg1, arg2} [
-	var some_array = (1, 2, 3, 4, 'foo');
-	for {var i in some_array} (
-		console.log(some_array, [{1 + (8 / 2)}, 'hello (world)');
-	)
-];
-```
-
-##### After
-
-```js
-var some_function = function (arg1, arg2) {
-	var some_array = [1, 2, 3, 4, 'foo'];
-	for (var i in some_array) {
-		console.log(some_array, [(1 + (8 / 2)), 'hello (world)');
-	}
-};
-```
-
-##### Command
-
-<details>
-
-<summary>
-`insert command here`
-</summary>
-
-1. Steps taken
-1. To perform the
-1. Transformation
-
-</details>
-
-#### Remove broken HTML Tags
-
-Someone took all my angled brackets and replaced them with *parentheses*, thinking I won't notice :\<
-
-Whatever, I didn't need them anyway...
-
-##### Before
-
-```html
-(html)
-  (head)(title)Basic HTML(/title)(/head)
-  (body)
-    (h1)Hello, world!(/h1)
-  (/body)
-(/html)
-```
-
-
-##### After
-
-```html
-
-Basic HTML
-
-Hello, world!
-
-
-```
-
-##### Command
-
-<details>
-
-<summary>
-`%sma(d<<`
-</summary>
-
-1. Select entire file with `%`
-1. `s` and then input `\)` to select all closing parentheses
-1. `ma(` to select all of the tags
-1. `d` to delete each of them
-1. `<<` to remove excess indentation
 
 </details>
 

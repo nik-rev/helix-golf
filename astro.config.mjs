@@ -32,6 +32,10 @@ export default defineConfig({
       social: {
         github: "https://github.com/nikitarevenco/helix-golf",
       },
+      components: {
+        ThemeProvider: "./src/ThemeProvider.astro",
+        ThemeSelect: "./src/ThemeSelect.astro",
+      },
       sidebar: [
         {
           label: "Helix Golf",
