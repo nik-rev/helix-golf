@@ -6,7 +6,7 @@ hero:
   tagline: Refactoring Examples for the <a href="https://github.com/helix-editor/helix">Helix Editor</a>
   image:
     alt: Helix logo
-    html: <img alt="Playing golf illustration" height="200px" src="/golf.svg" style="margin:auto;" />
+    html: <img alt="Playing golf illustration" height="200px" src="/golf.svg" style="margin:auto;"></img>
   actions:
     - text: View on GitHub
       link: https://github.com/nikitarevenco/helix-golf
@@ -21,10 +21,9 @@ import { Card, CardGrid, Steps } from '@astrojs/starlight/components';
 
 *For all examples, we'll assume that your cursor is on the very first character*
 
-<CardGrid stagger>
-<Card title="Object into Array">
+#### Object into Array
 
-**Before**
+##### Before
 
 ```js
 const palette = {
@@ -34,7 +33,17 @@ const palette = {
 };
 ```
 
-**Command**
+##### After
+
+```js
+const palette = [
+	["apricot", "#f47868"],
+	["lightning", "#fccd1c"],
+	["delta", "6f44f0"],
+];
+```
+
+##### Command
 
 <details>
 
@@ -58,21 +67,9 @@ const palette = {
 
 </details>
 
-**After**
+#### Fix Surroundings
 
-```js
-const palette = [
-	["apricot", "#f47868"],
-	["lightning", "#fccd1c"],
-	["delta", "6f44f0"],
-];
-```
-
-
-</Card>
-<Card title="Fix Surroundings">
-
-**Before**
+##### Before
 
 ```js
 var some_function = function {arg1, arg2} [
@@ -83,7 +80,18 @@ var some_function = function {arg1, arg2} [
 ];
 ```
 
-**Command**
+##### After
+
+```js
+var some_function = function (arg1, arg2) {
+	var some_array = [1, 2, 3, 4, 'foo'];
+	for (var i in some_array) {
+		console.log(some_array, [(1 + (8 / 2)), 'hello (world)');
+	}
+};
+```
+
+##### Command
 
 <details>
 
@@ -97,25 +105,13 @@ var some_function = function {arg1, arg2} [
 
 </details>
 
-**After**
+#### Remove broken HTML Tags
 
-```js
-var some_function = function (arg1, arg2) {
-	var some_array = [1, 2, 3, 4, 'foo'];
-	for (var i in some_array) {
-		console.log(some_array, [(1 + (8 / 2)), 'hello (world)');
-	}
-};
-```
-
-</Card>
-<Card title="Remove broken HTML Tags">
-
-Someone took all my angled brackets and replaced them with *parentheses*, thinking I won't notice :<
+Someone took all my angled brackets and replaced them with *parentheses*, thinking I won't notice :\<
 
 Whatever, I didn't need them anyway...
 
-**Before**
+##### Before
 
 ```html
 (html)
@@ -126,7 +122,19 @@ Whatever, I didn't need them anyway...
 (/html)
 ```
 
-**Command**
+
+##### After
+
+```html
+
+Basic HTML
+
+Hello, world!
+
+
+```
+
+##### Command
 
 <details>
 
@@ -142,55 +150,85 @@ Whatever, I didn't need them anyway...
 
 </details>
 
-**After**
+#### CSV to SQL
 
-```html
+##### Before
 
-Basic HTML
-
-Hello, world!
-
-
+```csv
+id 1,Item 1,cost 1,location 1
+id 2,Item 2,cost 2,location 2
+id 3,Item 3,cost 3,location 3
+id 4,Item 4,cost 4,location 4
+id 5,Item 5,cost 5,location 5
+id 6,Item 6,cost 6,location 6
+id 7,Item 7,cost 7,location 7
+id 8,Item 8,cost 8,location 8
+id 9,Item 9,cost 9,location 9
+id 10,Item 10,cost 10,location 10
 ```
 
-</Card>
-<Card title="Format C">
+##### After
 
-**Before**
-
-```c
-#include<stdio.h>
-int main(void){puts("Hello world!");return 0;}
+```sql
+INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 1','Item 1','Cost 1','Location 1'); 
+INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 2','Item 2','Cost 2','Location 2');
+INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 3','Item 3','Cost 3','Location 3');
+INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 4','Item 4','Cost 4','Location 4');
+INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 5','Item 5','Cost 5','Location 5');
+INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 6','Item 6','Cost 6','Location 6');
+INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 7','Item 7','Cost 7','Location 7');
+INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 8','Item 8','Cost 8','Location 8');
+INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 9','Item 9','Cost 9','Location 9');
+INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10','Item 10','Cost 10','Location 10');
 ```
 
-**Command**
+##### Command
 
 <details>
 
 <summary>
-`t<a<space>]<space>t{a<enter><esc>jxs\{|;<enter>a<tab>ge<`
+```%s\n<enter>"yys\d<enter>dhhbms``xms(IINSERT INTO `database<esc>a.`table<esc>la <esc>AVALUES (<esc>"ypS,ms'A;<esc>Fl;~```
 </summary>
 
-1. `t<a` go into insert mode before angled bracket
-1. `Space` adds a space
-1. `Escape` to enter normal mode, then `j` to go to the line below
-1. `[` + `Space` to add a newline above
-1. `f{a` insert mode after the angle bracket, then add a newline with `Enter`
-1. `Escape` + `o` + `Escape` to enter normal mode, add newline below and exit normal mode again
-1. `t{a` place cursor before the next `{` and enter insert mode
-1. 
-1. Transformation
+1. `%` selects full file
+1. `s\n` then `Enter` split selection into multiple selections on newline
+1. `"yy` yanks the 10 selections into "y" register
+1. `s\d` then `Enter` selects all digits
+1. `d` delete the selected digits
+1. `hh` goes backwards 2 chars, important to make sure we are at the end of each word
+1. `b` selects till the beginning of every word
+1. `ms` ` surrounds each word with a backtick
+1. ` ` ` switches all characters to lowercase
+1. `x` selects each line then `_` trims the trailing whitespace
+1. `ms(` surrounds each line with parentheses
+1. `I` goes into insert mode at the beginning of each line
+1. Type the following:
+
+		```
+		INSERT INTO `database
+		```
+
+1. `Escape` goes back to normal mode
+1. `a` to go into insert mode after the backtick then type:
+
+		```
+		.`table
+		```
+1. `Escape` goes back into normal mode, then `la` to enter insert mode just before the opening parentheses
+1. Add a `Space` then `Escape` to go back into normal mode again
+1. `A` goes into insert mode at the end of each line, now type:
+
+		```
+		VALUES (
+		```
+
+1. Hit `Escape` to leave insert mode. Your cursor will be at the closing parenthesis. 
+1. `"yp` pastes our previously yanked items from the "y" register
+1. `S,` splits current selection into multiple selections on each comma
+1. `ms'` surrounds each item with a single quote
+1. `A;` adds a semicolon at the end of each line
+1. `Escape` goes back to normal mode and `Fl` to place your cursor on the lowercase "l" of each "location"
+1. `;` collapses each selection into a single-width selection
+1. `~` toggles the case for each "l" into "L"
 
 </details>
-
-**After**
-
-```c
-#include<stdio.h>
-int main(void){
-puts("Hello world!");return 0;
-}
-```
-
-</Card>
-</CardGrid>
