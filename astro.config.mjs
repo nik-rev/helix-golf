@@ -6,6 +6,8 @@ import rehypeExternalLinks from "rehype-external-links";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://nikitarevenco.github.io",
+  base: "/helix-golf",
   markdown: {
     rehypePlugins: [
       rehypeHeadingIds,
