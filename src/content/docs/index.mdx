@@ -77,13 +77,6 @@ const palette = [
 ```csv
 id 1,Item 1,cost 1,location 1
 id 2,Item 2,cost 2,location 2
-id 3,Item 3,cost 3,location 3
-id 4,Item 4,cost 4,location 4
-id 5,Item 5,cost 5,location 5
-id 6,Item 6,cost 6,location 6
-id 7,Item 7,cost 7,location 7
-id 8,Item 8,cost 8,location 8
-id 9,Item 9,cost 9,location 9
 id 10,Item 10,cost 10,location 10
 ```
 
@@ -92,13 +85,6 @@ id 10,Item 10,cost 10,location 10
 ```sql
 INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 1','Item 1','Cost 1','Location 1'); 
 INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 2','Item 2','Cost 2','Location 2');
-INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 3','Item 3','Cost 3','Location 3');
-INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 4','Item 4','Cost 4','Location 4');
-INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 5','Item 5','Cost 5','Location 5');
-INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 6','Item 6','Cost 6','Location 6');
-INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 7','Item 7','Cost 7','Location 7');
-INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 8','Item 8','Cost 8','Location 8');
-INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 9','Item 9','Cost 9','Location 9');
 INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10','Item 10','Cost 10','Location 10');
 ```
 
@@ -150,5 +136,81 @@ INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10
 1. `Escape` goes back to normal mode and `Fl` to place your cursor on the lowercase "l" of each "location"
 1. `;` collapses each selection into a single-width selection
 1. `~` toggles the case for each "l" into "L"
+
+</details>
+
+#### Convert functions into a class
+
+##### Before
+
+```py
+def calculate_area(length, width):
+	result = length * width
+	return result
+
+def calculate_perimiter(length, width):
+	result = 2 * (length + width)
+	return result
+
+def calculate_volume(length, width, height):
+	result = length * width * height
+	return result
+```
+
+##### After
+
+```py
+class Calculator
+	@staticmethod
+	def get_area(len, wid):
+		return len * wid
+
+	@staticmethod
+	def get_perimiter(len, wid):
+		return 2 * (len + wid)
+
+	@staticmethod
+	def get_volume(len, wid, hei):
+		return len * wid * hei
+```
+
+##### Command
+
+<details>
+
+<summary>
+``%scalculate<enter>cget<esc>O@staticmethod<esc>jxxs\w+<enter>slength|width|height<enter>bllled%sresult =<enter>C<alt-(>;ddss<enter>xd%>O<backspace>class Calculator:``
+</summary>
+
+1. `%` selects the entire file
+1. `s` and then input `calculate` then hit `Enter` to make a selection on all instances of the word
+1. `c` then type `get` to change each selection
+1. `Escape` to go back to normal mode
+1. `O` creates an empty line above each cursor, write:
+
+		```
+		@staticmethod
+		```
+
+1. Hit `Esc` and then select the function definitions as well as the first line of each function with `j` followed by `xx`
+1. `s` then type `\w+` to select "one or more (+) wordly character (\\w)" which translates to "select each word" followed by `Enter`
+1. `s` again then type `length|width|height` followed by `Enter` to select those words
+1. `b` followed by `lll` moves to the 4th letter of each word
+1. `e` selects until the end of each word and `d` deletes it
+1. select the entire file again with `%` followed by `s` to bring up selection prompt again
+1. Write `result =` followed by `Enter` to select all instances of that string
+1. `C` to duplicate each selection on the next line
+1. Use `Alt` + `(` to rotate the *contents* of the selection backward
+1. `;` collapses each cursor into a single selection
+1. `dd` deletes two characters on each of the 6 lines
+1. `s` to bring up the prompt, then input `s` followed by `Enter` to select all "s" characters
+1. Select each of the lines with `x` followed by `d` to delete
+1. Select whole file with `%` and indent with `>`
+1. `O` creates a newline above and enters Insert mode, then `Backspace` to delete an extra tab
+1. Write this:
+
+		```
+		class Calculator:
+		```
 
 </details>

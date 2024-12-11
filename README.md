@@ -11,17 +11,23 @@ You can add new examples by editing the [`index.mdx`](https://github.com/NikitaR
 To add an entry, copy-paste the following template:
 
 ````mdx
-<Card title="A descriptive title">
+#### A descriptive title
 
 An optional description.
 
-**Before**
+##### Before
 
 ```js
 input file
 ```
 
-**Command**
+##### After
+
+```
+output file
+```
+
+##### Command
 
 <details>
 
@@ -34,12 +40,4 @@ input file
 1. Transformation
 
 </details>
-
-**After**
-
-```
-output file
-```
-
-</Card>
 ````
