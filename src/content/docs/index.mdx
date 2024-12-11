@@ -55,18 +55,18 @@ const palette = [
 </summary>
 
 1. Go inside of the object with `j`
-1. `mr{[` to replace the surrounding `{` with `[`
-1. `mi[` to select inside the entire array
-1. `s` to enter select mode
-1. `:` + `Enter` will place a cursor on every `:`
-1. `r,` replaces each selection with a `,`
+1. `mr{[` replaces the surrounding "{" with "["
+1. `mi[` selects inside the entire array
+1. Use `s` to enter select mode, which searches inside our selection and creates sub-selections based on a pattern
+1. Input `:` and then hit `Enter`, which will place a cursor on every ":" creating many single-width selections
+1. `r,` replaces each selection with a ",". Essentially we've replaced each colon with a comma
 1. `t,` moves the cursor on each line to the ending comma
 1. `;` collapses the selection around each cursor into a single selection
 1. `vgs` selects each line excluding the final comma
-1. `ms[` surrounds each individual selection with `[` to turn it into an array
+1. `ms[` surrounds each individual selection with "[" to turn it into an array. We're almost done here. We just need to transform the first item in each sub-array into a string.
 1. `l` moves 1 character forward, replacing the selection with just a 1-width selection
-1. `e` selects until the end of each word
-1. `ms"` surrounds the items with double quotes to make strings
+1. `e` selects until the end of each word. Since we start at the first character and select until the end, this selects the entire word.
+1. `ms"` surrounds each word with double quotes to make strings
 
 </details>
 
@@ -93,19 +93,19 @@ INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10
 <details>
 
 <summary>
-```%s\n<enter>"yys\d<enter>dhhbms``xms(IINSERT INTO `database<esc>a.`table<esc>la <esc>AVALUES (<esc>"ypS,ms'A;<esc>Fl;~```
+```%<alt-s>"yys\d<enter>dhhbms``xms(IINSERT INTO `database<esc>a.`table<esc>la <esc>AVALUES (<esc>"ypS,ms'A;<esc>Fl;~```
 </summary>
 
 1. `%` selects full file
-1. `s\n` then `Enter` split selection into multiple selections on newline
-1. `"yy` yanks the 10 selections into "y" register
-1. `s\d` then `Enter` selects all digits
-1. `d` delete the selected digits
+1. `Alt` + `s` split selection into multiple selections on newlines
+1. `"yy` yanks the selections into "y" register. We'll need it for later
+1. `s` and then input the pattern `\d` then `Enter` which creates a selection on all digits
+1. `d` deletes the selections. Essentially we've removed all the digits.
 1. `hh` goes backwards 2 chars, important to make sure we are at the end of each word
-1. `b` selects till the beginning of every word
+1. Use `b` to select till the beginning of every word, which also nicely selects all the words that there are
 1. `ms` ` surrounds each word with a backtick
 1. ` ` ` switches all characters to lowercase
-1. `x` selects each line then `_` trims the trailing whitespace
+1. `x` selects each line then use `_` to trim the trailing whitespace
 1. `ms(` surrounds each line with parentheses
 1. `I` goes into insert mode at the beginning of each line
 1. Type the following:
@@ -183,23 +183,27 @@ class Calculator
 </summary>
 
 1. `%` selects the entire file
-1. `s` and then input `calculate` then hit `Enter` to make a selection on all instances of the word
-1. `c` then type `get` to change each selection
+1. `s` searches inside the current selection and creates sub-selections based on a pattern. Input `calculate` then hit `Enter` to make a selection on all instances of the word
+1. `c` then type `get` to change each "calculate" word into a "get"
 1. `Escape` to go back to normal mode
-1. `O` creates an empty line above each cursor, write:
+1. Use `O` to create an empty line above each cursor, write:
 
 		```
 		@staticmethod
 		```
 
-1. Hit `Esc` and then select the function definitions as well as the first line of each function with `j` followed by `xx`
-1. `s` then type `\w+` to select "one or more (+) wordly character (\\w)" which translates to "select each word" followed by `Enter`
-1. `s` again then type `length|width|height` followed by `Enter` to select those words
-1. `b` followed by `lll` moves to the 4th letter of each word
-1. `e` selects until the end of each word and `d` deletes it
-1. select the entire file again with `%` followed by `s` to bring up selection prompt again
+1. Hit `Esc` to go into normal mode.
+1. We need to select 2 lines below the current line, first go down with `j` and then press `xx` which will select the current line, and then select the next line
+		In total we now have 3 cursors each with 2 lines selected, which includes the first line of the bodies of each function and the function definition themselves
+
+1. `s` brings up a prompt to select sub-selections by a given regex. The `\w+` regex selects each word, type it and then `Enter`
+1. `s` again then type `length|width|height` followed by `Enter`. This will look at the contents of the current selections, and create sub-selections where it finds the regex which means "length or width or height". So we select each instance of those 3 words
+1. Our cursor is currently at the end of each word. Let's go to the beginning with `b`
+1. We want to keep the first 3 characters and discard the rest from each of the parameters. To do this, move to the 4th character with `lll`
+1. Use `e` to select until the end of each word and then `d` to delete it
+1. Select the entire file again with `%` followed by `s` to bring up selection prompt again
 1. Write `result =` followed by `Enter` to select all instances of that string
-1. `C` to duplicate each selection on the next line
+1. `C` creates a new selection on the line directly below, for each cursor
 1. Use `Alt` + `(` to rotate the *contents* of the selection backward
 1. `;` collapses each cursor into a single selection
 1. `dd` deletes two characters on each of the 6 lines
