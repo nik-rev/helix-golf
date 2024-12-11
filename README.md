@@ -6,6 +6,8 @@ You can use the [Helix Editor](https://helix-editor.com/) to refactor code effic
 
 ## Contributing
 
+### Adding new examples
+
 You can add new examples by editing the [`index.mdx`](https://github.com/NikitaRevenco/helix-golf/edit/main/src/content/docs/index.mdx) file.
 
 To add an entry, copy-paste the following template:
@@ -41,3 +43,9 @@ output file
 
 </details>
 ````
+
+### Running locally
+
+1. Clone this repository
+1. `pnpm install`
+1. `pnpm dev`
