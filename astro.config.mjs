@@ -38,6 +38,20 @@ export default defineConfig({
             content: "/helix-golf/og.jpg",
           },
         },
+        {
+          tag: "meta",
+          attrs: {
+            name: "description",
+            content: "Helix Editor Refactor Examples",
+          },
+        },
+        {
+          tag: "meta",
+          attrs: {
+            property: "og:description",
+            content: "Helix Editor Refactor Examples",
+          },
+        },
       ],
       title: "Helix Golf ⛳",
       social: {
