@@ -93,7 +93,7 @@ INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10
 <details>
 
 <summary>
-```%<alt-s>"yys\d<enter>dhhbms``xms(IINSERT INTO `database<esc>a.`table<esc>la <esc>AVALUES (<esc>"ypS,ms'A;<esc>Fl;~```
+```%<alt-s>"yys\d<enter>dhhbms``x_ms(IINSERT INTO `database<esc>a.`table<esc>la <esc>AVALUES (<esc>"ypS,ms'A;<esc>Fl;~```
 </summary>
 
 1. `%` selects full file
@@ -103,8 +103,8 @@ INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10
 1. `d` deletes the selections. Essentially we've removed all the digits.
 1. `hh` goes backwards 2 chars, important to make sure we are at the end of each word
 1. Use `b` to select till the beginning of every word, which also nicely selects all the words that there are
-1. `ms` ` surrounds each word with a backtick
-1. ` ` ` switches all characters to lowercase
+1. ``` ms` ``` surrounds each word with a backtick
+1. ``` ` ``` switches all characters to lowercase
 1. `x` selects each line then use `_` to trim the trailing whitespace
 1. `ms(` surrounds each line with parentheses
 1. `I` goes into insert mode at the beginning of each line
