@@ -60,8 +60,8 @@ You can click on the commands and it will explain in detail every step
 `jmr{[mi[s:<enter>r,t,;vgsms[lems"`
 </summary>
 
-1. Go inside of the object with `j`
-1. `mr{[` replaces the surrounding "\{" with "["
+1. Go to the line below with `j`, this is because we need to be inside of the object for the next step.
+1. `mr{[` replaces the nearest pair of curly braces "\{" with square brackets "["
 1. `mi[` selects inside the entire array
 1. Use `s` to enter select mode, which searches inside our selection and creates sub-selections based on a pattern
 1. Input `:` and then hit `Enter`, which will place a cursor on every ":" creating many single-width selections
