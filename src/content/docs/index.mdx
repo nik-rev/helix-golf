@@ -24,6 +24,40 @@ import Hexagons from "../../Hexagons.astro";
 
 *For all examples, we'll assume that your cursor is on the very first character*
 
+#### Text into Array
+
+##### Before
+
+```txt
+Hello
+This
+Is
+Helix
+```
+
+##### After
+
+```
+[ "Hello", "This", "Is", "Helix" ]
+```
+
+##### Command
+
+<details>
+
+<summary>
+`%<A-s>ms"<A-J>i,<esc>xms ms[`
+</summary>
+
+1. `%` selects full file
+1. `<A-s>` split selection into multiple selections on newlines
+1. `ms"` surrounds each word with `"`'s
+1. `<A-J>i,` join lines inside selection, select the inserted space, and insert `,`'s
+1. `<esc>xms ` enter normal mode, select line and surround by spaces
+1. `ms[` surround by `[]`
+
+</details>
+
 #### Object into Array
 
 ##### Before
