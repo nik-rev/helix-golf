@@ -17,13 +17,13 @@ An optional description.
 
 ##### Before
 
-```file extension
+```optional extension
 input file
 ```
 
 ##### After
 
-```file extension
+```optional extension
 output file
 ```
 
