@@ -22,41 +22,7 @@ import Hexagons from "../../Hexagons.astro";
 
 <Hexagons />
 
-*For all examples, we'll assume that your cursor is on the very first character*
-
-#### Text into Array
-
-##### Before
-
-```txt
-Hello
-This
-Is
-Helix
-```
-
-##### After
-
-```
-[ "Hello", "This", "Is", "Helix" ]
-```
-
-##### Command
-
-<details>
-
-<summary>
-`%<A-s>ms"<A-J>i,<esc>xms ms[`
-</summary>
-
-1. `%` selects full file
-1. `<A-s>` split selection into multiple selections on newlines
-1. `ms"` surrounds each word with `"`'s
-1. `<A-J>i,` join lines inside selection, select the inserted space, and insert `,`'s
-1. `<esc>xms ` enter normal mode, select line and surround by spaces
-1. `ms[` surround by `[]`
-
-</details>
+_For all examples, we'll assume that your cursor is on the very first character_
 
 #### Object into Array
 
@@ -64,9 +30,9 @@ Helix
 
 ```js
 const palette = {
-	apricot: "#f47868",
-	lightning: "#ffcd1c",
-	delta: "6f44f0",
+  apricot: "#f47868",
+  lightning: "#ffcd1c",
+  delta: "6f44f0",
 };
 ```
 
@@ -74,9 +40,9 @@ const palette = {
 
 ```js
 const palette = [
-	["apricot", "#f47868"],
-	["lightning", "#fccd1c"],
-	["delta", "6f44f0"],
+  ["apricot", "#f47868"],
+  ["lightning", "#fccd1c"],
+  ["delta", "6f44f0"],
 ];
 ```
 
@@ -123,7 +89,7 @@ id 10,Item 10,cost 10,location 10
 ##### After
 
 ```sql
-INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 1','Item 1','Cost 1','Location 1'); 
+INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 1','Item 1','Cost 1','Location 1');
 INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 2','Item 2','Cost 2','Location 2');
 INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10','Item 10','Cost 10','Location 10');
 ```
@@ -136,46 +102,81 @@ INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10
 ```%<alt-s>"yys\d<enter>dhhbms``x_ms(IINSERT INTO `database<esc>a.`table<esc>la <esc>AVALUES (<esc>"ypS,ms'A;<esc>Fl;~```
 </summary>
 
+1.  `%` selects full file
+1.  `Alt` + `s` split selection into multiple selections on newlines
+1.  `"yy` yanks the selections into "y" register. We'll need it for later
+1.  `s` and then input the pattern `\d` then `Enter` which creates a selection on all digits
+1.  `d` deletes the selections. Essentially we've removed all the digits.
+1.  `hh` goes backwards 2 chars, important to make sure we are at the end of each word
+1.  Use `b` to select till the beginning of every word, which also nicely selects all the words that there are
+1.  `` ms` `` surrounds each word with a backtick
+1.  `` ` `` switches all characters to lowercase
+1.  `x` selects each line then use `_` to trim the trailing whitespace
+1.  `ms(` surrounds each line with parentheses
+1.  `I` goes into insert mode at the beginning of each line
+1.  Type the following:
+
+        ```
+        INSERT INTO `database
+        ```
+
+1.  `Escape` goes back to normal mode
+1.  `a` to go into insert mode after the backtick then type:
+
+        ```
+        .`table
+        ```
+
+1.  `Escape` goes back into normal mode, then `la` to enter insert mode just before the opening parentheses
+1.  Add a `Space` then `Escape` to go back into normal mode again
+1.  `A` goes into insert mode at the end of each line, now type:
+
+        ```
+        VALUES (
+        ```
+
+1.  Hit `Escape` to leave insert mode. Your cursor will be at the closing parenthesis.
+1.  `"yp` pastes our previously yanked items from the "y" register
+1.  `S,` splits current selection into multiple selections on each comma
+1.  `ms'` surrounds each item with a single quote
+1.  `A;` adds a semicolon at the end of each line
+1.  `Escape` goes back to normal mode and `Fl` to place your cursor on the lowercase "l" of each "location"
+1.  `;` collapses each selection into a single-width selection
+1.  `~` toggles the case for each "l" into "L"
+
+</details>
+
+#### Text into Array
+
+##### Before
+
+```
+Hello
+This
+Is
+Helix
+```
+
+##### After
+
+```js
+["Hello", "This", "Is", "Helix"];
+```
+
+##### Command
+
+<details>
+
+<summary>
+`%<A-s>ms"<A-J>i,<esc>xms ms[`
+</summary>
+
 1. `%` selects full file
-1. `Alt` + `s` split selection into multiple selections on newlines
-1. `"yy` yanks the selections into "y" register. We'll need it for later
-1. `s` and then input the pattern `\d` then `Enter` which creates a selection on all digits
-1. `d` deletes the selections. Essentially we've removed all the digits.
-1. `hh` goes backwards 2 chars, important to make sure we are at the end of each word
-1. Use `b` to select till the beginning of every word, which also nicely selects all the words that there are
-1. ``` ms` ``` surrounds each word with a backtick
-1. ``` ` ``` switches all characters to lowercase
-1. `x` selects each line then use `_` to trim the trailing whitespace
-1. `ms(` surrounds each line with parentheses
-1. `I` goes into insert mode at the beginning of each line
-1. Type the following:
-
-		```
-		INSERT INTO `database
-		```
-
-1. `Escape` goes back to normal mode
-1. `a` to go into insert mode after the backtick then type:
-
-		```
-		.`table
-		```
-1. `Escape` goes back into normal mode, then `la` to enter insert mode just before the opening parentheses
-1. Add a `Space` then `Escape` to go back into normal mode again
-1. `A` goes into insert mode at the end of each line, now type:
-
-		```
-		VALUES (
-		```
-
-1. Hit `Escape` to leave insert mode. Your cursor will be at the closing parenthesis. 
-1. `"yp` pastes our previously yanked items from the "y" register
-1. `S,` splits current selection into multiple selections on each comma
-1. `ms'` surrounds each item with a single quote
-1. `A;` adds a semicolon at the end of each line
-1. `Escape` goes back to normal mode and `Fl` to place your cursor on the lowercase "l" of each "location"
-1. `;` collapses each selection into a single-width selection
-1. `~` toggles the case for each "l" into "L"
+1. `<A-s>` split selection into multiple selections on newlines
+1. `ms"` surrounds each word with `"`'s
+1. `<A-J>i,` join lines inside selection, select the inserted space, and insert `,`'s
+1. `<esc>xms ` enter normal mode, select line and surround by spaces
+1. `ms[` surround by `[]`
 
 </details>
 
@@ -222,39 +223,39 @@ class Calculator
 ``%scalculate<enter>cget<esc>O@staticmethod<esc>jxxs\w+<enter>slength|width|height<enter>bllled%sresult =<enter>C<alt-(>;ddss<enter>xd%>O<backspace>class Calculator:``
 </summary>
 
-1. `%` selects the entire file
-1. `s` searches inside the current selection and creates sub-selections based on a pattern. Input `calculate` then hit `Enter` to make a selection on all instances of the word
-1. `c` then type `get` to change each "calculate" word into a "get"
-1. `Escape` to go back to normal mode
-1. Use `O` to create an empty line above each cursor, write:
+1.  `%` selects the entire file
+1.  `s` searches inside the current selection and creates sub-selections based on a pattern. Input `calculate` then hit `Enter` to make a selection on all instances of the word
+1.  `c` then type `get` to change each "calculate" word into a "get"
+1.  `Escape` to go back to normal mode
+1.  Use `O` to create an empty line above each cursor, write:
 
-		```
-		@staticmethod
-		```
+        ```
+        @staticmethod
+        ```
 
-1. Hit `Esc` to go into normal mode.
-1. We need to select 2 lines below the current line, first go down with `j` and then press `xx` which will select the current line, and then select the next line
-		In total we now have 3 cursors each with 2 lines selected, which includes the first line of the bodies of each function and the function definition themselves
+1.  Hit `Esc` to go into normal mode.
+1.  We need to select 2 lines below the current line, first go down with `j` and then press `xx` which will select the current line, and then select the next line
+    In total we now have 3 cursors each with 2 lines selected, which includes the first line of the bodies of each function and the function definition themselves
 
-1. `s` brings up a prompt to select sub-selections by a given regex. The `\w+` regex selects each word, type it and then `Enter`
-1. `s` again then type `length|width|height` followed by `Enter`. This will look at the contents of the current selections, and create sub-selections where it finds the regex which means "length or width or height". So we select each instance of those 3 words
-1. Our cursor is currently at the end of each word. Let's go to the beginning with `b`
-1. We want to keep the first 3 characters and discard the rest from each of the parameters. To do this, move to the 4th character with `lll`
-1. Use `e` to select until the end of each word and then `d` to delete it
-1. Select the entire file again with `%` followed by `s` to bring up selection prompt again
-1. Write `result =` followed by `Enter` to select all instances of that string
-1. `C` creates a new selection on the line directly below, for each cursor
-1. Use `Alt` + `(` to rotate the *contents* of the selection backward
-1. `;` collapses each cursor into a single selection
-1. `dd` deletes two characters on each of the 6 lines
-1. `s` to bring up the prompt, then input `s` followed by `Enter` to select all "s" characters
-1. Select each of the lines with `x` followed by `d` to delete
-1. Select whole file with `%` and indent with `>`
-1. `O` creates a newline above and enters Insert mode, then `Backspace` to delete an extra tab
-1. Write this:
+1.  `s` brings up a prompt to select sub-selections by a given regex. The `\w+` regex selects each word, type it and then `Enter`
+1.  `s` again then type `length|width|height` followed by `Enter`. This will look at the contents of the current selections, and create sub-selections where it finds the regex which means "length or width or height". So we select each instance of those 3 words
+1.  Our cursor is currently at the end of each word. Let's go to the beginning with `b`
+1.  We want to keep the first 3 characters and discard the rest from each of the parameters. To do this, move to the 4th character with `lll`
+1.  Use `e` to select until the end of each word and then `d` to delete it
+1.  Select the entire file again with `%` followed by `s` to bring up selection prompt again
+1.  Write `result =` followed by `Enter` to select all instances of that string
+1.  `C` creates a new selection on the line directly below, for each cursor
+1.  Use `Alt` + `(` to rotate the _contents_ of the selection backward
+1.  `;` collapses each cursor into a single selection
+1.  `dd` deletes two characters on each of the 6 lines
+1.  `s` to bring up the prompt, then input `s` followed by `Enter` to select all "s" characters
+1.  Select each of the lines with `x` followed by `d` to delete
+1.  Select whole file with `%` and indent with `>`
+1.  `O` creates a newline above and enters Insert mode, then `Backspace` to delete an extra tab
+1.  Write this:
 
-		```
-		class Calculator:
-		```
+        ```
+        class Calculator:
+        ```
 
 </details>
