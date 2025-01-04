@@ -2,7 +2,7 @@
 
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
-Examples of efficiently refactoring text in the [Helix Editor](https://helix-editor.com/).
+Examples of efficiently refactoring text in the [Helix Editor](https://helix-editor.com/)
 
 ## Contributing
 
