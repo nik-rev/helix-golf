@@ -1,0 +1,4 @@
+[[language]]
+name = "markdown"
+file-types = ["mdx"]
+auto-format = false
