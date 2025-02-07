@@ -99,7 +99,7 @@ INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10
 <details>
 
 <summary>
-```%<alt-s>"yys\d<enter>dhhbms``x_ms(IINSERT INTO `database<esc>a.`table<esc>la <esc>AVALUES (<esc>"ypS,ms'A;<esc>Fl;~```
+```%<alt-s>"yys\d<enter>dhhbms``x_ms(IINSERT INTO `database<esc>a.`table<esc>la <esc>AVALUES (<esc>"yPS,<enter>ms'A;<esc>Fl;~```
 </summary>
 
 1.  `%` selects full file
@@ -136,8 +136,8 @@ INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10
         ```
 
 1.  Hit `Escape` to leave insert mode. Your cursor will be at the closing parenthesis.
-1.  `"yp` pastes our previously yanked items from the "y" register
-1.  `S,` splits current selection into multiple selections on each comma
+1.  `"yP` pastes our previously yanked items from the "y" register
+1.  `S,<enter>` splits current selection into multiple selections on each comma
 1.  `ms'` surrounds each item with a single quote
 1.  `A;` adds a semicolon at the end of each line
 1.  `Escape` goes back to normal mode and `Fl` to place your cursor on the lowercase "l" of each "location"
