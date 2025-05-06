@@ -363,15 +363,14 @@ const userProfile = {
 <details>
 
 <summary>
-`%s\w+(:| =)<enter>s_\w<enter>~<alt-;>;d`
+`%s_<enter>5)<alt-,>d~`
 </summary>
 
 1. `%` selects the entire file
-2. `s\w+(:| =)<enter>` selects all words that are followed by either a colon or equals sign with space - capturing variable and property names
-3. `s_\w<enter>` finds all underscores followed by a character within those selections
-4. `~` toggles the case of the character after each underscore (making it uppercase)
-5. `<alt-;>` flips the selection cursor and anchor - this adjusts our selections to ensure we can properly target the underscores
-6. `;` collapses multiple selections to just the underscores
-7. `d` deletes all the underscores
+2. `_<enter>` selects all underscores
+3. `5)` rotates the main selection forward 5 times
+4. `<alt-,>` removes the primary selection - the lone underscore we want to keep
+5. `d` deletes the selections
+6. `~` toggles the case
 
 </details>
