@@ -6,8 +6,6 @@ Helix is _very_ good at editing text and this website has examples of how I've r
 
 ## Contributing
 
-### Add new template
-
 To add a new example create `src/your_example.md` using the following template.
 
 ````md
