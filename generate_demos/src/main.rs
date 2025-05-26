@@ -1,4 +1,8 @@
-use std::{fs, path::Path, process::Command};
+use std::{
+    fs,
+    path::Path,
+    process::{Command, Stdio},
+};
 
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use structure::Example;
@@ -31,6 +35,7 @@ pub fn main() -> miette::Result<()> {
 
     examples.par_iter().for_each(|example| {
         let stem = example.path.file_stem().unwrap().to_str().unwrap();
+        println!("Rendering example `{stem}`...");
         let contents = key_event_display::generate_tape_file_from_helix_key_sequence(
             &example.command,
             stem,
@@ -50,10 +55,14 @@ pub fn main() -> miette::Result<()> {
 
         Command::new("vhs")
             .arg(tape)
+            // .stdout(Stdio::null())
+            // .stderr(Stdio::null())
             .spawn()
-            .unwrap()
+            .expect("you need to install `vhs` in order to generate the demos")
             .wait()
             .unwrap();
+
+        println!("Finished rendering `{stem}`.")
     });
 
     Ok(())

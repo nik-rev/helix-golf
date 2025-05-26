@@ -9,7 +9,7 @@ Set Width 1200
 Set Height 600
 Set Padding 0
 Set Theme "Catppuccin Mocha"
-Set TypingSpeed 250ms
+Set TypingSpeed 400ms
 
 Type "hx -c src/generated/helix-config.toml src/generated/enumerate_and_align.js" Enter
 
@@ -42,6 +42,8 @@ Type "+"
 Enter
 Type "&"
 
-Type "gg"
+
+Escape
+Type ","
 
 Sleep 2s

@@ -44,7 +44,7 @@ It'll also need to be included in [`SUMMARY.md`](src/SUMMARY.md)
 
 ### Demos
 
-The demo for each example is generated using:
+Generate the demo for each example by running the following command in the project root directory:
 
 ```sh
 cargo generate_demos

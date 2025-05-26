@@ -411,30 +411,19 @@ pub fn parse_keys(keys_str: &str, filename: &str) -> Result<Vec<KeyEvent>, Parse
         }
         let c = &s[..end_i];
         if c == ">" {
-            keys.push(keys::LESS_THAN);
+            keys.push(keys::GREATER_THAN);
             i += end_i;
-            // keys_res = Err(ParseKeysError {
-            //     src: NamedSource::new(filename, keys_str.to_string()),
-            //     error: "Unmatched '>', use '<gt>' for greater-than".to_string(),
-            //     span: (i, end_i.saturating_sub(i)).into(),
-            // });
         } else if c != "<" {
             keys.push(if c == "-" { keys::MINUS } else { c });
             i += end_i;
         } else {
-            match s.find('>')
-            //  .ok_or_else(|| ParseKeysError {
-            //     src: NamedSource::new(filename, keys_str.to_string()),
-            //     error: "'>' expected".to_string(),
-            //     span: (i, end_i.saturating_sub(i)).into(),
-            // })
-             {
+            match s.find('>') {
                 Some(end_i) => {
                     keys.push(&s[1..end_i]);
                     i += end_i + 1;
                 }
                 None => {
-                    keys.push(keys::GREATER_THAN);
+                    keys.push(keys::LESS_THAN);
                     i += end_i;
                 }
             }
