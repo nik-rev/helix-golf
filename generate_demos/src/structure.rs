@@ -8,6 +8,7 @@ use markdown::{
     unist::{Point, Position},
 };
 use miette::{NamedSource, SourceSpan};
+use rayon::{iter::ParallelIterator, slice::ParallelSlice};
 
 /// The current element that we are expecting.
 #[derive(Clone)]
@@ -324,9 +325,48 @@ impl Example {
                                 value, position, ..
                             }) = child
                             {
+                                dbg!(value);
+                                let x: Vec<_> = value.chars().collect();
+                                #[allow(clippy::nonminimal_bool)]
+                                if x.par_windows(3).any(|windows| {
+                                    if let [a, b, c] = windows {
+                                        // 1 newline is not allowed
+                                        (*a != '\n' && *b == '\n' && *c != '\n')
+                                            // 3 newlines is not allowed
+                                            || (*a == '\n' && *b == '\n' && *c == '\n')
+                                    } else {
+                                        unreachable!()
+                                    }
+                                }) {
+                                    return Err((
+                                        position.clone().unwrap(),
+                                        "For each line break, use exactly 2 newlines".to_string(),
+                                    ));
+                                }
+
+                                let position = position.clone().unwrap();
+
+                                if let Some(line) = value.lines().find(|line| line.len() > 30) {
+                                    return Err((
+                                        position,
+                                        format!(
+                                            "Each line in code block \
+                                         after `## Command` \
+                                         should be at most 30 \
+                                         characters long.\nThis helps with readability \
+                                         on smaller devices.\n\n\
+                                         This line is more than 30 \
+                                         characters long (is {} chars long):\n  \
+                                           {line}\n\nBreak it with two newlines.",
+                                            line.len()
+                                        )
+                                        .to_string(),
+                                    ));
+                                }
+
                                 example.command = value.replace("\n", "");
 
-                                expecting.next(position.clone().unwrap());
+                                expecting.next(position);
                             }
                         }
                         Expecting::ListCommand(_) => {
@@ -345,11 +385,7 @@ impl Example {
                                         for child in children {
                                             // each child in the List Item
                                             if let Node::Code(Code { value, .. }) = child {
-                                                let first_newline = value.find('\n').unwrap();
-                                                let last_newline = value.rfind('\n').unwrap();
-                                                concatenated_inline_code.push_str(
-                                                    &value[first_newline + 1..last_newline],
-                                                );
+                                                concatenated_inline_code.push_str(value.trim());
                                             } else {
                                                 let inline_code_concatenated = child
                                                     .children()

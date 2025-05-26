@@ -42,13 +42,21 @@ class Calculator
 ## Command
 
 ```
-%scalculate<enter>cget<esc>O@staticmethod
+%scalculate<enter>cget<esc>
 
-<esc>jxxs\w+<enter>slength|width|height<enter>
+O@staticmethod
 
-bllled%sresult =<enter>C<alt-(>;ddss<enter>
+<esc>jxxs\w+<enter>s
 
-xd%>O<backspace>class Calculator:
+length|width|height<enter>
+
+bllled%sresult =<enter>C
+
+<alt-(>;ddss<enter>
+
+xd%>O<backspace>
+
+class Calculator:
 ```
 
 1.  `%` selects the entire file
@@ -57,9 +65,9 @@ xd%>O<backspace>class Calculator:
 1.  `<esc>` to go back to normal mode
 1.  Use `O` to create an empty line above each cursor, write:
 
-        ```
-        @staticmethod
-        ```
+    ```
+    @staticmethod
+    ```
 
 1.  Hit `<esc>` to go into normal mode.
 1.  We need to select 2 lines below the current line, first go down with `j` and then press `xx` which will select the current line, and then select the next line
@@ -82,6 +90,6 @@ xd%>O<backspace>class Calculator:
 1.  `O` creates a newline above and enters Insert mode, then `<backspace>` to delete an extra tab
 1.  Write this:
 
-        ```
-        class Calculator:
-        ```
+    ```
+    class Calculator:
+    ```

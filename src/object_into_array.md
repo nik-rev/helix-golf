@@ -33,7 +33,9 @@ const palette = [
 ## Command
 
 ```
-jmr{[mi[s:<enter>r,t,;vgsms[lems"
+jmr{[mi[s:<enter>
+
+r,t,;vgsms[lems"
 ```
 
 1. Go to the line below with `j`, this is because we need to be inside of the object for the next step.

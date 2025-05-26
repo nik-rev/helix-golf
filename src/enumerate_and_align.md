@@ -45,7 +45,9 @@
 ## Command
 
 ```
-%s\{<enter>a rank: <ctrl-r>#,<esc>%s |\d+<enter>&
+%s\{<enter>a rank: <ctrl-r>
+
+#,<esc>%s |\d+<enter>&
 ```
 
 1.  `%` selects full file

@@ -25,10 +25,19 @@ INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10
 ## Command
 
 ```
-%<alt-s>"yys\d<enter>dhhbms``x_ms
-(IINSERT INTO `database<esc>a.`table
-<esc>la <esc>AVALUES (<esc>"yPS,<enter>
-ms'A;<esc>Fl;~
+%<alt-s>"yys\d<enter>
+
+dhhbms
+
+``x_ms(IINSERT INTO `
+
+database<esc>
+
+a.`table<esc>la <esc>
+
+AVALUES (<esc>
+
+"yPS,<enter>ms'A;<esc>Fl;~
 ```
 
 1.  `%` selects full file
@@ -45,24 +54,24 @@ ms'A;<esc>Fl;~
 1.  `I` goes into insert mode at the beginning of each line
 1.  Type the following:
 
-        ```
-        INSERT INTO `database
-        ```
+    ```
+    INSERT INTO `database
+    ```
 
 1.  `<esc>` goes back to normal mode
 1.  `a` to go into insert mode after the backtick then type:
 
-        ```
-        .`table
-        ```
+    ```
+    .`table
+    ```
 
 1.  `<esc>` goes back into normal mode, then `la` to enter insert mode just before the opening parentheses
 1.  Add a space ` ` then `<esc>` to go back into normal mode again
 1.  `A` goes into insert mode at the end of each line, now type:
 
-        ```
-        VALUES (
-        ```
+    ```
+    VALUES (
+    ```
 
 1.  Hit `<esc>` to leave insert mode. Your cursor will be at the closing parenthesis.
 1.  `"yP` pastes our previously yanked items from the "y" register
