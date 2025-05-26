@@ -9,7 +9,7 @@ Set Width 1200
 Set Height 600
 Set Padding 0
 Set Theme "Catppuccin Mocha"
-Set TypingSpeed 250ms
+Set TypingSpeed 400ms
 
 Type "hx -c src/generated/helix-config.toml src/generated/function_into_class.py" Enter
 
@@ -94,7 +94,7 @@ Type " "
 Type "="
 Enter
 Type "C"
-Ctrl+"y"
+Ctrl+"z"
 Type ";"
 Type "d"
 Type "d"
@@ -104,7 +104,7 @@ Enter
 Type "x"
 Type "d"
 Type "%"
-Type "<"
+Type ">"
 Type "O"
 Backspace
 Type "c"
@@ -125,6 +125,8 @@ Type "o"
 Type "r"
 Type ":"
 
-Type "gg"
+
+Escape
+Type ","
 
 Sleep 2s

@@ -9,7 +9,7 @@ Set Width 1200
 Set Height 600
 Set Padding 0
 Set Theme "Catppuccin Mocha"
-Set TypingSpeed 250ms
+Set TypingSpeed 400ms
 
 Type "hx -c src/generated/helix-config.toml src/generated/snake_case_to_camel_case.js" Enter
 
@@ -21,10 +21,12 @@ Type "_"
 Enter
 Type "5"
 Type ")"
-Ctrl+Shift+"m"
+Alt+","
 Type "d"
 Type "~"
 
-Type "gg"
+
+Escape
+Type ","
 
 Sleep 2s
