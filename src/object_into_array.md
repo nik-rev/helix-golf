@@ -24,6 +24,12 @@ const palette = [
 ];
 ```
 
+## Preview
+
+<video controls>
+  <source src="generated/object_into_array.mp4" type="video/mp4">
+</video>
+
 ## Command
 
 ```

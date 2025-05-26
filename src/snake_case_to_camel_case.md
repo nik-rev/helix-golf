@@ -38,6 +38,12 @@ const userProfile = {
 };
 ```
 
+## Preview
+
+<video controls>
+  <source src="generated/snake_case_to_camel_case.mp4" type="video/mp4">
+</video>
+
 ## Command
 
 ```
