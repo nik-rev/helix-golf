@@ -27,9 +27,6 @@ Escape
 Type "x"
 Type "m"
 Type "s"
-Type " "
-Type "m"
-Type "s"
 Type "["
 
 

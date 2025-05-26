@@ -198,13 +198,13 @@ ms'A;&lt;esc&gt;Fl;~
 <p><code>%</code> selects full file</p>
 </li>
 <li>
-<p><code>Alt</code> + <code>s</code> split selection into multiple selections on newlines</p>
+<p><code>&lt;alt-s&gt;</code> split selection into multiple selections on newlines</p>
 </li>
 <li>
 <p><code>"yy</code> yanks the selections into "y" register. We'll need it for later</p>
 </li>
 <li>
-<p><code>s</code> and then input the pattern <code>\d</code> then <code>Enter</code> which creates a selection on all digits</p>
+<p><code>s</code> and then input the pattern <code>\d</code> then <code>&lt;enter&gt;</code> which creates a selection on all digits</p>
 </li>
 <li>
 <p><code>d</code> deletes the selections. Essentially we've removed all the digits.</p>
@@ -238,7 +238,7 @@ INSERT INTO `database
 </code></pre>
 </li>
 <li>
-<p><code>Escape</code> goes back to normal mode</p>
+<p><code>&lt;esc&gt;</code> goes back to normal mode</p>
 </li>
 <li>
 <p><code>a</code> to go into insert mode after the backtick then type:</p>
@@ -248,10 +248,10 @@ INSERT INTO `database
 </code></pre>
 </li>
 <li>
-<p><code>Escape</code> goes back into normal mode, then <code>la</code> to enter insert mode just before the opening parentheses</p>
+<p><code>&lt;esc&gt;</code> goes back into normal mode, then <code>la</code> to enter insert mode just before the opening parentheses</p>
 </li>
 <li>
-<p>Add a <code>Space</code> then <code>Escape</code> to go back into normal mode again</p>
+<p>Add a space <code> </code> then <code>&lt;esc&gt;</code> to go back into normal mode again</p>
 </li>
 <li>
 <p><code>A</code> goes into insert mode at the end of each line, now type:</p>
@@ -261,7 +261,7 @@ VALUES (
 </code></pre>
 </li>
 <li>
-<p>Hit <code>Escape</code> to leave insert mode. Your cursor will be at the closing parenthesis.</p>
+<p>Hit <code>&lt;esc&gt;</code> to leave insert mode. Your cursor will be at the closing parenthesis.</p>
 </li>
 <li>
 <p><code>"yP</code> pastes our previously yanked items from the "y" register</p>
@@ -276,7 +276,7 @@ VALUES (
 <p><code>A;</code> adds a semicolon at the end of each line</p>
 </li>
 <li>
-<p><code>Escape</code> goes back to normal mode and <code>Fl</code> to place your cursor on the lowercase "l" of each "location"</p>
+<p><code>&lt;esc&gt;</code> goes back to normal mode and <code>Fl</code> to place your cursor on the lowercase "l" of each "location"</p>
 </li>
 <li>
 <p><code>;</code> collapses each selection into a single-width selection</p>

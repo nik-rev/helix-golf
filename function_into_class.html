@@ -218,13 +218,13 @@ xd%&gt;O&lt;backspace&gt;class Calculator:
 <p><code>%</code> selects the entire file</p>
 </li>
 <li>
-<p><code>s</code> searches inside the current selection and creates sub-selections based on a pattern. Input <code>calculate</code> then hit <code>Enter</code> to make a selection on all instances of the word</p>
+<p><code>s</code> searches inside the current selection and creates sub-selections based on a pattern. Input <code>calculate</code> then hit <code>&lt;enter&gt;</code> to make a selection on all instances of the word</p>
 </li>
 <li>
 <p><code>c</code> then type <code>get</code> to change each "calculate" word into a "get"</p>
 </li>
 <li>
-<p><code>Escape</code> to go back to normal mode</p>
+<p><code>&lt;esc&gt;</code> to go back to normal mode</p>
 </li>
 <li>
 <p>Use <code>O</code> to create an empty line above each cursor, write:</p>
@@ -234,17 +234,17 @@ xd%&gt;O&lt;backspace&gt;class Calculator:
 </code></pre>
 </li>
 <li>
-<p>Hit <code>Esc</code> to go into normal mode.</p>
+<p>Hit <code>&lt;esc&gt;</code> to go into normal mode.</p>
 </li>
 <li>
 <p>We need to select 2 lines below the current line, first go down with <code>j</code> and then press <code>xx</code> which will select the current line, and then select the next line
 In total we now have 3 cursors each with 2 lines selected, which includes the first line of the bodies of each function and the function definition themselves</p>
 </li>
 <li>
-<p><code>s</code> brings up a prompt to select sub-selections by a given regex. The <code>\w+</code> regex selects each word, type it and then <code>Enter</code></p>
+<p><code>s</code> brings up a prompt to select sub-selections by a given regex. The <code>\w+</code> regex selects each word, type it and then <code>&lt;enter&gt;</code></p>
 </li>
 <li>
-<p><code>s</code> again then type <code>length|width|height</code> followed by <code>Enter</code>. This will look at the contents of the current selections, and create sub-selections where it finds the regex which means "length or width or height". So we select each instance of those 3 words</p>
+<p><code>s</code> again then type <code>length|width|height</code> followed by <code>&lt;enter&gt;</code>. This will look at the contents of the current selections, and create sub-selections where it finds the regex which means "length or width or height". So we select each instance of those 3 words</p>
 </li>
 <li>
 <p>Our cursor is currently at the end of each word. Let's go to the beginning with <code>b</code></p>
@@ -259,13 +259,13 @@ In total we now have 3 cursors each with 2 lines selected, which includes the fi
 <p>Select the entire file again with <code>%</code> followed by <code>s</code> to bring up selection prompt again</p>
 </li>
 <li>
-<p>Write <code>result =</code> followed by <code>Enter</code> to select all instances of that string</p>
+<p>Write <code>result =</code> followed by <code>&lt;enter&gt;</code> to select all instances of that string</p>
 </li>
 <li>
 <p><code>C</code> creates a new selection on the line directly below, for each cursor</p>
 </li>
 <li>
-<p>Use <code>Alt</code> + <code>(</code> to rotate the <em>contents</em> of the selection backward</p>
+<p>Use <code>&lt;alt-(&gt;</code> to rotate the <em>contents</em> of the selection backward</p>
 </li>
 <li>
 <p><code>;</code> collapses each cursor into a single selection</p>
@@ -274,7 +274,7 @@ In total we now have 3 cursors each with 2 lines selected, which includes the fi
 <p><code>dd</code> deletes two characters on each of the 6 lines</p>
 </li>
 <li>
-<p><code>s</code> to bring up the prompt, then input <code>s</code> followed by <code>Enter</code> to select all "s" characters</p>
+<p><code>s</code> to bring up the prompt, then input <code>s</code> followed by <code>&lt;enter&gt;</code> to select all "s" characters</p>
 </li>
 <li>
 <p>Select each of the lines with <code>x</code> followed by <code>d</code> to delete</p>
@@ -283,7 +283,7 @@ In total we now have 3 cursors each with 2 lines selected, which includes the fi
 <p>Select whole file with <code>%</code> and indent with <code>&gt;</code></p>
 </li>
 <li>
-<p><code>O</code> creates a newline above and enters Insert mode, then <code>Backspace</code> to delete an extra tab</p>
+<p><code>O</code> creates a newline above and enters Insert mode, then <code>&lt;backspace&gt;</code> to delete an extra tab</p>
 </li>
 <li>
 <p>Write this:</p>
@@ -293,8 +293,6 @@ class Calculator:
 </code></pre>
 </li>
 </ol>
-</details>
-<h2 id=""><a class="header" href="#"></a></h2>
 
                     </main>
 

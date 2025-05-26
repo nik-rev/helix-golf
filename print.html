@@ -199,7 +199,7 @@
 <li><code>mr{[</code> replaces the nearest pair of curly braces "{" with square brackets "["</li>
 <li><code>mi[</code> selects inside the entire array</li>
 <li>Use <code>s</code> to enter select mode, which searches inside our selection and creates sub-selections based on a pattern</li>
-<li>Input <code>:</code> and then hit <code>Enter</code>, which will place a cursor on every ":" creating many single-width selections</li>
+<li>Input <code>:</code> and then hit <code>&lt;enter&gt;</code>, which will place a cursor on every ":" creating many single-width selections</li>
 <li><code>r,</code> replaces each selection with a ",". Essentially we've replaced each colon with a comma</li>
 <li><code>t,</code> moves the cursor on each line to the ending comma</li>
 <li><code>;</code> collapses the selection around each cursor into a single selection</li>
@@ -235,13 +235,13 @@ ms'A;&lt;esc&gt;Fl;~
 <p><code>%</code> selects full file</p>
 </li>
 <li>
-<p><code>Alt</code> + <code>s</code> split selection into multiple selections on newlines</p>
+<p><code>&lt;alt-s&gt;</code> split selection into multiple selections on newlines</p>
 </li>
 <li>
 <p><code>"yy</code> yanks the selections into "y" register. We'll need it for later</p>
 </li>
 <li>
-<p><code>s</code> and then input the pattern <code>\d</code> then <code>Enter</code> which creates a selection on all digits</p>
+<p><code>s</code> and then input the pattern <code>\d</code> then <code>&lt;enter&gt;</code> which creates a selection on all digits</p>
 </li>
 <li>
 <p><code>d</code> deletes the selections. Essentially we've removed all the digits.</p>
@@ -275,7 +275,7 @@ INSERT INTO `database
 </code></pre>
 </li>
 <li>
-<p><code>Escape</code> goes back to normal mode</p>
+<p><code>&lt;esc&gt;</code> goes back to normal mode</p>
 </li>
 <li>
 <p><code>a</code> to go into insert mode after the backtick then type:</p>
@@ -285,10 +285,10 @@ INSERT INTO `database
 </code></pre>
 </li>
 <li>
-<p><code>Escape</code> goes back into normal mode, then <code>la</code> to enter insert mode just before the opening parentheses</p>
+<p><code>&lt;esc&gt;</code> goes back into normal mode, then <code>la</code> to enter insert mode just before the opening parentheses</p>
 </li>
 <li>
-<p>Add a <code>Space</code> then <code>Escape</code> to go back into normal mode again</p>
+<p>Add a space <code> </code> then <code>&lt;esc&gt;</code> to go back into normal mode again</p>
 </li>
 <li>
 <p><code>A</code> goes into insert mode at the end of each line, now type:</p>
@@ -298,7 +298,7 @@ VALUES (
 </code></pre>
 </li>
 <li>
-<p>Hit <code>Escape</code> to leave insert mode. Your cursor will be at the closing parenthesis.</p>
+<p>Hit <code>&lt;esc&gt;</code> to leave insert mode. Your cursor will be at the closing parenthesis.</p>
 </li>
 <li>
 <p><code>"yP</code> pastes our previously yanked items from the "y" register</p>
@@ -313,7 +313,7 @@ VALUES (
 <p><code>A;</code> adds a semicolon at the end of each line</p>
 </li>
 <li>
-<p><code>Escape</code> goes back to normal mode and <code>Fl</code> to place your cursor on the lowercase "l" of each "location"</p>
+<p><code>&lt;esc&gt;</code> goes back to normal mode and <code>Fl</code> to place your cursor on the lowercase "l" of each "location"</p>
 </li>
 <li>
 <p><code>;</code> collapses each selection into a single-width selection</p>
@@ -337,14 +337,14 @@ Helix
   <source src="generated/text_into_array.mp4" type="video/mp4">
 </video>
 <h2 id="command-2"><a class="header" href="#command-2">Command</a></h2>
-<pre><code>%&lt;alt-s&gt;ms"&lt;alt-J&gt;i,&lt;esc&gt;xms ms[
+<pre><code>%&lt;alt-s&gt;ms"&lt;alt-J&gt;i,&lt;esc&gt;xms[
 </code></pre>
 <ol>
 <li><code>%</code> selects full file</li>
 <li><code>&lt;alt-s&gt;</code> split selection into multiple selections on newlines</li>
-<li><code>ms"</code> surrounds each word with <code>"</code>'s</li>
-<li><code>&lt;alt-J&gt;i,</code> join lines inside selection, select the inserted space, and insert <code>,</code>'s</li>
-<li><code>&lt;esc&gt;xms[</code> surround by <code>[]</code></li>
+<li><code>ms"</code> surrounds each word with quotes</li>
+<li><code>&lt;alt-J&gt;i,</code> join lines inside selection, select the inserted space, and insert ","s</li>
+<li><code>&lt;esc&gt;xms[</code> surround by "[]"</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-into-class"><a class="header" href="#function-into-class">Function into Class</a></h1>
 <h2 id="before-3"><a class="header" href="#before-3">Before</a></h2>
@@ -392,13 +392,13 @@ xd%&gt;O&lt;backspace&gt;class Calculator:
 <p><code>%</code> selects the entire file</p>
 </li>
 <li>
-<p><code>s</code> searches inside the current selection and creates sub-selections based on a pattern. Input <code>calculate</code> then hit <code>Enter</code> to make a selection on all instances of the word</p>
+<p><code>s</code> searches inside the current selection and creates sub-selections based on a pattern. Input <code>calculate</code> then hit <code>&lt;enter&gt;</code> to make a selection on all instances of the word</p>
 </li>
 <li>
 <p><code>c</code> then type <code>get</code> to change each "calculate" word into a "get"</p>
 </li>
 <li>
-<p><code>Escape</code> to go back to normal mode</p>
+<p><code>&lt;esc&gt;</code> to go back to normal mode</p>
 </li>
 <li>
 <p>Use <code>O</code> to create an empty line above each cursor, write:</p>
@@ -408,17 +408,17 @@ xd%&gt;O&lt;backspace&gt;class Calculator:
 </code></pre>
 </li>
 <li>
-<p>Hit <code>Esc</code> to go into normal mode.</p>
+<p>Hit <code>&lt;esc&gt;</code> to go into normal mode.</p>
 </li>
 <li>
 <p>We need to select 2 lines below the current line, first go down with <code>j</code> and then press <code>xx</code> which will select the current line, and then select the next line
 In total we now have 3 cursors each with 2 lines selected, which includes the first line of the bodies of each function and the function definition themselves</p>
 </li>
 <li>
-<p><code>s</code> brings up a prompt to select sub-selections by a given regex. The <code>\w+</code> regex selects each word, type it and then <code>Enter</code></p>
+<p><code>s</code> brings up a prompt to select sub-selections by a given regex. The <code>\w+</code> regex selects each word, type it and then <code>&lt;enter&gt;</code></p>
 </li>
 <li>
-<p><code>s</code> again then type <code>length|width|height</code> followed by <code>Enter</code>. This will look at the contents of the current selections, and create sub-selections where it finds the regex which means "length or width or height". So we select each instance of those 3 words</p>
+<p><code>s</code> again then type <code>length|width|height</code> followed by <code>&lt;enter&gt;</code>. This will look at the contents of the current selections, and create sub-selections where it finds the regex which means "length or width or height". So we select each instance of those 3 words</p>
 </li>
 <li>
 <p>Our cursor is currently at the end of each word. Let's go to the beginning with <code>b</code></p>
@@ -433,13 +433,13 @@ In total we now have 3 cursors each with 2 lines selected, which includes the fi
 <p>Select the entire file again with <code>%</code> followed by <code>s</code> to bring up selection prompt again</p>
 </li>
 <li>
-<p>Write <code>result =</code> followed by <code>Enter</code> to select all instances of that string</p>
+<p>Write <code>result =</code> followed by <code>&lt;enter&gt;</code> to select all instances of that string</p>
 </li>
 <li>
 <p><code>C</code> creates a new selection on the line directly below, for each cursor</p>
 </li>
 <li>
-<p>Use <code>Alt</code> + <code>(</code> to rotate the <em>contents</em> of the selection backward</p>
+<p>Use <code>&lt;alt-(&gt;</code> to rotate the <em>contents</em> of the selection backward</p>
 </li>
 <li>
 <p><code>;</code> collapses each cursor into a single selection</p>
@@ -448,7 +448,7 @@ In total we now have 3 cursors each with 2 lines selected, which includes the fi
 <p><code>dd</code> deletes two characters on each of the 6 lines</p>
 </li>
 <li>
-<p><code>s</code> to bring up the prompt, then input <code>s</code> followed by <code>Enter</code> to select all "s" characters</p>
+<p><code>s</code> to bring up the prompt, then input <code>s</code> followed by <code>&lt;enter&gt;</code> to select all "s" characters</p>
 </li>
 <li>
 <p>Select each of the lines with <code>x</code> followed by <code>d</code> to delete</p>
@@ -457,7 +457,7 @@ In total we now have 3 cursors each with 2 lines selected, which includes the fi
 <p>Select whole file with <code>%</code> and indent with <code>&gt;</code></p>
 </li>
 <li>
-<p><code>O</code> creates a newline above and enters Insert mode, then <code>Backspace</code> to delete an extra tab</p>
+<p><code>O</code> creates a newline above and enters Insert mode, then <code>&lt;backspace&gt;</code> to delete an extra tab</p>
 </li>
 <li>
 <p>Write this:</p>
@@ -467,8 +467,6 @@ class Calculator:
 </code></pre>
 </li>
 </ol>
-</details>
-<h2 id=""><a class="header" href="#"></a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="enumerate-and-align"><a class="header" href="#enumerate-and-align">Enumerate and Align</a></h1>
 <h2 id="before-4"><a class="header" href="#before-4">Before</a></h2>
 <pre><code class="language-js">[
@@ -510,14 +508,14 @@ class Calculator:
 <ol>
 <li><code>%</code> selects full file</li>
 <li>Use <code>s</code> to enter select mode, which searches inside our selection and creates sub-selections based on a pattern</li>
-<li>Input <code>\{</code> and then hit <code>Enter</code>, which will place a cursor on every "{", creating many single-width selections</li>
-<li><code>a</code> to go into insert mode after the "{"</li>
-<li>Input <code>rank:</code></li>
-<li><code>Ctrl</code> + <code>r</code> followed by <code>#</code> inserts an increasing number for every selection starting with 1</li>
+<li>Input <code>\{</code> and then hit <code>&lt;enter&gt;</code>, which will place a cursor on every "{", creating many single-width selections</li>
+<li><code>a </code> to go into insert mode after the "{"</li>
+<li>Input <code>rank: </code></li>
+<li><code>&lt;ctrl-r&gt;</code> followed by <code>#</code> inserts an increasing number for every selection starting with 1</li>
 <li>Input <code>,</code></li>
-<li><code>Escape</code> goes back to normal mode</li>
-<li>Use <code>s</code> to enter select mode again</li>
-<li>Input <code>Space</code> and <code>|\d+</code> which is a regular expression selecting all spaces and numbers, then hit <code>Enter</code></li>
+<li><code>&lt;esc&gt;</code> goes back to normal mode</li>
+<li>Use <code>%s</code> to enter select mode again</li>
+<li>Input <code> |\d+</code> which is a regular expression selecting all spaces and numbers, then hit <code>&lt;enter&gt;</code></li>
 <li><code>&amp;</code> to align all selections in columns, note that the numbers get right-aligned</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="snake_case-to-camelcase"><a class="header" href="#snake_case-to-camelcase">snake_case to camelCase</a></h1>
@@ -562,7 +560,7 @@ class Calculator:
 </code></pre>
 <ol>
 <li><code>%</code> selects the entire file</li>
-<li><code>_&lt;enter&gt;</code> selects all underscores</li>
+<li><code>s_&lt;enter&gt;</code> selects all underscores</li>
 <li><code>5)</code> rotates the main selection forward 5 times</li>
 <li><code>&lt;alt-,&gt;</code> removes the primary selection - the lone underscore we want to keep</li>
 <li><code>d</code> deletes the selections</li>
