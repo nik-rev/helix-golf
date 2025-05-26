@@ -16,6 +16,12 @@ INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 2'
 INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10','Item 10','Cost 10','Location 10');
 ```
 
+## Preview
+
+<video controls>
+  <source src="generated/csv_to_sql.mp4" type="video/mp4">
+</video>
+
 ## Command
 
 ```

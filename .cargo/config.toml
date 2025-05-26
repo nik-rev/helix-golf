@@ -1,0 +1,2 @@
+[alias]
+generate_demos = "run --manifest-path ./generate_demos/Cargo.toml"

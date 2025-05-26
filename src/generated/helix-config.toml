@@ -1,0 +1,36 @@
+theme = "catppuccin_mocha"
+        
+[keys.normal]
+
+# Original: Alt + s
+C-s = "split_selection_on_newline"
+
+# Original: Alt + J
+C-m = "join_selections_space"
+
+# Original: Alt + (
+"C-y" = "rotate_selection_contents_backward"
+
+# Original: Alt + )
+"C-g" = "rotate_selection_contents_forward"
+
+"C-M" = "remove_primary_selection"
+
+
+
+[keys.select]
+
+# Original: Alt + s
+C-s = "split_selection_on_newline"
+
+# Original: Alt + J
+C-m = "join_selections_space"
+
+# Original: Alt + (
+"C-y" = "rotate_selection_contents_backward"
+
+# Original: Alt + )
+"C-g" = "rotate_selection_contents_forward"
+
+"C-M" = "remove_primary_selection"
+

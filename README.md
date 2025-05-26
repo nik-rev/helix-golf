@@ -25,6 +25,10 @@ hello world
 Hello world!
 ```
 
+## Preview
+
+![preview](generated/your_example.mp4)
+
 ## Command
 
 ```
@@ -37,3 +41,11 @@ Hello world!
 ````
 
 It'll also need to be included in [`SUMMARY.md`](src/SUMMARY.md)
+
+### Generate
+
+The demo for each example is generated using [vhs](https://github.com/charmbracelet/vhs) with this command:
+
+```sh
+cargo generate_demos
+```

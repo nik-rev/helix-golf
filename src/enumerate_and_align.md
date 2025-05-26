@@ -36,6 +36,12 @@
 ];
 ```
 
+## Preview
+
+<video controls>
+  <source src="generated/enumerate_and_align.mp4" type="video/mp4">
+</video>
+
 ## Command
 
 ```

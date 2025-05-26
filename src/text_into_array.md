@@ -15,10 +15,16 @@ Helix
 ["Hello", "This", "Is", "Helix"];
 ```
 
+## Preview
+
+<video controls>
+  <source src="generated/text_into_array.mp4" type="video/mp4">
+</video>
+
 ## Command
 
 ```
-%<A-s>ms"<A-J>i,<esc>xms ms[
+%<alt-s>ms"<alt-J>i,<esc>xms ms[
 ```
 
 1. `%` selects full file
