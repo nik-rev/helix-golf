@@ -1,6 +1,6 @@
 use std::{
     collections::HashSet,
-    fs, iter,
+    fs,
     path::{Path, PathBuf},
     process::Command,
     sync::LazyLock,
