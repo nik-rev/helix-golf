@@ -40,7 +40,29 @@ Hello world!
 1. `!` write the exclamation mark
 ````
 
-It'll also need to be included in [`SUMMARY.md`](src/SUMMARY.md)
+Notes:
+
+- The concatenation of code blocks in the description list needs to be the same as the
+  code block after `## Command`.
+
+  So in here:
+
+  ````md
+  1. `~` changes case of the selection
+  1. Go to end and enter insert mode:
+
+     ```
+     A
+     ```
+
+  1. `!` write the exclamation mark
+  ````
+
+  Concatenating all of the code blocks gives `~A!`, which is the same as the code block after `## Command` title.
+
+- It'll also need to be included in [`SUMMARY.md`](src/SUMMARY.md)
+
+- The exact structure is enforced by the script `cargo generate_demos`, which will provide a friendly error message if the structure is wrong.
 
 ### Demos
 

@@ -1,8 +1,10 @@
+//! Ensure that each markdown file corresponds to the expected structure
+
 use std::path::PathBuf;
 
 use markdown::{
     ParseOptions,
-    mdast::{Code, Heading, List, Node, Text},
+    mdast::{Code, Heading, InlineCode, List, Node, Text},
     unist::{Point, Position},
 };
 use miette::{NamedSource, SourceSpan};
@@ -123,15 +125,15 @@ impl Expecting {
 
     pub fn next(&mut self, pos: Position) {
         *self = match self {
-            Self::Title(..) => Self::TitleBefore(pos),
-            Self::TitleBefore(..) => Self::CodeBefore(pos),
-            Self::CodeBefore(..) => Self::TitleAfter(pos),
-            Self::TitleAfter(..) => Self::CodeAfter(pos),
-            Self::CodeAfter(..) => Self::TitlePreview(pos),
-            Self::TitlePreview(..) => Self::TitleCommand(pos),
-            Self::TitleCommand(..) => Self::CodeCommand(pos),
-            Self::CodeCommand(..) => Self::ListCommand(pos),
-            Self::ListCommand(..) => Self::Finished,
+            Self::Title(_) => Self::TitleBefore(pos),
+            Self::TitleBefore(_) => Self::CodeBefore(pos),
+            Self::CodeBefore(_) => Self::TitleAfter(pos),
+            Self::TitleAfter(_) => Self::CodeAfter(pos),
+            Self::CodeAfter(_) => Self::TitlePreview(pos),
+            Self::TitlePreview(_) => Self::TitleCommand(pos),
+            Self::TitleCommand(_) => Self::CodeCommand(pos),
+            Self::CodeCommand(_) => Self::ListCommand(pos),
+            Self::ListCommand(_) => Self::Finished,
             Self::Finished => unreachable!(),
         };
     }
@@ -142,8 +144,8 @@ impl Expecting {
 struct InvalidStructure {
     #[source_code]
     src: NamedSource<String>,
-    why: String,
-    #[label("{why}")]
+    reason: String,
+    #[label("{reason}")]
     span: SourceSpan,
 }
 
@@ -198,6 +200,7 @@ impl Example {
                             .clone()
                             .with_pos(pos.clone().unwrap())
                             .expected()
+                            .map(|(pos, s)| (pos, s.to_string()))
                             .unwrap()
                     };
                     match expecting {
@@ -327,7 +330,71 @@ impl Example {
                             }
                         }
                         Expecting::ListCommand(_) => {
-                            if let Node::List(List { position, .. }) = child {
+                            if let Node::List(List {
+                                position,
+                                ordered: true,
+                                children,
+                                ..
+                            }) = child
+                            {
+                                let mut concatenated_inline_code = String::new();
+                                for child in children {
+                                    if let Node::Code(Code { value, .. }) = child {
+                                        concatenated_inline_code.push_str(value.trim());
+                                    } else if let Some(children) = child.children() {
+                                        for child in children {
+                                            // each child in the List Item
+                                            if let Node::Code(Code { value, .. }) = child {
+                                                let first_newline = value.find('\n').unwrap();
+                                                let last_newline = value.rfind('\n').unwrap();
+                                                concatenated_inline_code.push_str(
+                                                    &value[first_newline + 1..last_newline],
+                                                );
+                                            } else {
+                                                let inline_code_concatenated = child
+                                                    .children()
+                                                    .into_iter()
+                                                    .flat_map(|children| children.iter())
+                                                    // each child in the Paragraph
+                                                    .flat_map(|child| {
+                                                        // only care about `InlineCode`
+                                                        if let Node::InlineCode(InlineCode {
+                                                            value,
+                                                            ..
+                                                        }) = child
+                                                        {
+                                                            Some(value)
+                                                        } else {
+                                                            None
+                                                        }
+                                                    })
+                                                    .fold(String::new(), |total, inline_code| {
+                                                        total + inline_code
+                                                    });
+                                                concatenated_inline_code
+                                                    .push_str(&inline_code_concatenated);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if concatenated_inline_code != example.command {
+                                    return Err((
+                                        position.clone().unwrap(),
+                                        format!(
+                                            "Code blocks in the explanation list \
+                                            must concatenate to the command.\n\n\
+                                        if you concatenate all code blocks in \
+                                        the list, you will get:\n  \
+                                          {concatenated_inline_code}\n\n\
+                                        but we expected to see contents of the \
+                                        code block after `## Command`:\n  \
+                                          {}",
+                                            example.command
+                                        ),
+                                    ));
+                                }
+
                                 expecting.next(position.clone().unwrap());
                             }
                         }
@@ -338,7 +405,7 @@ impl Example {
             )
             .and_then(|(expecting, example)| {
                 if let Some((pos, why)) = expecting.expected() {
-                    Err((pos, why))
+                    Err((pos, why.to_string()))
                 } else {
                     Ok(Ok(example))
                 }
@@ -348,7 +415,7 @@ impl Example {
                 InvalidStructure {
                     src: NamedSource::new(file_name, markdown),
                     span: (start.offset, length).into(),
-                    why: info.to_string(),
+                    reason: info.to_string(),
                 }
             })?
     }

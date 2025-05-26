@@ -50,12 +50,12 @@
 
 1.  `%` selects full file
 1.  Use `s` to enter select mode, which searches inside our selection and creates sub-selections based on a pattern
-1.  Input `\{` and then hit `Enter`, which will place a cursor on every "\{", creating many single-width selections
-1.  `a` to go into insert mode after the "\{"
-1.  Input `rank:`
-1.  `Ctrl` + `r` followed by `#` inserts an increasing number for every selection starting with 1
+1.  Input `\{` and then hit `<enter>`, which will place a cursor on every "\{", creating many single-width selections
+1.  `a ` to go into insert mode after the "\{"
+1.  Input `rank: `
+1.  `<ctrl-r>` followed by `#` inserts an increasing number for every selection starting with 1
 1.  Input `,`
-1.  `Escape` goes back to normal mode
-1.  Use `s` to enter select mode again
-1.  Input `Space` and `|\d+` which is a regular expression selecting all spaces and numbers, then hit `Enter`
+1.  `<esc>` goes back to normal mode
+1.  Use `%s` to enter select mode again
+1.  Input ` |\d+` which is a regular expression selecting all spaces and numbers, then hit `<enter>`
 1.  `&` to align all selections in columns, note that the numbers get right-aligned

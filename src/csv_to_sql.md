@@ -32,9 +32,9 @@ ms'A;<esc>Fl;~
 ```
 
 1.  `%` selects full file
-1.  `Alt` + `s` split selection into multiple selections on newlines
+1.  `<alt-s>` split selection into multiple selections on newlines
 1.  `"yy` yanks the selections into "y" register. We'll need it for later
-1.  `s` and then input the pattern `\d` then `Enter` which creates a selection on all digits
+1.  `s` and then input the pattern `\d` then `<enter>` which creates a selection on all digits
 1.  `d` deletes the selections. Essentially we've removed all the digits.
 1.  `hh` goes backwards 2 chars, important to make sure we are at the end of each word
 1.  Use `b` to select till the beginning of every word, which also nicely selects all the words that there are
@@ -49,26 +49,26 @@ ms'A;<esc>Fl;~
         INSERT INTO `database
         ```
 
-1.  `Escape` goes back to normal mode
+1.  `<esc>` goes back to normal mode
 1.  `a` to go into insert mode after the backtick then type:
 
         ```
         .`table
         ```
 
-1.  `Escape` goes back into normal mode, then `la` to enter insert mode just before the opening parentheses
-1.  Add a `Space` then `Escape` to go back into normal mode again
+1.  `<esc>` goes back into normal mode, then `la` to enter insert mode just before the opening parentheses
+1.  Add a space ` ` then `<esc>` to go back into normal mode again
 1.  `A` goes into insert mode at the end of each line, now type:
 
         ```
         VALUES (
         ```
 
-1.  Hit `Escape` to leave insert mode. Your cursor will be at the closing parenthesis.
+1.  Hit `<esc>` to leave insert mode. Your cursor will be at the closing parenthesis.
 1.  `"yP` pastes our previously yanked items from the "y" register
 1.  `S,<enter>` splits current selection into multiple selections on each comma
 1.  `ms'` surrounds each item with a single quote
 1.  `A;` adds a semicolon at the end of each line
-1.  `Escape` goes back to normal mode and `Fl` to place your cursor on the lowercase "l" of each "location"
+1.  `<esc>` goes back to normal mode and `Fl` to place your cursor on the lowercase "l" of each "location"
 1.  `;` collapses each selection into a single-width selection
 1.  `~` toggles the case for each "l" into "L"

@@ -40,7 +40,7 @@ jmr{[mi[s:<enter>r,t,;vgsms[lems"
 1. `mr{[` replaces the nearest pair of curly braces "\{" with square brackets "["
 1. `mi[` selects inside the entire array
 1. Use `s` to enter select mode, which searches inside our selection and creates sub-selections based on a pattern
-1. Input `:` and then hit `Enter`, which will place a cursor on every ":" creating many single-width selections
+1. Input `:` and then hit `<enter>`, which will place a cursor on every ":" creating many single-width selections
 1. `r,` replaces each selection with a ",". Essentially we've replaced each colon with a comma
 1. `t,` moves the cursor on each line to the ending comma
 1. `;` collapses the selection around each cursor into a single selection

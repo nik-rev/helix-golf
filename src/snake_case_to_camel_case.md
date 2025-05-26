@@ -51,7 +51,7 @@ const userProfile = {
 ```
 
 1. `%` selects the entire file
-2. `_<enter>` selects all underscores
+2. `s_<enter>` selects all underscores
 3. `5)` rotates the main selection forward 5 times
 4. `<alt-,>` removes the primary selection - the lone underscore we want to keep
 5. `d` deletes the selections
