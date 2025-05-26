@@ -42,10 +42,12 @@ Hello world!
 
 It'll also need to be included in [`SUMMARY.md`](src/SUMMARY.md)
 
-### Generate
+### Demos
 
-The demo for each example is generated using [vhs](https://github.com/charmbracelet/vhs) with this command:
+The demo for each example is generated using:
 
 ```sh
 cargo generate_demos
 ```
+
+You will need to install [vhs](https://github.com/charmbracelet/vhs) for it to work.
