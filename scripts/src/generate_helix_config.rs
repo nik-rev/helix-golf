@@ -34,7 +34,7 @@ C-z = "rotate_selection_contents_backward"
 "##;
 
     fs::write(
-        crate::action::GENERATED_DIR.join("helix-config.toml"),
+        crate::command::GENERATED_DIR.join("helix-config.toml"),
         format!(
             r#"theme = "base16_transparent"
             

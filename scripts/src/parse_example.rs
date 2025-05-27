@@ -2,7 +2,6 @@
 
 use std::{
     collections::HashSet,
-    fmt::Display,
     fs,
     path::{Path, PathBuf},
 };
@@ -15,7 +14,7 @@ use markdown::{
 use miette::{Context, NamedSource, SourceSpan, miette};
 use rayon::{iter::ParallelIterator, slice::ParallelSlice};
 
-use crate::helix_keys::KeyEvent;
+use crate::parse_helix_keys::KeyEvent;
 
 /// The current element that we are expecting.
 #[derive(Clone)]
@@ -177,48 +176,6 @@ pub struct Example {
     pub name: String,
     /// Extension of the file
     pub ext: String,
-}
-
-impl Display for Example {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        writeln!(
-            f,
-            r#"Output src/generated/{name}.mp4
-Require hx
-
-Hide
-Set Shell "bash"
-Set FontSize 18
-Set Width 1200
-Set Height 600
-Set Padding 0
-Set Theme "Catppuccin Mocha"
-Set TypingSpeed 350ms
-Type "hx -c src/generated/helix-config.toml src/generated/{name}.{ext}"
-Enter
-Show
-"#,
-            name = self.name,
-            ext = self.ext
-        )?;
-
-        for key in &self.key_events {
-            writeln!(f, "{key}")?;
-        }
-
-        f.write_str(
-            r#"
-Escape
-Type ","
-
-Hide
-Type ":w!"
-Enter
-Show
-
-Sleep 2s"#,
-        )
-    }
 }
 
 impl Example {
@@ -531,7 +488,8 @@ impl Example {
                 }
             })?
             .and_then(|mut example| {
-                example.key_events = crate::helix_keys::parse_keys(&example.command, file_stem)?;
+                example.key_events =
+                    crate::parse_helix_keys::parse_keys(&example.command, file_stem)?;
                 example.name = file_stem.to_string();
                 Ok(example)
             })

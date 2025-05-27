@@ -1,18 +1,19 @@
 use std::env;
 
-use action::Action;
 use miette::miette;
 
-mod action;
-mod example;
-mod helix_config;
-mod helix_keys;
+mod command;
+mod generate_tape_file;
+mod parse_example;
+use command::Command;
+mod generate_helix_config;
+mod parse_helix_keys;
 
 pub fn main() -> miette::Result<()> {
     env::args()
         .nth(1)
-        .ok_or(Action::ERROR)
-        .and_then(|arg| arg.parse::<Action>())
+        .ok_or(Command::ERROR)
+        .and_then(|arg| arg.parse::<Command>())
         .map_err(|err| miette!("{err}"))?
         .execute()
 }
