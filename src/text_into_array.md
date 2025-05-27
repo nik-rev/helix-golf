@@ -12,7 +12,7 @@ Helix
 ## After
 
 ```js
-["Hello", "This", "Is", "Helix"];
+["Hello", "This", "Is", "Helix"]
 ```
 
 ## Command
