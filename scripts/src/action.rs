@@ -179,6 +179,30 @@ pub fn generate_demos(examples: Vec<Example>) -> miette::Result<()> {
     Ok(())
 }
 
+pub fn mdbook_preprocessor() -> miette::Result<()> {
+    // 1. Skip the binary name
+    // 2. Skip the first command `mdbook-preprocessor` which signals this binary to
+    // run the markdown preprocessor
+    match env::args().nth(2).as_deref() {
+        Some("supports") => {
+            // Supports all renderers
+            return Ok(());
+        }
+        Some(arg) => {
+            eprintln!("unknown argument: {arg}");
+            std::process::exit(1);
+        }
+        None => {}
+    }
+
+    CmdPreprocessor::parse_input(io::stdin())
+        .map_err(|err| miette!("failed to parse mdbook input: {err}"))?
+        .pipe(|(ctx, book)| GolfPreprocessor.run(&ctx, book))
+        .map_err(|err| miette!("failed to run the helix-golf mdbook preprocessor: {err}"))?
+        .pipe(|book| serde_json::to_writer(io::stdout(), &book))
+        .map_err(|err| miette!("failed to write the modified mdbook: {err}"))
+}
+
 struct GolfPreprocessor;
 
 impl Preprocessor for GolfPreprocessor {
@@ -196,11 +220,9 @@ impl Preprocessor for GolfPreprocessor {
                 let name = chapter
                     .path
                     .as_ref()
-                    .unwrap()
-                    .file_stem()
-                    .unwrap()
-                    .to_str()
-                    .unwrap();
+                    .and_then(|path| path.file_stem())
+                    .and_then(|stem| stem.to_str())
+                    .expect("if filename did not have a stem, `validate` step would fail");
 
                 let start = chapter.content.find("## Command").expect(
                     "The `validate` step would have errored if the \
@@ -226,28 +248,4 @@ impl Preprocessor for GolfPreprocessor {
 
         Ok(book)
     }
-}
-
-pub fn mdbook_preprocessor() -> miette::Result<()> {
-    // 1. Skip the binary name
-    // 2. Skip the first command `mdbook-preprocessor` which signals this binary to
-    // run the markdown preprocessor
-    match env::args().nth(2).as_deref() {
-        Some("supports") => {
-            // Supports all renderers
-            return Ok(());
-        }
-        Some(arg) => {
-            eprintln!("unknown argument: {arg}");
-            std::process::exit(1);
-        }
-        None => {}
-    }
-
-    CmdPreprocessor::parse_input(io::stdin())
-        .map_err(|err| miette!("failed to parse mdbook input: {err}"))?
-        .pipe(|(ctx, book)| GolfPreprocessor.run(&ctx, book))
-        .map_err(|err| miette!("failed to run the helix-golf mdbook preprocessor: {err}"))?
-        .pipe(|book| serde_json::to_writer(io::stdout(), &book))
-        .map_err(|err| miette!("failed to write the modified mdbook: {err}"))
 }
