@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>CSV to SQL - Helix Golf</title>
+        <title>snake_case to camelCase - Helix Golf</title>
 
 
         <!-- Custom HTML head -->
@@ -143,7 +143,7 @@
                         <a href="https://github.com/nik-rev/helix-golf" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/nik-rev/helix-golf/edit/main/src/csv_to_sql.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/nik-rev/helix-golf/edit/main/src/snake_case_to_camel_case.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -172,121 +172,53 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="csv-to-sql"><a class="header" href="#csv-to-sql">CSV to SQL</a></h1>
+                        <h1 id="snake_case-to-camelcase"><a class="header" href="#snake_case-to-camelcase">snake_case to camelCase</a></h1>
 <h2 id="before"><a class="header" href="#before">Before</a></h2>
-<pre><code class="language-csv">id 1,Item 1,cost 1,location 1
-id 2,Item 2,cost 2,location 2
-id 10,Item 10,cost 10,location 10
+<pre><code class="language-js">const user_profile = {
+  first_name: "John",
+  last_name: "Doe",
+  birth_date: "1990-05-15",
+  email_address: "john_doe@example.com",
+  phone_number: "555-123-4567",
+  mailing_address: {
+    street_name: "Main Street",
+    house_number: 123,
+    apartment_unit: "4B",
+    zip_code: "10001",
+    city_name: "New York",
+  },
+};
 </code></pre>
 <h2 id="after"><a class="header" href="#after">After</a></h2>
-<pre><code class="language-sql">INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 1','Item 1','cost 1','Location 1');
-INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 2','Item 2','cost 2','Location 2');
-INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10','Item 10','cost 10','Location 10');
+<pre><code class="language-js">const userProfile = {
+  firstName: "John",
+  lastName: "Doe",
+  birthDate: "1990-05-15",
+  emailAddress: "john_doe@example.com",
+  phoneNumber: "555-123-4567",
+  mailingAddress: {
+    streetName: "Main Street",
+    houseNumber: 123,
+    apartmentUnit: "4B",
+    zipCode: "10001",
+    cityName: "New York",
+  },
+};
 </code></pre>
 <h2 id="preview"><a class="header" href="#preview">Preview</a></h2>
 <video controls>
-  <source src="generated/csv_to_sql.mp4" type="video/mp4">
+  <source src="generated/snake_case_to_camel_case.mp4" type="video/mp4">
 </video>
 <h2 id="command"><a class="header" href="#command">Command</a></h2>
-<pre><code>%&lt;alt-s&gt;"yys\d&lt;enter&gt;
-
-dhhbms
-
-``x_ms(IINSERT INTO `
-
-database&lt;esc&gt;
-
-a.`table&lt;esc&gt;la &lt;esc&gt;
-
-AVALUES (&lt;esc&gt;
-
-"yPS,&lt;enter&gt;ms'A;&lt;esc&gt;Fl;~
+<pre><code>%s_&lt;enter&gt;5)&lt;alt-,&gt;d~
 </code></pre>
 <ol>
-<li>
-<p><code>%</code> selects full file</p>
-</li>
-<li>
-<p><code>&lt;alt-s&gt;</code> split selection into multiple selections on newlines</p>
-</li>
-<li>
-<p><code>"yy</code> yanks the selections into "y" register. We'll need it for later</p>
-</li>
-<li>
-<p><code>s</code> and then input the pattern <code>\d</code> then <code>&lt;enter&gt;</code> which creates a selection on all digits</p>
-</li>
-<li>
-<p><code>d</code> deletes the selections. Essentially we've removed all the digits.</p>
-</li>
-<li>
-<p><code>hh</code> goes backwards 2 chars, important to make sure we are at the end of each word</p>
-</li>
-<li>
-<p>Use <code>b</code> to select till the beginning of every word, which also nicely selects all the words that there are</p>
-</li>
-<li>
-<p><code>ms`</code> surrounds each word with a backtick</p>
-</li>
-<li>
-<p><code>`</code> switches all characters to lowercase</p>
-</li>
-<li>
-<p><code>x</code> selects each line then use <code>_</code> to trim the trailing whitespace</p>
-</li>
-<li>
-<p><code>ms(</code> surrounds each line with parentheses</p>
-</li>
-<li>
-<p><code>I</code> goes into insert mode at the beginning of each line</p>
-</li>
-<li>
-<p>Type the following:</p>
-<pre><code>INSERT INTO `database
-</code></pre>
-</li>
-<li>
-<p><code>&lt;esc&gt;</code> goes back to normal mode</p>
-</li>
-<li>
-<p><code>a</code> to go into insert mode after the backtick then type:</p>
-<pre><code>.`table
-</code></pre>
-</li>
-<li>
-<p><code>&lt;esc&gt;</code> goes back into normal mode, then <code>la</code> to enter insert mode just before the opening parentheses</p>
-</li>
-<li>
-<p>Add a space <code> </code> then <code>&lt;esc&gt;</code> to go back into normal mode again</p>
-</li>
-<li>
-<p><code>A</code> goes into insert mode at the end of each line, now type:</p>
-<pre><code>VALUES (
-</code></pre>
-</li>
-<li>
-<p>Hit <code>&lt;esc&gt;</code> to leave insert mode. Your cursor will be at the closing parenthesis.</p>
-</li>
-<li>
-<p><code>"yP</code> pastes our previously yanked items from the "y" register</p>
-</li>
-<li>
-<p><code>S,&lt;enter&gt;</code> splits current selection into multiple selections on each comma</p>
-</li>
-<li>
-<p><code>ms'</code> surrounds each item with a single quote</p>
-</li>
-<li>
-<p><code>A;</code> adds a semicolon at the end of each line</p>
-</li>
-<li>
-<p><code>&lt;esc&gt;</code> goes back to normal mode and <code>Fl</code> to place your cursor on the lowercase "l" of each "location"</p>
-</li>
-<li>
-<p><code>;</code> collapses each selection into a single-width selection</p>
-</li>
-<li>
-<p><code>~</code> toggles the case for each "l" into "L"</p>
-</li>
+<li><code>%</code> selects the entire file</li>
+<li><code>s_&lt;enter&gt;</code> selects all underscores</li>
+<li><code>5)</code> rotates the main selection forward 5 times</li>
+<li><code>&lt;alt-,&gt;</code> removes the primary selection - the lone underscore we want to keep</li>
+<li><code>d</code> deletes the selections</li>
+<li><code>~</code> toggles the case</li>
 </ol>
 
                     </main>
@@ -294,7 +226,7 @@ AVALUES (&lt;esc&gt;
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
 
-                            <a rel="next prefetch" href="enumerate_and_align.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="text_into_array.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -305,7 +237,7 @@ AVALUES (&lt;esc&gt;
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
 
-                    <a rel="next prefetch" href="enumerate_and_align.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="text_into_array.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
