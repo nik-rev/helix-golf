@@ -73,7 +73,8 @@ pub fn validate() -> miette::Result<Vec<Example>> {
         .skip(2)
         .collect();
 
-    fs::remove_dir_all(&*GENERATED_DIR)
+    fs::create_dir_all(&*GENERATED_DIR)
+        .and_then(|_| fs::remove_dir_all(&*GENERATED_DIR))
         .and_then(|_| fs::create_dir_all(&*GENERATED_DIR))
         .map_err(|err| miette!("failed cleaning the generated directory: {err}"))?;
 
