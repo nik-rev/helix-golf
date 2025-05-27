@@ -25,10 +25,6 @@ hello world
 Hello world!
 ```
 
-## Preview
-
-![preview](generated/your_example.mp4)
-
 ## Command
 
 ```
