@@ -1,0 +1,22 @@
+[package]
+name = "scripts"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# required by helix vendor
+bitflags = "2.9.1"
+# parse markdown
+markdown = "1.0.0"
+# beautiful error messages
+miette = { version = "7.6.0", features = ["fancy"] }
+# ensure BEFORE and AFTER is the same and get a colorful diff if they aren't
+pretty_assertions = "1.4.1"
+# generate each example in parallel
+rayon = "1.10.0"
+# functional methods such as Pipe
+tap = "1.0.1"
+# `#[derive(Error)]`
+thiserror = "2.0.12"
+# check if binary `vhs` exists
+which = "7.0.3"

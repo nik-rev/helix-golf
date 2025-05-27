@@ -1,6 +1,6 @@
 //! The helix config used by the recordings.
 
-use std::{fs, path::Path};
+use std::fs;
 
 use tap::Pipe as _;
 
@@ -10,8 +10,6 @@ pub fn remap(mods: &str, ch: char) -> Option<String> {
         ("Alt+", 's') => r#"Ctrl+"s""#.to_string(),
         ("Alt+", 'J') => r#"Ctrl+"y""#.to_string(),
         ("Alt+", '(') => r#"Ctrl+"z""#.to_string(),
-        // ("Alt+", ')') => r#"Ctrl+"g""#.to_string(),
-        // ("Alt+", ',') => r#"Ctrl+Shift+"m""#.to_string(),
         _ => return None,
     }
     .pipe(Some)
@@ -36,7 +34,7 @@ C-z = "rotate_selection_contents_backward"
 "##;
 
     fs::write(
-        crate::GENERATED_DIR.join("helix-config.toml"),
+        crate::action::GENERATED_DIR.join("helix-config.toml"),
         format!(
             r#"theme = "catppuccin_mocha"
 [editor.gutters]

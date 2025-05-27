@@ -1,16 +1,21 @@
 //! Ensure that each markdown file corresponds to the expected structure
 
-use std::{fmt::Display, path::PathBuf};
+use std::{
+    collections::HashSet,
+    fmt::Display,
+    fs,
+    path::{Path, PathBuf},
+};
 
 use markdown::{
     ParseOptions,
     mdast::{Code, Heading, InlineCode, List, Node, Text},
     unist::{Point, Position},
 };
-use miette::{Context, NamedSource, SourceSpan};
+use miette::{Context, NamedSource, SourceSpan, miette};
 use rayon::{iter::ParallelIterator, slice::ParallelSlice};
 
-use crate::helix_parse_keys::{self, KeyEvent};
+use crate::helix_keys::KeyEvent;
 
 /// The current element that we are expecting.
 #[derive(Clone)]
@@ -96,6 +101,7 @@ enum Expecting {
 }
 
 impl Expecting {
+    /// Change the position of this node
     pub fn with_pos(self, pos: Position) -> Self {
         match self {
             Self::Title(_) => Self::Title(pos),
@@ -111,7 +117,13 @@ impl Expecting {
         }
     }
 
-    pub fn expected(self) -> Option<(Position, &'static str)> {
+    /// Check that we have found all expected nodes.
+    ///
+    /// # Returns
+    ///
+    /// - `Some` if we are still expecting something.
+    /// - `None` if `self == Self::Finished`
+    pub fn check(self) -> Option<(Position, &'static str)> {
         Some(match self {
             Self::Title(pos) => (pos, "expected heading: `# ...`"),
             Self::TitleBefore(pos) => (pos, "expected heading `## Before`"),
@@ -126,6 +138,9 @@ impl Expecting {
         })
     }
 
+    /// The requirement for the current node that we are expecting has been met.
+    ///
+    /// Expect the next node.
     pub fn next(&mut self, pos: Position) {
         *self = match self {
             Self::Title(_) => Self::TitleBefore(pos),
@@ -137,17 +152,21 @@ impl Expecting {
             Self::TitleCommand(_) => Self::CodeCommand(pos),
             Self::CodeCommand(_) => Self::ListCommand(pos),
             Self::ListCommand(_) => Self::Finished,
-            Self::Finished => unreachable!(),
+            Self::Finished => Self::Finished,
         };
     }
 }
 
+/// The markdown file does not conform to the structure that we are expecting.
 #[derive(thiserror::Error, Debug, miette::Diagnostic)]
 #[error("Invalid structure of example, please see README.md for correct structure")]
 struct InvalidStructure {
+    /// Contents of the markdown file
     #[source_code]
     src: NamedSource<String>,
+    /// Why the error has occured
     reason: String,
+    /// Region in the markdown file that the error points out
     #[label("{reason}")]
     span: SourceSpan,
 }
@@ -155,8 +174,6 @@ struct InvalidStructure {
 /// Represents a single Helix Golf example
 #[derive(Default, Debug)]
 pub struct Example {
-    /// Location of the file
-    pub path: PathBuf,
     /// Level 1 heading
     pub title: String,
     /// Contents of the file before the `command`
@@ -216,7 +233,32 @@ Sleep 2s"#,
 }
 
 impl Example {
-    pub fn try_new(path: PathBuf, markdown: String) -> miette::Result<Self> {
+    /// Reads multiple examples from the `root` directory.
+    ///
+    /// If `filter` is empty, parse all of the examples from `root`.
+    /// Otherwise, parses all of the examples in `filter` that are available in the `root`.
+    pub fn parse_all(root: &Path, filter: HashSet<String>) -> miette::Result<Vec<Self>> {
+        fs::read_dir(root)
+            .map_err(|err| miette!("failed to read {root}: {err}", root = root.display()))?
+            .flatten()
+            .filter(|entry| {
+                entry.file_type().is_ok_and(|ft| ft.is_file())
+                    && (entry.path().file_stem().unwrap().to_str().unwrap() != "SUMMARY")
+                    && if filter.is_empty() {
+                        true
+                    } else {
+                        filter.contains(entry.path().file_stem().unwrap().to_str().unwrap())
+                    }
+            })
+            .map(|entry| Example::parse(entry.path()))
+            .collect()
+    }
+
+    /// Try to parse path of the given markdown file
+    pub fn parse(path: PathBuf) -> miette::Result<Self> {
+        let markdown = fs::read_to_string(&path)
+            .map_err(|err| miette!("failed to read path {}: {err}", path.display()))?;
+
         let file_name = path
             .file_name()
             .and_then(|name| name.to_str())
@@ -245,20 +287,17 @@ impl Example {
                             offset: 0,
                         },
                     }),
-                    Example {
-                        path: path.clone(),
-                        ..Default::default()
-                    },
+                    Example::default(),
                 ),
                 |(mut expecting, mut example), child| {
-                    let err = |pos: &Option<Position>| {
+                    let expected_err_with_pos = |pos: &Option<Position>| {
                         // NOTE: These `clone`s are cheap.
                         // `Position` could be `Copy` as it is just 6 `usize`,
                         // but unfortunately `miette` does not `#[derive(Copy)] Position`
                         expecting
                             .clone()
                             .with_pos(pos.clone().unwrap())
-                            .expected()
+                            .check()
                             .map(|(pos, s)| (pos, s.to_string()))
                             .unwrap()
                     };
@@ -272,7 +311,7 @@ impl Example {
                             {
                                 let Some(Node::Text(Text { position, value })) = children.first()
                                 else {
-                                    return Err(err(position));
+                                    return Err(expected_err_with_pos(position));
                                 };
 
                                 example.title = value.to_string();
@@ -289,11 +328,11 @@ impl Example {
                             {
                                 let Some(Node::Text(Text { value, position })) = children.first()
                                 else {
-                                    return Err(err(position));
+                                    return Err(expected_err_with_pos(position));
                                 };
 
                                 if value != "Before" {
-                                    return Err(err(position));
+                                    return Err(expected_err_with_pos(position));
                                 }
 
                                 expecting.next(position.clone().unwrap());
@@ -318,11 +357,11 @@ impl Example {
                             {
                                 let Some(Node::Text(Text { value, position })) = children.first()
                                 else {
-                                    return Err(err(position));
+                                    return Err(expected_err_with_pos(position));
                                 };
 
                                 if value != "After" {
-                                    return Err(err(position));
+                                    return Err(expected_err_with_pos(position));
                                 }
 
                                 expecting.next(position.clone().unwrap());
@@ -351,11 +390,11 @@ impl Example {
                             {
                                 let Some(Node::Text(Text { value, position })) = children.first()
                                 else {
-                                    return Err(err(position));
+                                    return Err(expected_err_with_pos(position));
                                 };
 
                                 if value != "Preview" {
-                                    return Err(err(position));
+                                    return Err(expected_err_with_pos(position));
                                 }
 
                                 expecting.next(position.clone().unwrap());
@@ -370,11 +409,11 @@ impl Example {
                             {
                                 let Some(Node::Text(Text { value, position })) = children.first()
                                 else {
-                                    return Err(err(position));
+                                    return Err(expected_err_with_pos(position));
                                 };
 
                                 if value != "Command" {
-                                    return Err(err(position));
+                                    return Err(expected_err_with_pos(position));
                                 }
 
                                 expecting.next(position.clone().unwrap());
@@ -409,16 +448,20 @@ impl Example {
 
                                 let position = position.clone().unwrap();
 
-                                if let Some(line) = value.lines().find(|line| line.len() > 30) {
+                                const MAX_LINE_LEN: usize = 60;
+
+                                if let Some(line) =
+                                    value.lines().find(|line| line.len() > MAX_LINE_LEN)
+                                {
                                     return Err((
                                         position,
                                         format!(
                                             "Each line in code block \
                                          after `## Command` \
-                                         should be at most 30 \
+                                         should be at most {MAX_LINE_LEN} \
                                          characters long.\nThis helps with readability \
                                          on smaller devices.\n\n\
-                                         This line is more than 30 \
+                                         This line is more than {MAX_LINE_LEN} \
                                          characters long (is {} chars long):\n  \
                                            {line}\n\nBreak it with two newlines.",
                                             line.len()
@@ -482,13 +525,13 @@ impl Example {
                                         position.clone().unwrap(),
                                         format!(
                                             "Code blocks in the explanation list \
-                                            must concatenate to the command.\n\n\
-                                        if you concatenate all code blocks in \
-                                        the list, you will get:\n  \
-                                          {concatenated_inline_code}\n\n\
-                                        but we expected to see contents of the \
-                                        code block after `## Command`:\n  \
-                                          {}",
+                                             must concatenate to the command.\n\n\
+                                             if you concatenate all code blocks in \
+                                             the list, you will get:\n  \
+                                               {concatenated_inline_code}\n\n\
+                                             but we expected to see contents of the \
+                                             code block after `## Command`:\n  \
+                                               {}",
                                             example.command
                                         ),
                                     ));
@@ -503,7 +546,7 @@ impl Example {
                 },
             )
             .and_then(|(expecting, example)| {
-                if let Some((pos, why)) = expecting.expected() {
+                if let Some((pos, why)) = expecting.check() {
                     Err((pos, why.to_string()))
                 } else {
                     Ok(Ok(example))
@@ -518,7 +561,7 @@ impl Example {
                 }
             })?
             .and_then(|mut example| {
-                example.key_events = helix_parse_keys::parse_keys(&example.command, file_stem)?;
+                example.key_events = crate::helix_keys::parse_keys(&example.command, file_stem)?;
                 example.name = file_stem.to_string();
                 Ok(example)
             })

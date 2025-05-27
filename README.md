@@ -40,34 +40,26 @@ Hello world!
 1. `!` write the exclamation mark
 ````
 
-Notes:
+### Validate
 
-- The concatenation of code blocks in the description list needs to be the same as the
-  code block after `## Command`.
+Verify that your example is correctly structured by running the following command in the project root (requires [installing Rust](https://www.rust-lang.org/tools/install)):
 
-  So in here:
+```sh
+cargo validate
+```
 
-  ````md
-  1. `~` changes case of the selection
-  1. Go to end and enter insert mode:
+### Generate Demos
 
-     ```
-     A
-     ```
-
-  1. `!` write the exclamation mark
-  ````
-
-  Concatenating all of the code blocks gives `~A!`, which is the same as the code block after `## Command` title.
-
-- The exact structure is enforced by the script `cargo generate_demos`, which will provide a friendly error message if the structure is wrong.
-
-### Demos
-
-Generate the demo for each example by running the following command in the project root directory:
+The demos for each example are generated and tested by running the following command, which requires [installing VHS](https://github.com/charmbracelet/vhs?tab=readme-ov-file#installation):
 
 ```sh
 cargo generate_demos
 ```
 
-You will need to install [vhs](https://github.com/charmbracelet/vhs) for it to work.
+### Running locally
+
+You can build the website by running the following command:
+
+```sh
+mdbook serve
+```
