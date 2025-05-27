@@ -1,5 +1,7 @@
 # Enumerate and Align
 
+Add a new field `rank` to each object, it starts at 1 and increments and align fields to look neat.
+
 ## Before
 
 ```js

@@ -1,5 +1,7 @@
 # snake_case to camelCase
 
+Rename all fields to be camelCase.
+
 ## Before
 
 ```js

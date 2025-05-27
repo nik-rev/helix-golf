@@ -1,5 +1,7 @@
 # Function into Class
 
+Convert 3 functions into a class with 3 methods.
+
 ## Before
 
 ```py

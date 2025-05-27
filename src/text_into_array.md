@@ -1,5 +1,7 @@
 # Text into Array
 
+Join newline-separated data into an array of strings
+
 ## Before
 
 ```

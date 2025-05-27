@@ -1,8 +1,6 @@
-Refatoring examples for the Helix Editor
-
-_For all examples, we'll assume that your cursor is on the very first character._
-
 # Object into Array
+
+Convert object into a list of tuples representing the field and the value.
 
 ## Before
 
