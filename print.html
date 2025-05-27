@@ -170,7 +170,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="snake_case-to-camelcase"><a class="header" href="#snake_case-to-camelcase">snake_case to camelCase</a></h1>
+                        <pre><code>                    # snake_case to camelCase
+</code></pre>
 <h2 id="before"><a class="header" href="#before">Before</a></h2>
 <pre><code class="language-js">const user_profile = {
   first_name: "John",
@@ -203,11 +204,14 @@
   },
 };
 </code></pre>
-<h2 id="preview"><a class="header" href="#preview">Preview</a></h2>
-<video controls>
-  <source src="generated/snake_case_to_camel_case.mp4" type="video/mp4">
-</video>
-<h2 id="command"><a class="header" href="#command">Command</a></h2>
+<pre><code>                    ## Preview
+
+                    &lt;video controls&gt;
+                      &lt;source src="generated/snake_case_to_camel_case.mp4" type="video/mp4"&gt;
+                    &lt;/video&gt;
+
+                    ## Command
+</code></pre>
 <pre><code>%s_&lt;enter&gt;5)&lt;alt-,&gt;d~
 </code></pre>
 <ol>
@@ -218,7 +222,8 @@
 <li><code>d</code> deletes the selections</li>
 <li><code>~</code> toggles the case</li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="text-into-array"><a class="header" href="#text-into-array">Text into Array</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><pre><code>                    # Text into Array
+</code></pre>
 <h2 id="before-1"><a class="header" href="#before-1">Before</a></h2>
 <pre><code>Hello
 This
@@ -228,11 +233,14 @@ Helix
 <h2 id="after-1"><a class="header" href="#after-1">After</a></h2>
 <pre><code class="language-js">["Hello", "This", "Is", "Helix"]
 </code></pre>
-<h2 id="preview-1"><a class="header" href="#preview-1">Preview</a></h2>
-<video controls>
-  <source src="generated/text_into_array.mp4" type="video/mp4">
-</video>
-<h2 id="command-1"><a class="header" href="#command-1">Command</a></h2>
+<pre><code>                    ## Preview
+
+                    &lt;video controls&gt;
+                      &lt;source src="generated/text_into_array.mp4" type="video/mp4"&gt;
+                    &lt;/video&gt;
+
+                    ## Command
+</code></pre>
 <pre><code>%&lt;alt-s&gt;ms"&lt;alt-J&gt;i,&lt;esc&gt;xms[
 </code></pre>
 <ol>
@@ -242,7 +250,8 @@ Helix
 <li><code>&lt;alt-J&gt;i,</code> join lines inside selection, select the inserted space, and insert ","s</li>
 <li><code>&lt;esc&gt;xms[</code> surround by "[]"</li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="enumerate-and-align"><a class="header" href="#enumerate-and-align">Enumerate and Align</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><pre><code>                    # Enumerate and Align
+</code></pre>
 <h2 id="before-2"><a class="header" href="#before-2">Before</a></h2>
 <pre><code class="language-js">[
   { word: "a", count: 2565 },
@@ -273,11 +282,14 @@ Helix
   { rank: 11, word: "for",  count:  630 },
 ];
 </code></pre>
-<h2 id="preview-2"><a class="header" href="#preview-2">Preview</a></h2>
-<video controls>
-  <source src="generated/enumerate_and_align.mp4" type="video/mp4">
-</video>
-<h2 id="command-2"><a class="header" href="#command-2">Command</a></h2>
+<pre><code>                    ## Preview
+
+                    &lt;video controls&gt;
+                      &lt;source src="generated/enumerate_and_align.mp4" type="video/mp4"&gt;
+                    &lt;/video&gt;
+
+                    ## Command
+</code></pre>
 <pre><code>%s\{&lt;enter&gt;a rank: &lt;ctrl-r&gt;
 
 #,&lt;esc&gt;%s |\d+&lt;enter&gt;&amp;
@@ -295,7 +307,8 @@ Helix
 <li>Input <code> |\d+</code> which is a regular expression selecting all spaces and numbers, then hit <code>&lt;enter&gt;</code></li>
 <li><code>&amp;</code> to align all selections in columns, note that the numbers get right-aligned</li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><p>Refatoring examples for the Helix Editor</p>
+<div style="break-before: page; page-break-before: always;"></div><pre><code>                    Refatoring examples for the Helix Editor
+</code></pre>
 <p><em>For all examples, we'll assume that your cursor is on the very first character.</em></p>
 <h1 id="object-into-array"><a class="header" href="#object-into-array">Object into Array</a></h1>
 <h2 id="before-3"><a class="header" href="#before-3">Before</a></h2>
@@ -312,11 +325,14 @@ Helix
   ["delta", "6f44f0"],
 ];
 </code></pre>
-<h2 id="preview-3"><a class="header" href="#preview-3">Preview</a></h2>
-<video controls>
-  <source src="generated/object_into_array.mp4" type="video/mp4">
-</video>
-<h2 id="command-3"><a class="header" href="#command-3">Command</a></h2>
+<pre><code>                    ## Preview
+
+                    &lt;video controls&gt;
+                      &lt;source src="generated/object_into_array.mp4" type="video/mp4"&gt;
+                    &lt;/video&gt;
+
+                    ## Command
+</code></pre>
 <pre><code>jmr{[mi[s:&lt;enter&gt;
 
 r,t,;vgsms[lems"
@@ -336,7 +352,8 @@ r,t,;vgsms[lems"
 <li><code>e</code> selects until the end of each word. Since we start at the first character and select until the end, this selects the entire word.</li>
 <li><code>ms"</code> surrounds each word with double quotes to make strings</li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="csv-to-sql"><a class="header" href="#csv-to-sql">CSV to SQL</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><pre><code>                    # CSV to SQL
+</code></pre>
 <h2 id="before-4"><a class="header" href="#before-4">Before</a></h2>
 <pre><code class="language-csv">id 1,Item 1,cost 1,location 1
 id 2,Item 2,cost 2,location 2
@@ -347,11 +364,14 @@ id 10,Item 10,cost 10,location 10
 INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 2','Item 2','cost 2','Location 2');
 INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10','Item 10','cost 10','Location 10');
 </code></pre>
-<h2 id="preview-4"><a class="header" href="#preview-4">Preview</a></h2>
-<video controls>
-  <source src="generated/csv_to_sql.mp4" type="video/mp4">
-</video>
-<h2 id="command-4"><a class="header" href="#command-4">Command</a></h2>
+<pre><code>                    ## Preview
+
+                    &lt;video controls&gt;
+                      &lt;source src="generated/csv_to_sql.mp4" type="video/mp4"&gt;
+                    &lt;/video&gt;
+
+                    ## Command
+</code></pre>
 <pre><code>%&lt;alt-s&gt;"yys\d&lt;enter&gt;
 
 dhhbms
@@ -452,7 +472,8 @@ AVALUES (&lt;esc&gt;
 <p><code>~</code> toggles the case for each "l" into "L"</p>
 </li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="function-into-class"><a class="header" href="#function-into-class">Function into Class</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><pre><code>                    # Function into Class
+</code></pre>
 <h2 id="before-5"><a class="header" href="#before-5">Before</a></h2>
 <pre><code class="language-py">def calculate_area(length, width):
     result = length * width
@@ -480,11 +501,14 @@ def calculate_volume(length, width, height):
     def get_volume(len, wid, hei):
         return len * wid * hei
 </code></pre>
-<h2 id="preview-5"><a class="header" href="#preview-5">Preview</a></h2>
-<video controls>
-  <source src="generated/function_into_class.mp4" type="video/mp4">
-</video>
-<h2 id="command-5"><a class="header" href="#command-5">Command</a></h2>
+<pre><code>                    ## Preview
+
+                    &lt;video controls&gt;
+                      &lt;source src="generated/function_into_class.mp4" type="video/mp4"&gt;
+                    &lt;/video&gt;
+
+                    ## Command
+</code></pre>
 <pre><code>%scalculate&lt;enter&gt;cget&lt;esc&gt;
 
 O@staticmethod
