@@ -1,4 +1,10 @@
-theme = "catppuccin_mocha"
+theme = "base16_transparent"
+            
+[editor]
+true-color = false
+auto-format = false
+lsp.enable = false
+            
 [editor.gutters]
 layout = ["line-numbers", "spacer"]
 

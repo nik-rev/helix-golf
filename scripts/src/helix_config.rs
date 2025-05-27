@@ -36,7 +36,13 @@ C-z = "rotate_selection_contents_backward"
     fs::write(
         crate::action::GENERATED_DIR.join("helix-config.toml"),
         format!(
-            r#"theme = "catppuccin_mocha"
+            r#"theme = "base16_transparent"
+            
+[editor]
+true-color = false
+auto-format = false
+lsp.enable = false
+            
 [editor.gutters]
 layout = ["line-numbers", "spacer"]
 
