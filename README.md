@@ -60,8 +60,6 @@ Notes:
 
   Concatenating all of the code blocks gives `~A!`, which is the same as the code block after `## Command` title.
 
-- It'll also need to be included in [`SUMMARY.md`](src/SUMMARY.md)
-
 - The exact structure is enforced by the script `cargo generate_demos`, which will provide a friendly error message if the structure is wrong.
 
 ### Demos

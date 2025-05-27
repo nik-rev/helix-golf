@@ -155,6 +155,8 @@ struct InvalidStructure {
 pub struct Example {
     /// Location of the file
     pub path: PathBuf,
+    /// Level 1 heading
+    pub title: String,
     /// Contents of the file before the `command`
     pub before: String,
     /// Contents of the file after the `command`
@@ -212,10 +214,12 @@ impl Example {
                                 position,
                             }) = child
                             {
-                                let Some(Node::Text(Text { position, .. })) = children.first()
+                                let Some(Node::Text(Text { position, value })) = children.first()
                                 else {
                                     return Err(err(position));
                                 };
+
+                                example.title = value.to_string();
 
                                 expecting.next(position.clone().unwrap());
                             }

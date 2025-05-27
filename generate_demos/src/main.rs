@@ -1,3 +1,4 @@
+use std::fmt::Write as _;
 use std::{
     collections::HashSet,
     fs,
@@ -18,13 +19,17 @@ mod structure;
 
 static ROOT_DIR: LazyLock<PathBuf> =
     LazyLock::new(|| Path::new(env!("CARGO_MANIFEST_DIR")).join("..").join("src"));
+
 static GENERATED_DIR: LazyLock<PathBuf> = LazyLock::new(|| ROOT_DIR.join("generated"));
 
 pub fn main() -> miette::Result<()> {
     // User can pass examples which will be ignored
     let examples_to_ignore: HashSet<_> = std::env::args().skip(1).collect();
 
-    let examples = fs::read_dir(&*ROOT_DIR)
+    fs::remove_dir_all(&*GENERATED_DIR).unwrap();
+    fs::create_dir_all(&*GENERATED_DIR).unwrap();
+
+    let mut examples = fs::read_dir(&*ROOT_DIR)
         .map_err(|err| miette!("failed to read {}: {err}", ROOT_DIR.display()))?
         .flatten()
         .filter(|entry| {
@@ -38,8 +43,31 @@ pub fn main() -> miette::Result<()> {
         })
         .map(|entry| Example::try_new(entry.path(), entry.path().pipe(fs::read_to_string).unwrap()))
         .collect::<Result<Vec<Example>, _>>()?;
+    examples.sort_unstable_by(|a, b| lexical_sort::natural_lexical_cmp(&a.title, &b.title));
 
     helix_config::generate(&GENERATED_DIR.join("helix-config.toml"));
+
+    examples
+        .iter()
+        .fold(
+            String::from(
+                "<!-- @generated This file is generated. Do not edit it by hand. -->
+
+# Summary\n\n",
+            ),
+            |mut summary_md, example| {
+                writeln!(
+                    &mut summary_md,
+                    "- [{}]({})",
+                    example.title,
+                    example.path.file_name().unwrap().to_string_lossy()
+                )
+                .unwrap();
+                summary_md
+            },
+        )
+        .pipe(|summary_md| fs::write(ROOT_DIR.join("SUMMARY.md"), summary_md))
+        .unwrap();
 
     examples
         .par_iter()
