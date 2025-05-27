@@ -8,6 +8,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - uses: actions/setup-go@v3
+
+      - name: Install VHS
+        run: |
+          sudo apt-get update
+          sudo apt-get install ffmpeg
+          sudo snap install ttyd --classic
+          go install github.com/charmbracelet/vhs@v0.9
+
+      - run: cargo generate-demos
 
       - name: Setup mdBook
         uses: peaceiris/actions-mdbook@v2

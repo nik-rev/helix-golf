@@ -11,5 +11,5 @@ site-url = "https://nik-rev.github.io/helix-golf"
 git-repository-url = "https://github.com/nik-rev/helix-golf"
 edit-url-template = "https://github.com/nik-rev/helix-golf/edit/main/{path}"
 
-[preprocessor.golf]
+[preprocessor.helix-golf]
 command = "cargo run --manifest-path scripts/Cargo.toml -- mdbook-preprocessor"
