@@ -37,7 +37,11 @@ jobs:
         with:
           mdbook-version: "0.4.50"
 
-      - run: mdbook build
+      - run: |
+          mdbook build
+          # mdbook does not copy the generated folder on its own
+          # because all references to it are injected via the preprocessor
+          cp -r ./src/generated ./book
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
