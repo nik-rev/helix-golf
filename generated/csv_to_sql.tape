@@ -3,12 +3,12 @@ Require hx
 
 Hide
 Set Shell "bash"
-Set FontSize 36
+Set FontSize 20
 Set Width 1200
 Set Height 600
 Set Padding 0
 Set Theme "Catppuccin Mocha"
-Set TypingSpeed 350ms
+Set TypingSpeed 150ms
 Type "hx -c src/generated/helix-config.toml src/generated/csv_to_sql.sql"
 Enter
 Show
