@@ -325,19 +325,22 @@ impl Example {
                                 value, position, ..
                             }) = child
                             {
-                                dbg!(value);
-                                let x: Vec<_> = value.chars().collect();
-                                #[allow(clippy::nonminimal_bool)]
-                                if x.par_windows(3).any(|windows| {
-                                    if let [a, b, c] = windows {
-                                        // 1 newline is not allowed
-                                        (*a != '\n' && *b == '\n' && *c != '\n')
+                                #[allow(clippy::nonminimal_bool, reason = "more readable")]
+                                if value
+                                    .chars()
+                                    .collect::<Vec<_>>()
+                                    .par_windows(3)
+                                    .any(|windows| {
+                                        if let [a, b, c] = windows {
+                                            // 1 newline is not allowed
+                                            (*a != '\n' && *b == '\n' && *c != '\n')
                                             // 3 newlines is not allowed
                                             || (*a == '\n' && *b == '\n' && *c == '\n')
-                                    } else {
-                                        unreachable!()
-                                    }
-                                }) {
+                                        } else {
+                                            unreachable!()
+                                        }
+                                    })
+                                {
                                     return Err((
                                         position.clone().unwrap(),
                                         "For each line break, use exactly 2 newlines".to_string(),

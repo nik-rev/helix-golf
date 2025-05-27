@@ -44,35 +44,41 @@ pub fn main() -> miette::Result<()> {
     examples
         .par_iter()
         .try_for_each(|example| -> Result<(), miette::Error> {
-            let stem = example
+            let example_name = example
                 .path
                 .file_stem()
                 .and_then(|stem| stem.to_str())
                 .with_context(|| format!("{} is missing stem", example.path.display()))?;
 
-            println!("Rendering example `{stem}`...");
+            println!("Rendering example `{example_name}`...");
             let contents = key_event_display::generate_tape_file_from_helix_key_sequence(
                 &example.command,
-                stem,
+                example_name,
                 &example.ext,
             )?;
 
-            let tape = GENERATED_DIR.join(format!("{stem}.tape"));
+            let tape = GENERATED_DIR.join(format!("{example_name}.tape"));
 
+            // Create .tape file
+            //
+            // These are the commands inputted into `vhs`
             fs::write(&tape, contents).map_err(|err| {
                 miette!(
-                    "Failed to create `{}` for example {stem}: {err}",
+                    "Failed to create `{}` for example `{example_name}`: {err}",
                     tape.display()
                 )
             })?;
 
+            // First, this file has contents Before
+            //
+            // as we modify it, it'll have the contents that we expect from After
             fs::write(
-                GENERATED_DIR.join(format!("{stem}.{}", example.ext)),
+                GENERATED_DIR.join(format!("{example_name}.{}", example.ext)),
                 &example.before,
             )
             .map_err(|err| {
                 miette!(
-                    "Failed to create `Before` for example {stem}.{}: {err}",
+                    "Failed to create `Before` for example `{example_name}.{}`: {err}",
                     example.ext
                 )
             })?;
@@ -82,6 +88,7 @@ pub fn main() -> miette::Result<()> {
                 "You need to install `vhs` in order to generate the demos"
             );
 
+            // Generate the .mp4 file preview
             Command::new("vhs")
                 .arg(tape)
                 .spawn()
@@ -89,10 +96,22 @@ pub fn main() -> miette::Result<()> {
                 .wait()
                 .into_diagnostic()?;
 
-            println!("Finished rendering `{stem}`.");
+            println!("Finished rendering `{example_name}`.");
+
+            pretty_assertions::assert_str_eq!(
+                fs::read_to_string(GENERATED_DIR.join(format!("{example_name}.{}", example.ext)))
+                    .unwrap()
+                    .trim(),
+                example.after.trim(),
+                "example {example_name}"
+            );
+
+            println!("Example {example_name} has been successfully tested.");
 
             Ok(())
         })?;
+
+    println!("All examples have been successfully rendered and tested.");
 
     Ok(())
 }

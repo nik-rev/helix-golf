@@ -4,33 +4,33 @@
 
 ```py
 def calculate_area(length, width):
-	result = length * width
-	return result
+    result = length * width
+    return result
 
 def calculate_perimiter(length, width):
-	result = 2 * (length + width)
-	return result
+    result = 2 * (length + width)
+    return result
 
 def calculate_volume(length, width, height):
-	result = length * width * height
-	return result
+    result = length * width * height
+    return result
 ```
 
 ## After
 
 ```py
 class Calculator
-	@staticmethod
-	def get_area(len, wid):
-		return len * wid
+    @staticmethod
+    def get_area(len, wid):
+        return len * wid
 
-	@staticmethod
-	def get_perimiter(len, wid):
-		return 2 * (len + wid)
+    @staticmethod
+    def get_perimiter(len, wid):
+        return 2 * (len + wid)
 
-	@staticmethod
-	def get_volume(len, wid, hei):
-		return len * wid * hei
+    @staticmethod
+    def get_volume(len, wid, hei):
+        return len * wid * hei
 ```
 
 ## Preview
