@@ -36,9 +36,18 @@ Hello world!
 1. `!` write the exclamation mark
 ````
 
+### Dependencies
+
+- [Helix](https://docs.helix-editor.com/install.html)
+- [Rust](https://www.rust-lang.org/tools/install)
+- [mdbook](https://rust-lang.github.io/mdBook/guide/installation.html)
+- [VHS](https://github.com/charmbracelet/vhs?tab=readme-ov-file#installation) to generate the demo files and test examples for correctness
+
+If you don't want to install them but still would like to contribute, you can edit the markdown example files in the [`src/`](src/) folder, send a pull request and the GitHub CI will automatically test your PR.
+
 ### Validate
 
-Verify that your example is correctly structured by running the following command in the project root (requires [installing Rust](https://www.rust-lang.org/tools/install)):
+Verify that your example is correctly structured by running the following command in the project root:
 
 ```sh
 cargo validate
@@ -46,7 +55,7 @@ cargo validate
 
 ### Generate Demos
 
-The demos for each example are generated and tested by running the following command, which requires [installing VHS](https://github.com/charmbracelet/vhs?tab=readme-ov-file#installation):
+The demos for each example are generated and tested by running the following command:
 
 ```sh
 cargo generate-demos
@@ -54,8 +63,10 @@ cargo generate-demos
 
 ### Running locally
 
-You can build the website by running the following command:
+You can run the website locally by running:
 
 ```sh
 mdbook serve
 ```
+
+It will be available on `http://localhost:3000`.

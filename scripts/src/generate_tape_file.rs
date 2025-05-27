@@ -12,12 +12,12 @@ impl Display for Example {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(
             f,
-            r#"Output src/generated/{name}.mp4
+            r##"Output src/generated/{name}.mp4
 Require hx
 
 Hide
 Set Shell "bash"
-Set FontSize 18
+Set FontSize 36
 Set Width 1200
 Set Height 600
 Set Padding 0
@@ -26,7 +26,7 @@ Set TypingSpeed 350ms
 Type "hx -c src/generated/helix-config.toml src/generated/{name}.{ext}"
 Enter
 Show
-"#,
+"##,
             name = self.name,
             ext = self.ext
         )?;
