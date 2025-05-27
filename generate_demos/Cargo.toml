@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 bitflags = "2.9.1"
+indicatif = { version = "0.17.11", features = ["rayon"] }
 lexical-sort = "0.3.1"
 markdown = "1.0.0"
 miette = { version = "7.6.0", features = ["fancy"] }

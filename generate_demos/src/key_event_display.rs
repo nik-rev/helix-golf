@@ -2,56 +2,12 @@
 //!
 //! [vhs]: https://github.com/charmbracelet/vhs
 
-use std::fmt::{Display, Write as _};
-
-use tap::Pipe;
+use std::fmt::Display;
 
 use crate::{
     helix_config,
-    helix_parse_keys::{self, KeyCode, KeyEvent, KeyModifiers, MediaKeyCode, ModifierKeyCode},
+    helix_parse_keys::{KeyCode, KeyEvent, KeyModifiers, MediaKeyCode, ModifierKeyCode},
 };
-
-pub fn generate_tape_file_from_helix_key_sequence(
-    helix_key_sequence: &str,
-    name: &str,
-    extension: &str,
-) -> miette::Result<String> {
-    helix_parse_keys::parse_keys(helix_key_sequence, name)?
-        .into_iter()
-        .fold(String::new(), |mut f, key| {
-            writeln!(f, "{key}").expect("write not to fail");
-            f
-        })
-        .pipe(|keys| {
-            format!(
-                r#"Output src/generated/{name}.mp4
-Require hx
-
-Hide
-    Set Shell "bash"
-    Set FontSize 18
-    Set Width 1200
-    Set Height 600
-    Set Padding 0
-    Set Theme "Catppuccin Mocha"
-    Set TypingSpeed 400ms
-    Type "hx -c src/generated/helix-config.toml src/generated/{name}.{extension}" Enter
-Show
-
-{keys}
-
-Escape
-Type ","
-
-Hide
-    Type ":w!" Enter
-Show
-
-Sleep 2s"#
-            )
-        })
-        .pipe(Ok)
-}
 
 impl Display for KeyEvent {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

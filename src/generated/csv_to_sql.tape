@@ -2,14 +2,15 @@ Output src/generated/csv_to_sql.mp4
 Require hx
 
 Hide
-    Set Shell "bash"
-    Set FontSize 18
-    Set Width 1200
-    Set Height 600
-    Set Padding 0
-    Set Theme "Catppuccin Mocha"
-    Set TypingSpeed 400ms
-    Type "hx -c src/generated/helix-config.toml src/generated/csv_to_sql.sql" Enter
+Set Shell "bash"
+Set FontSize 18
+Set Width 1200
+Set Height 600
+Set Padding 0
+Set Theme "Catppuccin Mocha"
+Set TypingSpeed 400ms
+Type "hx -c src/generated/helix-config.toml src/generated/csv_to_sql.sql"
+Enter
 Show
 
 Type "%"
@@ -97,12 +98,12 @@ Type "l"
 Type ";"
 Type "~"
 
-
 Escape
 Type ","
 
 Hide
-    Type ":w!" Enter
+Type ":w!"
+Enter
 Show
 
 Sleep 2s

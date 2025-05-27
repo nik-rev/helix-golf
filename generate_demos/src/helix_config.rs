@@ -17,7 +17,7 @@ pub fn remap(mods: &str, ch: char) -> Option<String> {
     .pipe(Some)
 }
 
-pub fn generate(path: &Path) {
+pub fn generate() {
     let remapped = r##"
 # Original: Alt + s
 C-s = "split_selection_on_newline"
@@ -36,7 +36,7 @@ C-z = "rotate_selection_contents_backward"
 "##;
 
     fs::write(
-        path,
+        crate::GENERATED_DIR.join("helix-config.toml"),
         format!(
             r#"theme = "catppuccin_mocha"
 [editor.gutters]

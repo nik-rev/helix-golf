@@ -1,4 +1,6 @@
 use std::fmt::Write as _;
+use std::io::{BufRead, BufReader};
+use std::process::Stdio;
 use std::{
     collections::HashSet,
     fs,
@@ -7,7 +9,8 @@ use std::{
     sync::LazyLock,
 };
 
-use miette::{Context, IntoDiagnostic, ensure, miette};
+// use indicatif::{MultiProgress, ProgressStyle};
+use miette::{IntoDiagnostic, ensure, miette};
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use structure::Example;
 use tap::Pipe as _;
@@ -23,6 +26,13 @@ static ROOT_DIR: LazyLock<PathBuf> =
 static GENERATED_DIR: LazyLock<PathBuf> = LazyLock::new(|| ROOT_DIR.join("generated"));
 
 pub fn main() -> miette::Result<()> {
+    // let progress_bars = MultiProgress::new();
+    // let styles = ProgressStyle::with_template(
+    //     "[{elapsed_precise}] {bar:40.cyan/blue} {pos:>7}/{len:7} {msg}",
+    // )
+    // .unwrap()
+    // .progress_chars("##-");
+
     // User can pass examples which will be ignored
     let examples_to_ignore: HashSet<_> = std::env::args().skip(1).collect();
 
@@ -43,9 +53,11 @@ pub fn main() -> miette::Result<()> {
         })
         .map(|entry| Example::try_new(entry.path(), entry.path().pipe(fs::read_to_string).unwrap()))
         .collect::<Result<Vec<Example>, _>>()?;
-    examples.sort_unstable_by(|a, b| lexical_sort::natural_lexical_cmp(&a.title, &b.title));
 
-    helix_config::generate(&GENERATED_DIR.join("helix-config.toml"));
+    // We want to sort examples from smallest command count to largest
+    examples.sort_unstable_by(|a, b| a.key_events.len().cmp(&b.key_events.len()));
+
+    helix_config::generate();
 
     examples
         .iter()
@@ -72,43 +84,31 @@ pub fn main() -> miette::Result<()> {
     examples
         .par_iter()
         .try_for_each(|example| -> Result<(), miette::Error> {
-            let example_name = example
-                .path
-                .file_stem()
-                .and_then(|stem| stem.to_str())
-                .with_context(|| format!("{} is missing stem", example.path.display()))?;
+            let name = &example.name;
+            let ext = &example.ext;
 
-            println!("Rendering example `{example_name}`...");
-            let contents = key_event_display::generate_tape_file_from_helix_key_sequence(
-                &example.command,
-                example_name,
-                &example.ext,
-            )?;
+            println!("Rendering example `{name}`...");
+            let contents = example.to_string();
 
-            let tape = GENERATED_DIR.join(format!("{example_name}.tape"));
+            let tape = GENERATED_DIR.join(format!("{name}.tape"));
 
             // Create .tape file
             //
             // These are the commands inputted into `vhs`
             fs::write(&tape, contents).map_err(|err| {
                 miette!(
-                    "Failed to create `{}` for example `{example_name}`: {err}",
+                    "Failed to create `{}` for example `{name}`: {err}",
                     tape.display()
                 )
             })?;
 
+            let modification_file = GENERATED_DIR.join(format!("{name}.{ext}"));
+
             // First, this file has contents Before
             //
             // as we modify it, it'll have the contents that we expect from After
-            fs::write(
-                GENERATED_DIR.join(format!("{example_name}.{}", example.ext)),
-                &example.before,
-            )
-            .map_err(|err| {
-                miette!(
-                    "Failed to create `Before` for example `{example_name}.{}`: {err}",
-                    example.ext
-                )
+            fs::write(&modification_file, &example.before).map_err(|err| {
+                miette!("Failed to create `Before` for example `{name}.{ext}`: {err}",)
             })?;
 
             ensure!(
@@ -117,24 +117,33 @@ pub fn main() -> miette::Result<()> {
             );
 
             // Generate the .mp4 file preview
-            Command::new("vhs")
+            let mut command = Command::new("vhs")
                 .arg(tape)
+                .stderr(Stdio::null())
+                .stdout(Stdio::piped())
                 .spawn()
-                .into_diagnostic()?
-                .wait()
                 .into_diagnostic()?;
 
-            println!("Finished rendering `{example_name}`.");
+            let stdout = command.stdout.take().unwrap();
+            let reader = BufReader::new(stdout);
 
+            for line in reader.lines() {
+                println!("{line:?}");
+            }
+
+            println!("Finished rendering `{name}`.");
+
+            // Assert that the `## Before` code block is equal to the `## After` code block
+            // once we have executed the commands in `## Commands` code block.
             pretty_assertions::assert_str_eq!(
-                fs::read_to_string(GENERATED_DIR.join(format!("{example_name}.{}", example.ext)))
-                    .unwrap()
+                fs::read_to_string(modification_file)
+                    .expect("read to not fail, because file exists as we have just written to it earlier")
                     .trim(),
                 example.after.trim(),
-                "example {example_name}"
+                "example {name}"
             );
 
-            println!("Example {example_name} has been successfully tested.");
+            println!("Example {name} has been successfully tested.");
 
             Ok(())
         })?;

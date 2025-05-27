@@ -19,7 +19,7 @@ def calculate_volume(length, width, height):
 ## After
 
 ```py
-class Calculator
+class Calculator:
     @staticmethod
     def get_area(len, wid):
         return len * wid

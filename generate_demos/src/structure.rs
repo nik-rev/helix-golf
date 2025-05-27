@@ -1,14 +1,16 @@
 //! Ensure that each markdown file corresponds to the expected structure
 
-use std::path::PathBuf;
+use std::{fmt::Display, path::PathBuf};
 
 use markdown::{
     ParseOptions,
     mdast::{Code, Heading, InlineCode, List, Node, Text},
     unist::{Point, Position},
 };
-use miette::{NamedSource, SourceSpan};
+use miette::{Context, NamedSource, SourceSpan};
 use rayon::{iter::ParallelIterator, slice::ParallelSlice};
+
+use crate::helix_parse_keys::{self, KeyEvent};
 
 /// The current element that we are expecting.
 #[derive(Clone)]
@@ -163,13 +165,67 @@ pub struct Example {
     pub after: String,
     /// Command to go from `before` -> `after`
     pub command: String,
+    /// Parsed `command` into a structure that can be converted into a `.tape` file
+    pub key_events: Vec<KeyEvent>,
+    /// Name of the example. This is name of the file, excluding the `.md` extension.
+    pub name: String,
     /// Extension of the file
     pub ext: String,
 }
 
+impl Display for Example {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        writeln!(
+            f,
+            r#"Output src/generated/{name}.mp4
+Require hx
+
+Hide
+Set Shell "bash"
+Set FontSize 18
+Set Width 1200
+Set Height 600
+Set Padding 0
+Set Theme "Catppuccin Mocha"
+Set TypingSpeed 400ms
+Type "hx -c src/generated/helix-config.toml src/generated/{name}.{ext}"
+Enter
+Show
+"#,
+            name = self.name,
+            ext = self.ext
+        )?;
+
+        for key in &self.key_events {
+            writeln!(f, "{key}")?;
+        }
+
+        f.write_str(
+            r#"
+Escape
+Type ","
+
+Hide
+Type ":w!"
+Enter
+Show
+
+Sleep 2s"#,
+        )
+    }
+}
+
 impl Example {
     pub fn try_new(path: PathBuf, markdown: String) -> miette::Result<Self> {
-        let file_name = path.file_name().unwrap().to_str().unwrap();
+        let file_name = path
+            .file_name()
+            .and_then(|name| name.to_str())
+            .context("filename cannot end with `..`")?;
+        let file_stem = path
+            .file_stem()
+            .and_then(|stem| stem.to_str())
+            .context("missing filename")?;
+
         markdown::to_mdast(&markdown, &ParseOptions::default())
             .unwrap()
             .children()
@@ -461,5 +517,10 @@ impl Example {
                     reason: info.to_string(),
                 }
             })?
+            .and_then(|mut example| {
+                example.key_events = helix_parse_keys::parse_keys(&example.command, file_stem)?;
+                example.name = file_stem.to_string();
+                Ok(example)
+            })
     }
 }
