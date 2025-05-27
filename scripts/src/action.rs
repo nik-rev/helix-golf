@@ -228,15 +228,15 @@ impl Preprocessor for GolfPreprocessor {
 
                     chapter.content = format!(
                         r#"
-                        {before}
+{before}
 
-                        ## Preview
+## Preview
 
-                        <video controls>
-                          <source src="generated/{name}.mp4" type="video/mp4">
-                        </video>
+<video controls>
+  <source src="generated/{name}.mp4" type="video/mp4">
+</video>
 
-                        {after}"#
+{after}"#
                     );
                 }
             }
