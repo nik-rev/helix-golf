@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Object into Array - Helix Golf</title>
+        <title>CSV to SQL - Helix Golf</title>
 
 
         <!-- Custom HTML head -->
@@ -143,7 +143,7 @@
                         <a href="https://github.com/nik-rev/helix-golf" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/nik-rev/helix-golf/edit/main/src/object_into_array.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/nik-rev/helix-golf/edit/main/src/csv_to_sql.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -172,46 +172,121 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p>Refatoring examples for the Helix Editor</p>
-<p><em>For all examples, we'll assume that your cursor is on the very first character.</em></p>
-<h1 id="object-into-array"><a class="header" href="#object-into-array">Object into Array</a></h1>
+                        <h1 id="csv-to-sql"><a class="header" href="#csv-to-sql">CSV to SQL</a></h1>
 <h2 id="before"><a class="header" href="#before">Before</a></h2>
-<pre><code class="language-js">const palette = {
-  apricot: "#f47868",
-  lightning: "#ffcd1c",
-  delta: "6f44f0",
-};
+<pre><code class="language-csv">id 1,Item 1,cost 1,location 1
+id 2,Item 2,cost 2,location 2
+id 10,Item 10,cost 10,location 10
 </code></pre>
 <h2 id="after"><a class="header" href="#after">After</a></h2>
-<pre><code class="language-js">const palette = [
-  ["apricot", "#f47868"],
-  ["lightning", "#ffcd1c"],
-  ["delta", "6f44f0"],
-];
+<pre><code class="language-sql">INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 1','Item 1','cost 1','Location 1');
+INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 2','Item 2','cost 2','Location 2');
+INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10','Item 10','cost 10','Location 10');
 </code></pre>
 <h2 id="preview"><a class="header" href="#preview">Preview</a></h2>
 <video controls>
-  <source src="generated/object_into_array.mp4" type="video/mp4">
+  <source src="generated/csv_to_sql.mp4" type="video/mp4">
 </video>
 <h2 id="command"><a class="header" href="#command">Command</a></h2>
-<pre><code>jmr{[mi[s:&lt;enter&gt;
+<pre><code>%&lt;alt-s&gt;"yys\d&lt;enter&gt;
 
-r,t,;vgsms[lems"
+dhhbms
+
+``x_ms(IINSERT INTO `
+
+database&lt;esc&gt;
+
+a.`table&lt;esc&gt;la &lt;esc&gt;
+
+AVALUES (&lt;esc&gt;
+
+"yPS,&lt;enter&gt;ms'A;&lt;esc&gt;Fl;~
 </code></pre>
 <ol>
-<li>Go to the line below with <code>j</code>, this is because we need to be inside of the object for the next step.</li>
-<li><code>mr{[</code> replaces the nearest pair of curly braces "{" with square brackets "["</li>
-<li><code>mi[</code> selects inside the entire array</li>
-<li>Use <code>s</code> to enter select mode, which searches inside our selection and creates sub-selections based on a pattern</li>
-<li>Input <code>:</code> and then hit <code>&lt;enter&gt;</code>, which will place a cursor on every ":" creating many single-width selections</li>
-<li><code>r,</code> replaces each selection with a ",". Essentially we've replaced each colon with a comma</li>
-<li><code>t,</code> moves the cursor on each line to the ending comma</li>
-<li><code>;</code> collapses the selection around each cursor into a single selection</li>
-<li><code>vgs</code> selects each line excluding the final comma</li>
-<li><code>ms[</code> surrounds each individual selection with "[" to turn it into an array. We're almost done here. We just need to transform the first item in each sub-array into a string.</li>
-<li><code>l</code> moves 1 character forward, replacing the selection with just a 1-width selection</li>
-<li><code>e</code> selects until the end of each word. Since we start at the first character and select until the end, this selects the entire word.</li>
-<li><code>ms"</code> surrounds each word with double quotes to make strings</li>
+<li>
+<p><code>%</code> selects full file</p>
+</li>
+<li>
+<p><code>&lt;alt-s&gt;</code> split selection into multiple selections on newlines</p>
+</li>
+<li>
+<p><code>"yy</code> yanks the selections into "y" register. We'll need it for later</p>
+</li>
+<li>
+<p><code>s</code> and then input the pattern <code>\d</code> then <code>&lt;enter&gt;</code> which creates a selection on all digits</p>
+</li>
+<li>
+<p><code>d</code> deletes the selections. Essentially we've removed all the digits.</p>
+</li>
+<li>
+<p><code>hh</code> goes backwards 2 chars, important to make sure we are at the end of each word</p>
+</li>
+<li>
+<p>Use <code>b</code> to select till the beginning of every word, which also nicely selects all the words that there are</p>
+</li>
+<li>
+<p><code>ms`</code> surrounds each word with a backtick</p>
+</li>
+<li>
+<p><code>`</code> switches all characters to lowercase</p>
+</li>
+<li>
+<p><code>x</code> selects each line then use <code>_</code> to trim the trailing whitespace</p>
+</li>
+<li>
+<p><code>ms(</code> surrounds each line with parentheses</p>
+</li>
+<li>
+<p><code>I</code> goes into insert mode at the beginning of each line</p>
+</li>
+<li>
+<p>Type the following:</p>
+<pre><code>INSERT INTO `database
+</code></pre>
+</li>
+<li>
+<p><code>&lt;esc&gt;</code> goes back to normal mode</p>
+</li>
+<li>
+<p><code>a</code> to go into insert mode after the backtick then type:</p>
+<pre><code>.`table
+</code></pre>
+</li>
+<li>
+<p><code>&lt;esc&gt;</code> goes back into normal mode, then <code>la</code> to enter insert mode just before the opening parentheses</p>
+</li>
+<li>
+<p>Add a space <code> </code> then <code>&lt;esc&gt;</code> to go back into normal mode again</p>
+</li>
+<li>
+<p><code>A</code> goes into insert mode at the end of each line, now type:</p>
+<pre><code>VALUES (
+</code></pre>
+</li>
+<li>
+<p>Hit <code>&lt;esc&gt;</code> to leave insert mode. Your cursor will be at the closing parenthesis.</p>
+</li>
+<li>
+<p><code>"yP</code> pastes our previously yanked items from the "y" register</p>
+</li>
+<li>
+<p><code>S,&lt;enter&gt;</code> splits current selection into multiple selections on each comma</p>
+</li>
+<li>
+<p><code>ms'</code> surrounds each item with a single quote</p>
+</li>
+<li>
+<p><code>A;</code> adds a semicolon at the end of each line</p>
+</li>
+<li>
+<p><code>&lt;esc&gt;</code> goes back to normal mode and <code>Fl</code> to place your cursor on the lowercase "l" of each "location"</p>
+</li>
+<li>
+<p><code>;</code> collapses each selection into a single-width selection</p>
+</li>
+<li>
+<p><code>~</code> toggles the case for each "l" into "L"</p>
+</li>
 </ol>
 
                     </main>
@@ -219,7 +294,7 @@ r,t,;vgsms[lems"
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
 
-                            <a rel="next prefetch" href="csv_to_sql.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="enumerate_and_align.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -230,7 +305,7 @@ r,t,;vgsms[lems"
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
 
-                    <a rel="next prefetch" href="csv_to_sql.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="enumerate_and_align.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
