@@ -1,3 +1,3 @@
 [alias]
-generate_demos = "run --manifest-path ./scripts/Cargo.toml -- generate-demos"
+generate-demos = "run --manifest-path ./scripts/Cargo.toml -- generate-demos"
 validate = "run --manifest-path ./scripts/Cargo.toml -- validate"

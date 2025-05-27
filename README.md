@@ -49,7 +49,7 @@ cargo validate
 The demos for each example are generated and tested by running the following command, which requires [installing VHS](https://github.com/charmbracelet/vhs?tab=readme-ov-file#installation):
 
 ```sh
-cargo generate_demos
+cargo generate-demos
 ```
 
 ### Running locally
