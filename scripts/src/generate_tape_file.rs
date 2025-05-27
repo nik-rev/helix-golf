@@ -25,6 +25,8 @@ Set Theme "Catppuccin Mocha"
 Set TypingSpeed 150ms
 Type "hx -c src/generated/helix-config.toml src/generated/{name}.{ext}"
 Enter
+Type ":cd src/generated"
+Enter
 Show
 "##,
             name = self.name,

@@ -6,7 +6,11 @@ Helix is _very_ good at editing text and this website has examples of how I've r
 
 ## Contributing
 
-To add a new example create `src/your_example.md` using the following template.
+If you want to suggest a new example, make an issue and I'll add it.
+
+---
+
+If you want to add a new example yourself: create `src/your_example.md` using the following template.
 
 ````md
 # Title
@@ -59,6 +63,12 @@ The demos for each example are generated and tested by running the following com
 
 ```sh
 cargo generate-demos
+```
+
+You can specify exactly which demos to generate:
+
+```sh
+cargo generate-demos export_from_mod
 ```
 
 ### Running locally

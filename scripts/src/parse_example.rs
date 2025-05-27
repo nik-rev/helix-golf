@@ -289,7 +289,11 @@ impl Example {
                                 value, position, ..
                             }) = child
                             {
-                                example.before = value.to_string();
+                                example.before = if value.ends_with('\n') {
+                                    value.to_string()
+                                } else {
+                                    format!("{value}\n")
+                                };
 
                                 expecting.next(position.clone().unwrap());
                             }
