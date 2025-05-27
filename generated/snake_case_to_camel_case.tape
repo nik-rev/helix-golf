@@ -11,6 +11,8 @@ Set Theme "Catppuccin Mocha"
 Set TypingSpeed 150ms
 Type "hx -c src/generated/helix-config.toml src/generated/snake_case_to_camel_case.js"
 Enter
+Type ":cd src/generated"
+Enter
 Show
 
 Type "%"
