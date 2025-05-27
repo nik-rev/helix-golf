@@ -39,11 +39,9 @@ impl Action {
     pub const ERROR: &str = "Expected either `validate`, `generate-demos` or `mdbook-preprocessor` as the first argument";
 
     pub fn execute(self) -> miette::Result<()> {
-        let examples = validate()?;
-
         match self {
-            Action::Validate => Ok(()),
-            Action::GenerateDemos => generate_demos(examples),
+            Action::Validate => validate().map(drop),
+            Action::GenerateDemos => validate()?.pipe(generate_demos),
             Action::MdBookPreprocessor => mdbook_preprocessor(),
         }
     }
@@ -218,32 +216,29 @@ impl Preprocessor for GolfPreprocessor {
     ) -> mdbook::errors::Result<mdbook::book::Book> {
         book.for_each_mut(|book_item| {
             if let mdbook::BookItem::Chapter(chapter) = book_item {
-                let name = chapter
-                    .path
-                    .as_ref()
-                    .and_then(|path| path.file_stem())
-                    .and_then(|stem| stem.to_str())
-                    .expect("if filename did not have a stem, `validate` step would fail");
+                if let (Some(name), Some(start)) = (
+                    chapter
+                        .path
+                        .as_ref()
+                        .and_then(|path| path.file_stem())
+                        .and_then(|stem| stem.to_str()),
+                    chapter.content.find("## Command"),
+                ) {
+                    let (before, after) = chapter.content.split_at(start);
 
-                let start = chapter.content.find("## Command").expect(
-                    "The `validate` step would have errored if the \
-                    chapter did not include a `## Command` heading",
-                );
+                    chapter.content = format!(
+                        r#"
+                        {before}
 
-                let (before, after) = chapter.content.split_at(start);
+                        ## Preview
 
-                chapter.content = format!(
-                    r#"
-{before}
+                        <video controls>
+                          <source src="generated/{name}.mp4" type="video/mp4">
+                        </video>
 
-## Preview
-
-<video controls>
-  <source src="generated/{name}.mp4" type="video/mp4">
-</video>
-
-{after}"#
-                );
+                        {after}"#
+                    );
+                }
             }
         });
 
