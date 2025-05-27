@@ -62,14 +62,6 @@ enum Expecting {
     /// ```
     /// ````
     CodeAfter(Position),
-    /// H2 with contents "Preview"
-    ///
-    /// Contains the actual video inside.
-    ///
-    /// ```md
-    /// ## Preview
-    /// ```
-    TitlePreview(Position),
     /// H2 with contents "Command"
     ///
     /// ```md
@@ -109,7 +101,6 @@ impl Expecting {
             Self::CodeBefore(_) => Self::CodeBefore(pos),
             Self::TitleAfter(_) => Self::TitleAfter(pos),
             Self::CodeAfter(_) => Self::CodeAfter(pos),
-            Self::TitlePreview(_) => Self::TitlePreview(pos),
             Self::TitleCommand(_) => Self::TitleCommand(pos),
             Self::CodeCommand(_) => Self::CodeCommand(pos),
             Self::ListCommand(_) => Self::ListCommand(pos),
@@ -130,7 +121,6 @@ impl Expecting {
             Self::CodeBefore(pos) => (pos, "expected code block after `## Before`"),
             Self::TitleAfter(pos) => (pos, "expected heading `## After`"),
             Self::CodeAfter(pos) => (pos, "expected code block after `## After`"),
-            Self::TitlePreview(pos) => (pos, "expected heading `## Preview`"),
             Self::TitleCommand(pos) => (pos, "expected heading `## Title`"),
             Self::CodeCommand(pos) => (pos, "expected code block after `## Title`"),
             Self::ListCommand(pos) => (pos, "expected numbered list describing each command"),
@@ -147,8 +137,7 @@ impl Expecting {
             Self::TitleBefore(_) => Self::CodeBefore(pos),
             Self::CodeBefore(_) => Self::TitleAfter(pos),
             Self::TitleAfter(_) => Self::CodeAfter(pos),
-            Self::CodeAfter(_) => Self::TitlePreview(pos),
-            Self::TitlePreview(_) => Self::TitleCommand(pos),
+            Self::CodeAfter(_) => Self::TitleCommand(pos),
             Self::TitleCommand(_) => Self::CodeCommand(pos),
             Self::CodeCommand(_) => Self::ListCommand(pos),
             Self::ListCommand(_) => Self::Finished,
@@ -377,25 +366,6 @@ impl Example {
                             {
                                 example.after = value.to_string();
                                 example.ext = lang.clone().unwrap_or_default();
-
-                                expecting.next(position.clone().unwrap());
-                            }
-                        }
-                        Expecting::TitlePreview(_) => {
-                            if let Node::Heading(Heading {
-                                children,
-                                depth: 2,
-                                position,
-                            }) = child
-                            {
-                                let Some(Node::Text(Text { value, position })) = children.first()
-                                else {
-                                    return Err(expected_err_with_pos(position));
-                                };
-
-                                if value != "Preview" {
-                                    return Err(expected_err_with_pos(position));
-                                }
 
                                 expecting.next(position.clone().unwrap());
                             }

@@ -33,12 +33,6 @@ class Calculator:
         return len * wid * hei
 ```
 
-## Preview
-
-<video controls>
-  <source src="generated/function_into_class.mp4" type="video/mp4">
-</video>
-
 ## Command
 
 ```

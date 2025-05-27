@@ -15,12 +15,6 @@ Helix
 ["Hello", "This", "Is", "Helix"];
 ```
 
-## Preview
-
-<video controls>
-  <source src="generated/text_into_array.mp4" type="video/mp4">
-</video>
-
 ## Command
 
 ```
