@@ -8,7 +8,7 @@ use std::{
 
 use markdown::{
     ParseOptions,
-    mdast::{Code, Heading, InlineCode, List, Node, Text},
+    mdast::{Code, Emphasis, Heading, InlineCode, Link, List, Node, Paragraph, Strong, Text},
     unist::{Point, Position},
 };
 use miette::{Context, NamedSource, SourceSpan, miette};
@@ -176,6 +176,8 @@ pub struct Example {
     pub name: String,
     /// Extension of the file
     pub ext: String,
+    /// Description of the example
+    pub description: Option<String>,
 }
 
 impl Example {
@@ -188,12 +190,19 @@ impl Example {
             .map_err(|err| miette!("failed to read {root}: {err}", root = root.display()))?
             .flatten()
             .filter(|entry| {
+                let stem = entry.path();
+                let stem = stem.file_stem().and_then(|stem| stem.to_str()).unwrap();
+
                 entry.file_type().is_ok_and(|ft| ft.is_file())
-                    && (entry.path().file_stem().unwrap().to_str().unwrap() != "SUMMARY")
+                    // fully ignore these files, as we auto-generate them in a special way
+                    && stem != "SUMMARY"
+                    && stem != "all_previews"
                     && if filter.is_empty() {
+                        // include everything if no filter specified
                         true
                     } else {
-                        filter.contains(entry.path().file_stem().unwrap().to_str().unwrap())
+                        // include only the stuff specified in the filter
+                        filter.contains(stem)
                     }
             })
             .map(|entry| Example::parse(entry.path()))
@@ -282,6 +291,39 @@ impl Example {
                                 }
 
                                 expecting.next(position.clone().unwrap());
+                            // optional description
+                            // After the `# Title` of the example
+                            // but before the `## Before`
+                            } else if let Node::Paragraph(Paragraph { children, .. }) = child {
+                                fn inline_mdast_into_md_string(children: &[Node]) -> String {
+                                    children.iter().fold(String::new(), |md, child| {
+                                        let new = match child {
+                                            Node::Emphasis(Emphasis { children, .. }) => {
+                                                format!(
+                                                    "_{}_",
+                                                    inline_mdast_into_md_string(children)
+                                                )
+                                            }
+                                            Node::Link(Link { children, url, .. }) => format!(
+                                                "[{}]({url})",
+                                                inline_mdast_into_md_string(children)
+                                            ),
+                                            Node::Text(Text { value, .. }) => value.to_string(),
+                                            Node::InlineCode(InlineCode { value, .. }) => {
+                                                format!("`{value}`")
+                                            }
+                                            Node::Strong(Strong { children, .. }) => format!(
+                                                "**{}**",
+                                                inline_mdast_into_md_string(children)
+                                            ),
+                                            // no modifications
+                                            _ => return md,
+                                        };
+                                        format!("{md}{new}")
+                                    })
+                                }
+
+                                example.description = Some(inline_mdast_into_md_string(children));
                             }
                         }
                         Expecting::CodeBefore(_) => {
