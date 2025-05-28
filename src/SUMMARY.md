@@ -2,7 +2,7 @@
 
 # Summary
 
-- [Helix Golf - Demos for All Examples](all_previews.md)
+- [Helix Golf - Introduction](introduction.md)
 - [snake_case to camelCase](snake_case_to_camel_case.md)
 - [Text into Array](text_into_array.md)
 - [Export from Rust Module](export_from_mod.md)

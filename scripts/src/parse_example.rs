@@ -196,7 +196,7 @@ impl Example {
                 entry.file_type().is_ok_and(|ft| ft.is_file())
                     // fully ignore these files, as we auto-generate them in a special way
                     && stem != "SUMMARY"
-                    && stem != "all_previews"
+                    && stem != "introduction"
                     && if filter.is_empty() {
                         // include everything if no filter specified
                         true

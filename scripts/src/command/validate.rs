@@ -37,20 +37,29 @@ pub fn validate() -> miette::Result<Vec<Example>> {
                 String::from(
                     "<!-- @generated This file is generated. Do not edit it by hand. -->
 
-# Helix Golf\n\n",
+# Helix Golf
+
+Helix Golf is a collection of refactoring examples using the [Helix Editor](https://github.com/helix-editor/helix), a next generation terminal IDE written in Rust.
+
+Each example is described in-depth, is tested using the latest version of Helix and has a satisfying video demo. Examples aren't just made-up, all of them were created from real situations.
+
+In many cases the Helix Golf examples are much easier to understand _and come up with on your own_ than similar Vim Golf examples, while often being shorter due to multiple cursors being a core editing primitive in Helix.
+
+This makes Helix a perfect swiss army knife text-editor for developers and anyone who seeks to become faster at editing text. It's not just about becoming more productive - it's also really fun!
+
+# Demo for each example\n\n",
                 ),
                 String::from(
                     "<!-- @generated This file is generated. Do not edit it by hand. -->
 
 # Summary
 
-- [Helix Golf - Demos for All Examples](all_previews.md)\n",
+- [Helix Golf - Introduction](introduction.md)\n",
                 ),
             ),
             |(mut all_previews, mut summary_md), example| -> miette::Result<(String, String)> {
                 let name = &example.name;
                 let title = &example.title;
-                let description = &example.description.as_ref().map(|desc| format!("{desc}\n\n")).unwrap_or_default();
 
                 writeln!(&mut summary_md, "- [{title}]({name}.md)",).map_err(|err| {
                     miette!("failed to add line to SUMMARY.md for example `{name}`: {err}",)
@@ -58,7 +67,14 @@ pub fn validate() -> miette::Result<Vec<Example>> {
 
                 writeln!(
                     &mut all_previews,
-                    "## {title}\n\n{description}<video autoplay controls loop><source src=\"generated/{name}.mp4\"></video>",
+                    "## [{title}]({name}.md)
+
+{desc}
+
+<video autoplay controls loop>
+  <source src=\"generated/{name}.mp4\">
+</video>\n\n",
+                    desc = example.description.as_deref().unwrap_or("")
                 )
                 .map_err(|err| {
                     miette!("failed to add line to SUMMARY.md for example `{name}`: {err}",)
@@ -70,9 +86,9 @@ pub fn validate() -> miette::Result<Vec<Example>> {
         .pipe(|(all_previews, summary_md)| {
             fs::write(ROOT_DIR.join("SUMMARY.md"), summary_md)
                 .map_err(|err| miette!("Failed to write `SUMMARY.md`: {err}"))
-                .map(|_| fs::write(ROOT_DIR.join("all_previews.md"), all_previews))
+                .map(|_| fs::write(ROOT_DIR.join("introduction.md"), all_previews))
         })?
-        .map_err(|err| miette!("Failed to write `all_previews.md`: {err}"))?;
+        .map_err(|err| miette!("Failed to write `introduction.md`: {err}"))?;
 
     Ok(examples)
 }
