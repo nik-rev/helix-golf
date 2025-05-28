@@ -28,7 +28,7 @@ pub enum Command {
     /// 2. Generate demo `.mp4` files
     /// 3. Test that each demo is correct
     GenerateDemos,
-    /// Transforms each markdown file
+    /// Transforms each markdown file, adding a `<video>` element for demo
     MdBookPreprocessor,
 }
 
