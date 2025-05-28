@@ -21,11 +21,11 @@ pub fn validate() -> miette::Result<Vec<Example>> {
         .collect();
 
     fs::create_dir_all(&*GENERATED_DIR)
-        .and_then(|_| fs::remove_dir_all(&*GENERATED_DIR))
-        .and_then(|_| fs::create_dir_all(&*GENERATED_DIR))
+        .and_then(|()| fs::remove_dir_all(&*GENERATED_DIR))
+        .and_then(|()| fs::create_dir_all(&*GENERATED_DIR))
         .map_err(|err| miette!("failed cleaning the generated directory: {err}"))?;
 
-    let mut examples = Example::parse_all(&ROOT_DIR, only_include_these_examples)?;
+    let mut examples = Example::parse_all(&ROOT_DIR, &only_include_these_examples)?;
 
     // We want to sort examples from smallest command count to largest
     examples.sort_by(|a, b| a.key_events.len().cmp(&b.key_events.len()));
@@ -86,7 +86,7 @@ This makes Helix a perfect swiss army knife text-editor for developers and anyon
         .pipe(|(all_previews, summary_md)| {
             fs::write(ROOT_DIR.join("SUMMARY.md"), summary_md)
                 .map_err(|err| miette!("Failed to write `SUMMARY.md`: {err}"))
-                .map(|_| fs::write(ROOT_DIR.join("introduction.md"), all_previews))
+                .map(|()| fs::write(ROOT_DIR.join("introduction.md"), all_previews))
         })?
         .map_err(|err| miette!("Failed to write `introduction.md`: {err}"))?;
 

@@ -420,17 +420,12 @@ pub fn parse_keys(keys_str: &str, filename: &str) -> Result<Vec<KeyEvent>, Parse
         } else if c != "<" {
             keys.push(if c == "-" { keys::MINUS } else { c });
             i += end_i;
+        } else if let Some(end_i) = s.find('>') {
+            keys.push(&s[1..end_i]);
+            i += end_i + 1;
         } else {
-            match s.find('>') {
-                Some(end_i) => {
-                    keys.push(&s[1..end_i]);
-                    i += end_i + 1;
-                }
-                None => {
-                    keys.push(keys::LESS_THAN);
-                    i += end_i;
-                }
-            }
+            keys.push(keys::LESS_THAN);
+            i += end_i;
         }
     }
     keys_res.and_then(|keys| {
@@ -522,20 +517,19 @@ impl KeyEvent {
             // missing a code).
             _ if s.ends_with('-') && tokens.last().is_some_and(|t| t.is_empty()) => {
                 if s == "-" {
-                    return Ok(KeyEvent {
+                    return Ok(Self {
                         code: KeyCode::Char('-'),
                         modifiers: KeyModifiers::empty(),
                     });
-                } else {
-                    let suggestion = format!("{}-{}", s.trim_end_matches('-'), keys::MINUS);
-                    return Err(ParseKeysError {
-                        src: NamedSource::new(filename, keys_str.to_string()),
-                        error: format!(
-                            "Key '-' cannot be used with modifiers, use '{suggestion}' instead"
-                        ),
-                        span: (0, 4).into(),
-                    });
                 }
+                let suggestion = format!("{}-{}", s.trim_end_matches('-'), keys::MINUS);
+                return Err(ParseKeysError {
+                    src: NamedSource::new(filename, keys_str.to_string()),
+                    error: format!(
+                        "Key '-' cannot be used with modifiers, use '{suggestion}' instead"
+                    ),
+                    span: (0, 4).into(),
+                });
             }
             invalid => {
                 return Err(ParseKeysError {
@@ -607,7 +601,7 @@ impl KeyEvent {
             _ => (),
         }
 
-        Ok(KeyEvent { code, modifiers })
+        Ok(Self { code, modifiers })
     }
 }
 
@@ -661,19 +655,19 @@ pub enum KeyCode {
     Null,
     /// Escape key.
     Esc,
-    /// CapsLock key.
+    /// `CapsLock` key.
     CapsLock,
-    /// ScrollLock key.
+    /// `ScrollLock` key.
     ScrollLock,
-    /// NumLock key.
+    /// `NumLock` key.
     NumLock,
-    /// PrintScreen key.
+    /// `PrintScreen` key.
     PrintScreen,
     /// Pause key.
     Pause,
     /// Menu key.
     Menu,
-    /// KeypadBegin key.
+    /// `KeypadBegin` key.
     KeypadBegin,
     /// A media key.
     Media(MediaKeyCode),
@@ -757,59 +751,59 @@ bitflags! {
     }
 }
 
-pub(crate) mod keys {
-    pub(crate) const BACKSPACE: &str = "backspace";
+pub mod keys {
+    pub const BACKSPACE: &str = "backspace";
     // NOTE: In Helix, it is "ret"
-    pub(crate) const ENTER: &str = "enter";
-    pub(crate) const LEFT: &str = "left";
-    pub(crate) const RIGHT: &str = "right";
-    pub(crate) const UP: &str = "up";
-    pub(crate) const DOWN: &str = "down";
-    pub(crate) const HOME: &str = "home";
-    pub(crate) const END: &str = "end";
-    pub(crate) const PAGEUP: &str = "pageup";
-    pub(crate) const PAGEDOWN: &str = "pagedown";
-    pub(crate) const TAB: &str = "tab";
-    pub(crate) const DELETE: &str = "del";
-    pub(crate) const INSERT: &str = "ins";
-    pub(crate) const NULL: &str = "null";
-    pub(crate) const ESC: &str = "esc";
-    pub(crate) const SPACE: &str = "space";
-    pub(crate) const MINUS: &str = "minus";
-    pub(crate) const LESS_THAN: &str = "lt";
-    pub(crate) const GREATER_THAN: &str = "gt";
-    pub(crate) const CAPS_LOCK: &str = "capslock";
-    pub(crate) const SCROLL_LOCK: &str = "scrolllock";
-    pub(crate) const NUM_LOCK: &str = "numlock";
-    pub(crate) const PRINT_SCREEN: &str = "printscreen";
-    pub(crate) const PAUSE: &str = "pause";
-    pub(crate) const MENU: &str = "menu";
-    pub(crate) const KEYPAD_BEGIN: &str = "keypadbegin";
-    pub(crate) const PLAY: &str = "play";
-    pub(crate) const PAUSE_MEDIA: &str = "pausemedia";
-    pub(crate) const PLAY_PAUSE: &str = "playpause";
-    pub(crate) const REVERSE: &str = "reverse";
-    pub(crate) const STOP: &str = "stop";
-    pub(crate) const FAST_FORWARD: &str = "fastforward";
-    pub(crate) const REWIND: &str = "rewind";
-    pub(crate) const TRACK_NEXT: &str = "tracknext";
-    pub(crate) const TRACK_PREVIOUS: &str = "trackprevious";
-    pub(crate) const RECORD: &str = "record";
-    pub(crate) const LOWER_VOLUME: &str = "lowervolume";
-    pub(crate) const RAISE_VOLUME: &str = "raisevolume";
-    pub(crate) const MUTE_VOLUME: &str = "mutevolume";
-    pub(crate) const LEFT_SHIFT: &str = "leftshift";
-    pub(crate) const LEFT_CONTROL: &str = "leftcontrol";
-    pub(crate) const LEFT_ALT: &str = "leftalt";
-    pub(crate) const LEFT_SUPER: &str = "leftsuper";
-    pub(crate) const LEFT_HYPER: &str = "lefthyper";
-    pub(crate) const LEFT_META: &str = "leftmeta";
-    pub(crate) const RIGHT_SHIFT: &str = "rightshift";
-    pub(crate) const RIGHT_CONTROL: &str = "rightcontrol";
-    pub(crate) const RIGHT_ALT: &str = "rightalt";
-    pub(crate) const RIGHT_SUPER: &str = "rightsuper";
-    pub(crate) const RIGHT_HYPER: &str = "righthyper";
-    pub(crate) const RIGHT_META: &str = "rightmeta";
-    pub(crate) const ISO_LEVEL_3_SHIFT: &str = "isolevel3shift";
-    pub(crate) const ISO_LEVEL_5_SHIFT: &str = "isolevel5shift";
+    pub const ENTER: &str = "enter";
+    pub const LEFT: &str = "left";
+    pub const RIGHT: &str = "right";
+    pub const UP: &str = "up";
+    pub const DOWN: &str = "down";
+    pub const HOME: &str = "home";
+    pub const END: &str = "end";
+    pub const PAGEUP: &str = "pageup";
+    pub const PAGEDOWN: &str = "pagedown";
+    pub const TAB: &str = "tab";
+    pub const DELETE: &str = "del";
+    pub const INSERT: &str = "ins";
+    pub const NULL: &str = "null";
+    pub const ESC: &str = "esc";
+    pub const SPACE: &str = "space";
+    pub const MINUS: &str = "minus";
+    pub const LESS_THAN: &str = "lt";
+    pub const GREATER_THAN: &str = "gt";
+    pub const CAPS_LOCK: &str = "capslock";
+    pub const SCROLL_LOCK: &str = "scrolllock";
+    pub const NUM_LOCK: &str = "numlock";
+    pub const PRINT_SCREEN: &str = "printscreen";
+    pub const PAUSE: &str = "pause";
+    pub const MENU: &str = "menu";
+    pub const KEYPAD_BEGIN: &str = "keypadbegin";
+    pub const PLAY: &str = "play";
+    pub const PAUSE_MEDIA: &str = "pausemedia";
+    pub const PLAY_PAUSE: &str = "playpause";
+    pub const REVERSE: &str = "reverse";
+    pub const STOP: &str = "stop";
+    pub const FAST_FORWARD: &str = "fastforward";
+    pub const REWIND: &str = "rewind";
+    pub const TRACK_NEXT: &str = "tracknext";
+    pub const TRACK_PREVIOUS: &str = "trackprevious";
+    pub const RECORD: &str = "record";
+    pub const LOWER_VOLUME: &str = "lowervolume";
+    pub const RAISE_VOLUME: &str = "raisevolume";
+    pub const MUTE_VOLUME: &str = "mutevolume";
+    pub const LEFT_SHIFT: &str = "leftshift";
+    pub const LEFT_CONTROL: &str = "leftcontrol";
+    pub const LEFT_ALT: &str = "leftalt";
+    pub const LEFT_SUPER: &str = "leftsuper";
+    pub const LEFT_HYPER: &str = "lefthyper";
+    pub const LEFT_META: &str = "leftmeta";
+    pub const RIGHT_SHIFT: &str = "rightshift";
+    pub const RIGHT_CONTROL: &str = "rightcontrol";
+    pub const RIGHT_ALT: &str = "rightalt";
+    pub const RIGHT_SUPER: &str = "rightsuper";
+    pub const RIGHT_HYPER: &str = "righthyper";
+    pub const RIGHT_META: &str = "rightmeta";
+    pub const ISO_LEVEL_3_SHIFT: &str = "isolevel3shift";
+    pub const ISO_LEVEL_5_SHIFT: &str = "isolevel5shift";
 }

@@ -1,18 +1,14 @@
 //! Ensure that each markdown file corresponds to the expected structure
 
-use std::{
-    collections::HashSet,
-    fs,
-    path::{Path, PathBuf},
-};
+use std::{collections::HashSet, fs, path::Path};
 
 use markdown::{
     ParseOptions,
     mdast::{Code, Emphasis, Heading, InlineCode, Link, List, Node, Paragraph, Strong, Text},
     unist::{Point, Position},
 };
-use miette::{Context, NamedSource, SourceSpan, miette};
-use rayon::{iter::ParallelIterator, slice::ParallelSlice};
+use miette::{Context as _, NamedSource, SourceSpan, miette};
+use rayon::{iter::ParallelIterator as _, slice::ParallelSlice as _};
 
 use crate::parse_helix_keys::KeyEvent;
 
@@ -20,7 +16,7 @@ use crate::parse_helix_keys::KeyEvent;
 #[derive(Clone)]
 enum Expecting {
     /// Title of the example.
-    /// The snake_case conversion of it needs to be equal to the file name.
+    /// The `snake_case` conversion of it needs to be equal to the file name.
     ///
     /// If file is called `text_into_array.md`:
     ///
@@ -139,8 +135,7 @@ impl Expecting {
             Self::CodeAfter(_) => Self::TitleCommand(pos),
             Self::TitleCommand(_) => Self::CodeCommand(pos),
             Self::CodeCommand(_) => Self::ListCommand(pos),
-            Self::ListCommand(_) => Self::Finished,
-            Self::Finished => Self::Finished,
+            Self::ListCommand(_) | Self::Finished => Self::Finished,
         };
     }
 }
@@ -185,7 +180,7 @@ impl Example {
     ///
     /// If `filter` is empty, parse all of the examples from `root`.
     /// Otherwise, parses all of the examples in `filter` that are available in the `root`.
-    pub fn parse_all(root: &Path, filter: HashSet<String>) -> miette::Result<Vec<Self>> {
+    pub fn parse_all(root: &Path, filter: &HashSet<String>) -> miette::Result<Vec<Self>> {
         fs::read_dir(root)
             .map_err(|err| miette!("failed to read {root}: {err}", root = root.display()))?
             .flatten()
@@ -205,13 +200,13 @@ impl Example {
                         filter.contains(stem)
                     }
             })
-            .map(|entry| Example::parse(entry.path()))
+            .map(|entry| Self::parse(&entry.path()))
             .collect()
     }
 
     /// Try to parse path of the given markdown file
-    pub fn parse(path: PathBuf) -> miette::Result<Self> {
-        let markdown = fs::read_to_string(&path)
+    pub fn parse(path: &Path) -> miette::Result<Self> {
+        let markdown = fs::read_to_string(path)
             .map_err(|err| miette!("failed to read path {}: {err}", path.display()))?;
 
         let file_name = path
@@ -242,7 +237,7 @@ impl Example {
                             offset: 0,
                         },
                     }),
-                    Example::default(),
+                    Self::default(),
                 ),
                 |(mut expecting, mut example), child| {
                     let expected_err_with_pos = |pos: &Option<Position>| {
@@ -397,6 +392,8 @@ impl Example {
                                 value, position, ..
                             }) = child
                             {
+                                const MAX_LINE_LEN: usize = 60;
+
                                 #[allow(clippy::nonminimal_bool, reason = "more readable")]
                                 if value
                                     .chars()
@@ -421,8 +418,6 @@ impl Example {
 
                                 let position = position.clone().unwrap();
 
-                                const MAX_LINE_LEN: usize = 60;
-
                                 if let Some(line) =
                                     value.lines().find(|line| line.len() > MAX_LINE_LEN)
                                 {
@@ -438,12 +433,11 @@ impl Example {
                                          characters long (is {} chars long):\n  \
                                            {line}\n\nBreak it with two newlines.",
                                             line.len()
-                                        )
-                                        .to_string(),
+                                        ),
                                     ));
                                 }
 
-                                example.command = value.replace("\n", "");
+                                example.command = value.replace('\n', "");
 
                                 expecting.next(position);
                             }
@@ -471,7 +465,7 @@ impl Example {
                                                     .into_iter()
                                                     .flat_map(|children| children.iter())
                                                     // each child in the Paragraph
-                                                    .flat_map(|child| {
+                                                    .filter_map(|child| {
                                                         // only care about `InlineCode`
                                                         if let Node::InlineCode(InlineCode {
                                                             value,
@@ -514,7 +508,7 @@ impl Example {
                             }
                         }
                         Expecting::Finished => (),
-                    };
+                    }
                     Ok((expecting, example))
                 },
             )
@@ -530,7 +524,7 @@ impl Example {
                 InvalidStructure {
                     src: NamedSource::new(file_name, markdown),
                     span: (start.offset, length).into(),
-                    reason: info.to_string(),
+                    reason: info,
                 }
             })?
             .and_then(|mut example| {

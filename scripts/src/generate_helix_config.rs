@@ -16,7 +16,7 @@ pub fn remap(mods: &str, ch: char) -> Option<String> {
 }
 
 pub fn generate() {
-    let remapped = r##"
+    let remapped = r#"
 # Original: Alt + s
 C-s = "split_selection_on_newline"
 
@@ -31,7 +31,7 @@ C-z = "rotate_selection_contents_backward"
 
 #"C-M" = "remove_primary_selection"
 
-"##;
+"#;
 
     fs::write(
         crate::command::GENERATED_DIR.join("helix-config.toml"),

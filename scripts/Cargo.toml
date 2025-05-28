@@ -22,3 +22,17 @@ tap = "1.0.1"
 thiserror = "2.0.12"
 # check if binary `vhs` exists
 which = "7.0.3"
+
+[lints.rust]
+missing_docs = "warn"
+unused_qualifications = "warn"
+
+[lints.clippy]
+pedantic = { priority = -1, level = "warn" }
+nursery = { priority = -1, level = "warn" }
+# use Trait; => use Trait as _;
+unused_trait_names = "warn"
+# if we need it const, make it const. no need to make everything that can be const, const
+missing_const_for_fn = "allow"
+# arbitrary limit imposes unnecessary restriction and can make code harder to follow
+too_many_lines = "allow"

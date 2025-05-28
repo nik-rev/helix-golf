@@ -7,7 +7,7 @@ use std::{fs, process::Command};
 use crate::{command::GENERATED_DIR, parse_example::Example};
 
 /// Generate `.mp4` files for each command
-pub fn generate_demos(examples: Vec<Example>) -> miette::Result<()> {
+pub fn generate_demos(examples: &[Example]) -> miette::Result<()> {
     // Use a custom helix config to ensure reproducibility
     //
     // This is also necessary because VHS cannot handle some

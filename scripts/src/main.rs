@@ -1,3 +1,5 @@
+//! Scripts for Helix Golf
+
 use std::env;
 
 use miette::miette;
@@ -9,7 +11,7 @@ use command::Command;
 mod generate_helix_config;
 mod parse_helix_keys;
 
-pub fn main() -> miette::Result<()> {
+fn main() -> miette::Result<()> {
     env::args()
         .nth(1)
         .ok_or(Command::ERROR)

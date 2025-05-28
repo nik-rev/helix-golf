@@ -12,7 +12,7 @@ impl Display for Example {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(
             f,
-            r##"Output src/generated/{name}.mp4
+            r#"Output src/generated/{name}.mp4
 Require hx
 
 Hide
@@ -28,7 +28,7 @@ Enter
 Type ":cd src/generated"
 Enter
 Show
-"##,
+"#,
             name = self.name,
             ext = self.ext
         )?;
@@ -100,7 +100,7 @@ impl Display for KeyEvent {
                     } else {
                         format!("\"{ch}\"")
                     };
-                    format!(r#"Type {ch}"#)
+                    format!("Type {ch}")
                 } else if let Some(mods) = generate_helix_config::remap(mods.as_str(), ch) {
                     mods
                 } else {

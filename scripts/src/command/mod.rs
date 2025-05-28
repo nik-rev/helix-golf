@@ -37,9 +37,9 @@ impl Command {
 
     pub fn execute(self) -> miette::Result<()> {
         match self {
-            Command::Validate => validate::validate().map(drop),
-            Command::GenerateDemos => validate::validate()?.pipe(generate_demos::generate_demos),
-            Command::MdBookPreprocessor => mdbook_preprocessor::mdbook_preprocessor(),
+            Self::Validate => validate::validate().map(drop),
+            Self::GenerateDemos => validate::validate()?.pipe_deref(generate_demos::generate_demos),
+            Self::MdBookPreprocessor => mdbook_preprocessor::mdbook_preprocessor(),
         }
     }
 }

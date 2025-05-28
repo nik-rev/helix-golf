@@ -33,7 +33,7 @@ pub fn mdbook_preprocessor() -> miette::Result<()> {
 struct GolfPreprocessor;
 
 impl Preprocessor for GolfPreprocessor {
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         "helix-golf-preprocessor"
     }
 
