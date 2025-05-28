@@ -109,12 +109,11 @@ It's not just about becoming more productive - it's also really fun!
 
 # Demo for each example
 
-The entire website and all examples are available in a single
-code block you can copy-paste and work on locally:
-
 <details>
 
-<summary>All Examples (single markdown file)</summary>
+<summary>All examples are also available in a single code block</summary>
+
+You can copy-paste it into Helix and work through it without need for internet!
 
 ````````````md
 {md_file_with_everything}
