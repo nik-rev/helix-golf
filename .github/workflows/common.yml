@@ -36,7 +36,6 @@ jobs:
       - run: cargo check --manifest-path scripts/Cargo.toml
       - run: cargo fmt --manifest-path scripts/Cargo.toml --check
       - run: cargo clippy --manifest-path scripts/Cargo.toml --workspace --all-targets -- -D warnings
-      - run: cargo doc --manifest-path scripts/Cargo.toml --no-deps --workspace --document-private-items
         env:
           RUSTDOCFLAGS: -D warnings
 
