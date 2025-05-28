@@ -1,0 +1,62 @@
+name: Common Setup
+
+on:
+  workflow_call:
+    inputs:
+      do_deploy:
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - uses: actions/setup-go@v3
+
+      - name: Install VHS
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          sudo snap install ttyd --classic
+          go install github.com/charmbracelet/vhs@v0.9
+          echo "$HOME/go/bin" >> $GITHUB_PATH
+
+      - name: Install Helix
+        run: |
+          curl -L https://github.com/helix-editor/helix/releases/download/25.01.1/helix-25.01.1-x86_64-linux.tar.xz -o helix.tar.xz
+          mkdir helix
+          tar -xf helix.tar.xz -C helix --strip-components=1
+          mkdir -p ~/.config/helix
+          mv helix/runtime ~/.config/helix/runtime
+          echo "$PWD/helix" >> $GITHUB_PATH
+
+      - run: cargo --manifest-path scripts/Cargo.toml check
+      - run: cargo --manifest-path scripts/Cargo.toml fmt --check
+      - run: cargo --manifest-path scripts/Cargo.toml clippy --workspace --all-targets -- -D warnings
+      - run: cargo --manifest-path scripts/Cargo.toml doc --no-deps --workspace --document-private-items
+        env:
+          RUSTDOCFLAGS: -D warnings
+
+      - run: cargo generate-demos
+
+      - name: Setup mdBook
+        uses: peaceiris/actions-mdbook@v2
+        with:
+          mdbook-version: "0.4.50"
+
+      - run: mdbook build
+
+      - name: Copy generated files
+        if: ${{ inputs.do_deploy }}
+        run: cp -r ./src/generated ./book
+
+      - name: Deploy to GitHub Pages
+        if: ${{ inputs.do_deploy }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./book
+          publish_branch: gh-pages
