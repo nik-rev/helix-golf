@@ -2,6 +2,10 @@
 
 Helix is _very_ good at editing text and this website has examples of how I've refactored some snippets of code using it.
 
+https://github.com/user-attachments/assets/d79d583e-f79b-40ce-add7-e60a8307156a
+
+All examples here:
+
 [https://nik-rev.github.io/helix-golf](https://nik-rev.github.io/helix-golf/)
 
 ## Contributing
