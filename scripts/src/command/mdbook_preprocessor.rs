@@ -52,10 +52,11 @@ impl Preprocessor for GolfPreprocessor {
                         .and_then(|stem| stem.to_str()),
                     chapter.content.find("## Command"),
                 ) {
-                    let (before, after) = chapter.content.split_at(start);
+                    if name != "introduction" {
+                        let (before, after) = chapter.content.split_at(start);
 
-                    chapter.content = format!(
-                        r#"
+                        chapter.content = format!(
+                            r#"
 {before}
 
 ## Preview
@@ -65,7 +66,8 @@ impl Preprocessor for GolfPreprocessor {
 </video>
 
 {after}"#
-                    );
+                        );
+                    }
                 }
             }
         });

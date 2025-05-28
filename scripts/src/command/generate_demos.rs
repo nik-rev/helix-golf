@@ -17,7 +17,7 @@ pub fn generate_demos(examples: &[Example]) -> miette::Result<()> {
         .par_iter()
         .try_for_each(|example| -> Result<(), miette::Error> {
             let name = &example.name;
-            let ext = &example.ext;
+            let ext = &example.language;
 
             let tape_contents = example.to_string();
 

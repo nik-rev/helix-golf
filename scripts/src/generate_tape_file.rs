@@ -30,7 +30,7 @@ Enter
 Show
 "#,
             name = self.name,
-            ext = self.ext
+            ext = self.language
         )?;
 
         for key in &self.key_events {

@@ -157,22 +157,24 @@ struct InvalidStructure {
 /// Represents a single Helix Golf example
 #[derive(Default, Debug)]
 pub struct Example {
-    /// Level 1 heading
+    /// The unprocessed markdown file
+    pub contents: String,
+    /// Name of the example. This is name of the file, excluding the `.md` extension.
+    pub name: String,
+    /// Contents of the 1st heading `# ...`
     pub title: String,
+    /// Description of the example, after the 1st heading `# ...`
+    pub description: Option<String>,
     /// Contents of the file before the `command`
     pub before: String,
     /// Contents of the file after the `command`
     pub after: String,
+    /// Extension of the code block in `## After`
+    pub language: String,
     /// Command to go from `before` -> `after`
     pub command: String,
     /// Parsed `command` into a structure that can be converted into a `.tape` file
     pub key_events: Vec<KeyEvent>,
-    /// Name of the example. This is name of the file, excluding the `.md` extension.
-    pub name: String,
-    /// Extension of the file
-    pub ext: String,
-    /// Description of the example
-    pub description: Option<String>,
 }
 
 impl Example {
@@ -363,7 +365,7 @@ impl Example {
                             }) = child
                             {
                                 example.after = value.to_string();
-                                example.ext = lang.clone().unwrap_or_default();
+                                example.language = lang.clone().unwrap_or_default();
 
                                 expecting.next(position.clone().unwrap());
                             }
@@ -522,7 +524,7 @@ impl Example {
             .map_err(|(Position { start, end }, info)| {
                 let length = end.offset - start.offset;
                 InvalidStructure {
-                    src: NamedSource::new(file_name, markdown),
+                    src: NamedSource::new(file_name, markdown.clone()),
                     span: (start.offset, length).into(),
                     reason: info,
                 }
@@ -531,6 +533,7 @@ impl Example {
                 example.key_events =
                     crate::parse_helix_keys::parse_keys(&example.command, file_stem)?;
                 example.name = file_stem.to_string();
+                example.contents = markdown;
                 Ok(example)
             })
     }
