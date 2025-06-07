@@ -4,7 +4,7 @@ language = "en"
 multilingual = false
 src = "src"
 title = "Helix Golf"
-descrition = "Using Helix to it's true potential"
+description = "Using Helix to it's true potential"
 
 [output.html]
 site-url = "https://nik-rev.github.io/helix-golf"
