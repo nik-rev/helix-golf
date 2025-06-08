@@ -275,6 +275,49 @@ Helix
 1. `&lt;alt-J&gt;i,` join lines inside selection, select the inserted space, and insert ","s
 1. `&lt;esc&gt;xms[` surround by "[]"
 
+# Object into Array
+
+Convert object into a list of tuples representing the field and the value.
+
+## Before
+
+```js
+const palette = {
+  apricot: "#f47868",
+  lightning: "#ffcd1c",
+  delta: "6f44f0",
+};
+```
+
+## After
+
+```js
+const palette = [
+  ["apricot", "#f47868"],
+  ["lightning", "#ffcd1c"],
+  ["delta", "6f44f0"],
+];
+```
+
+## Command
+
+```
+jmr{[mi[s:&lt;enter&gt;
+
+r,bems"vt,ms[
+```
+
+1. Go to the line below with `j`, this is because we need to be inside of the object for the next step.
+1. `mr{[` replaces the nearest pair of curly braces "\{" with square brackets "["
+1. `mi[` selects inside the entire array
+1. Use `s` to enter select mode, which searches inside our selection and creates sub-selections based on a pattern
+1. Input `:` and then hit `&lt;enter&gt;`, which will place a cursor on every ":" creating many single-width selections
+1. `r,` replaces each selection with a ",". Essentially we've replaced each colon with a comma
+1. `be` selects the previous word on each line and moves each cursor to the end of each word
+1. `ms"` surrounds each word with double quotes to make strings
+1. `vt,` selects each line excluding the final comma
+1. `ms[` surrounds each individual selection with "[" to turn it into an array
+
 # Export from Rust Module
 
 Each module contains a function, which we want to export.
@@ -377,52 +420,6 @@ Add a new field `rank` to each object, it starts at 1 and increments and align f
 1.  Use `%s` to enter select mode again
 1.  Input ` |\d+` which is a regular expression selecting all spaces and numbers, then hit `&lt;enter&gt;`
 1.  `&amp;` to align all selections in columns, note that the numbers get right-aligned
-
-# Object into Array
-
-Convert object into a list of tuples representing the field and the value.
-
-## Before
-
-```js
-const palette = {
-  apricot: "#f47868",
-  lightning: "#ffcd1c",
-  delta: "6f44f0",
-};
-```
-
-## After
-
-```js
-const palette = [
-  ["apricot", "#f47868"],
-  ["lightning", "#ffcd1c"],
-  ["delta", "6f44f0"],
-];
-```
-
-## Command
-
-```
-jmr{[mi[s:&lt;enter&gt;
-
-r,t,;vgsms[lems"
-```
-
-1. Go to the line below with `j`, this is because we need to be inside of the object for the next step.
-1. `mr{[` replaces the nearest pair of curly braces "\{" with square brackets "["
-1. `mi[` selects inside the entire array
-1. Use `s` to enter select mode, which searches inside our selection and creates sub-selections based on a pattern
-1. Input `:` and then hit `&lt;enter&gt;`, which will place a cursor on every ":" creating many single-width selections
-1. `r,` replaces each selection with a ",". Essentially we've replaced each colon with a comma
-1. `t,` moves the cursor on each line to the ending comma
-1. `;` collapses the selection around each cursor into a single selection
-1. `vgs` selects each line excluding the final comma
-1. `ms[` surrounds each individual selection with "[" to turn it into an array. We're almost done here. We just need to transform the first item in each sub-array into a string.
-1. `l` moves 1 character forward, replacing the selection with just a 1-width selection
-1. `e` selects until the end of each word. Since we start at the first character and select until the end, this selects the entire word.
-1. `ms"` surrounds each word with double quotes to make strings
 
 # CSV to SQL
 
@@ -607,6 +604,11 @@ class Calculator:
 <video autoplay controls loop>
   <source src="generated/text_into_array.mp4">
 </video>
+<h2 id="object-into-array"><a class="header" href="#object-into-array"><a href="object_into_array.html">Object into Array</a></a></h2>
+<p>Convert object into a list of tuples representing the field and the value.</p>
+<video autoplay controls loop>
+  <source src="generated/object_into_array.mp4">
+</video>
 <h2 id="export-from-rust-module"><a class="header" href="#export-from-rust-module"><a href="export_from_mod.html">Export from Rust Module</a></a></h2>
 <p>Each module contains a function, which we want to export.</p>
 <video autoplay controls loop>
@@ -616,11 +618,6 @@ class Calculator:
 <p>Add a new field <code>rank</code> to each object, it starts at 1 and increments and align fields to look neat.</p>
 <video autoplay controls loop>
   <source src="generated/enumerate_and_align.mp4">
-</video>
-<h2 id="object-into-array"><a class="header" href="#object-into-array"><a href="object_into_array.html">Object into Array</a></a></h2>
-<p>Convert object into a list of tuples representing the field and the value.</p>
-<video autoplay controls loop>
-  <source src="generated/object_into_array.mp4">
 </video>
 <h2 id="csv-to-sql"><a class="header" href="#csv-to-sql"><a href="csv_to_sql.html">CSV to SQL</a></a></h2>
 <video autoplay controls loop>
@@ -705,14 +702,51 @@ Helix
 <li><code>&lt;alt-J&gt;i,</code> join lines inside selection, select the inserted space, and insert ","s</li>
 <li><code>&lt;esc&gt;xms[</code> surround by "[]"</li>
 </ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="object-into-array-1"><a class="header" href="#object-into-array-1">Object into Array</a></h1>
+<p>Convert object into a list of tuples representing the field and the value.</p>
+<h2 id="before-2"><a class="header" href="#before-2">Before</a></h2>
+<pre><code class="language-js">const palette = {
+  apricot: "#f47868",
+  lightning: "#ffcd1c",
+  delta: "6f44f0",
+};
+</code></pre>
+<h2 id="after-2"><a class="header" href="#after-2">After</a></h2>
+<pre><code class="language-js">const palette = [
+  ["apricot", "#f47868"],
+  ["lightning", "#ffcd1c"],
+  ["delta", "6f44f0"],
+];
+</code></pre>
+<h2 id="preview-2"><a class="header" href="#preview-2">Preview</a></h2>
+<video controls>
+  <source src="generated/object_into_array.mp4" type="video/mp4">
+</video>
+<h2 id="command-2"><a class="header" href="#command-2">Command</a></h2>
+<pre><code>jmr{[mi[s:&lt;enter&gt;
+
+r,bems"vt,ms[
+</code></pre>
+<ol>
+<li>Go to the line below with <code>j</code>, this is because we need to be inside of the object for the next step.</li>
+<li><code>mr{[</code> replaces the nearest pair of curly braces "{" with square brackets "["</li>
+<li><code>mi[</code> selects inside the entire array</li>
+<li>Use <code>s</code> to enter select mode, which searches inside our selection and creates sub-selections based on a pattern</li>
+<li>Input <code>:</code> and then hit <code>&lt;enter&gt;</code>, which will place a cursor on every ":" creating many single-width selections</li>
+<li><code>r,</code> replaces each selection with a ",". Essentially we've replaced each colon with a comma</li>
+<li><code>be</code> selects the previous word on each line and moves each cursor to the end of each word</li>
+<li><code>ms"</code> surrounds each word with double quotes to make strings</li>
+<li><code>vt,</code> selects each line excluding the final comma</li>
+<li><code>ms[</code> surrounds each individual selection with "[" to turn it into an array</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="export-from-rust-module-1"><a class="header" href="#export-from-rust-module-1">Export from Rust Module</a></h1>
 <p>Each module contains a function, which we want to export.</p>
-<h2 id="before-2"><a class="header" href="#before-2">Before</a></h2>
+<h2 id="before-3"><a class="header" href="#before-3">Before</a></h2>
 <pre><code class="language-rs">mod generate_demos;
 mod mdbook_preprocessor;
 mod validate;
 </code></pre>
-<h2 id="after-2"><a class="header" href="#after-2">After</a></h2>
+<h2 id="after-3"><a class="header" href="#after-3">After</a></h2>
 <pre><code class="language-rs">mod generate_demos;
 mod mdbook_preprocessor;
 mod validate;
@@ -721,11 +755,11 @@ pub use generate_demos::generate_demos;
 pub use mdbook_preprocessor::mdbook_preprocessor;
 pub use validate::validate;
 </code></pre>
-<h2 id="preview-2"><a class="header" href="#preview-2">Preview</a></h2>
+<h2 id="preview-3"><a class="header" href="#preview-3">Preview</a></h2>
 <video controls>
   <source src="generated/export_from_mod.mp4" type="video/mp4">
 </video>
-<h2 id="command-2"><a class="header" href="#command-2">Command</a></h2>
+<h2 id="command-3"><a class="header" href="#command-3">Command</a></h2>
 <pre><code>%yp[&lt;space&gt;
 
 &lt;alt-s&gt;gse
@@ -744,7 +778,7 @@ cpub use&lt;esc&gt;leypi::
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="enumerate-and-align-1"><a class="header" href="#enumerate-and-align-1">Enumerate and Align</a></h1>
 <p>Add a new field <code>rank</code> to each object, it starts at 1 and increments and align fields to look neat.</p>
-<h2 id="before-3"><a class="header" href="#before-3">Before</a></h2>
+<h2 id="before-4"><a class="header" href="#before-4">Before</a></h2>
 <pre><code class="language-js">[
   { word: "a", count: 2565 },
   { word: "and", count: 1777 },
@@ -759,7 +793,7 @@ cpub use&lt;esc&gt;leypi::
   { word: "for", count: 630 },
 ];
 </code></pre>
-<h2 id="after-3"><a class="header" href="#after-3">After</a></h2>
+<h2 id="after-4"><a class="header" href="#after-4">After</a></h2>
 <pre><code class="language-js">[
   { rank:  1, word: "a",    count: 2565 },
   { rank:  2, word: "and",  count: 1777 },
@@ -774,11 +808,11 @@ cpub use&lt;esc&gt;leypi::
   { rank: 11, word: "for",  count:  630 },
 ];
 </code></pre>
-<h2 id="preview-3"><a class="header" href="#preview-3">Preview</a></h2>
+<h2 id="preview-4"><a class="header" href="#preview-4">Preview</a></h2>
 <video controls>
   <source src="generated/enumerate_and_align.mp4" type="video/mp4">
 </video>
-<h2 id="command-3"><a class="header" href="#command-3">Command</a></h2>
+<h2 id="command-4"><a class="header" href="#command-4">Command</a></h2>
 <pre><code>%s\{&lt;enter&gt;a rank: &lt;ctrl-r&gt;
 
 #,&lt;esc&gt;%s |\d+&lt;enter&gt;&amp;
@@ -795,46 +829,6 @@ cpub use&lt;esc&gt;leypi::
 <li>Use <code>%s</code> to enter select mode again</li>
 <li>Input <code> |\d+</code> which is a regular expression selecting all spaces and numbers, then hit <code>&lt;enter&gt;</code></li>
 <li><code>&amp;</code> to align all selections in columns, note that the numbers get right-aligned</li>
-</ol>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="object-into-array-1"><a class="header" href="#object-into-array-1">Object into Array</a></h1>
-<p>Convert object into a list of tuples representing the field and the value.</p>
-<h2 id="before-4"><a class="header" href="#before-4">Before</a></h2>
-<pre><code class="language-js">const palette = {
-  apricot: "#f47868",
-  lightning: "#ffcd1c",
-  delta: "6f44f0",
-};
-</code></pre>
-<h2 id="after-4"><a class="header" href="#after-4">After</a></h2>
-<pre><code class="language-js">const palette = [
-  ["apricot", "#f47868"],
-  ["lightning", "#ffcd1c"],
-  ["delta", "6f44f0"],
-];
-</code></pre>
-<h2 id="preview-4"><a class="header" href="#preview-4">Preview</a></h2>
-<video controls>
-  <source src="generated/object_into_array.mp4" type="video/mp4">
-</video>
-<h2 id="command-4"><a class="header" href="#command-4">Command</a></h2>
-<pre><code>jmr{[mi[s:&lt;enter&gt;
-
-r,t,;vgsms[lems"
-</code></pre>
-<ol>
-<li>Go to the line below with <code>j</code>, this is because we need to be inside of the object for the next step.</li>
-<li><code>mr{[</code> replaces the nearest pair of curly braces "{" with square brackets "["</li>
-<li><code>mi[</code> selects inside the entire array</li>
-<li>Use <code>s</code> to enter select mode, which searches inside our selection and creates sub-selections based on a pattern</li>
-<li>Input <code>:</code> and then hit <code>&lt;enter&gt;</code>, which will place a cursor on every ":" creating many single-width selections</li>
-<li><code>r,</code> replaces each selection with a ",". Essentially we've replaced each colon with a comma</li>
-<li><code>t,</code> moves the cursor on each line to the ending comma</li>
-<li><code>;</code> collapses the selection around each cursor into a single selection</li>
-<li><code>vgs</code> selects each line excluding the final comma</li>
-<li><code>ms[</code> surrounds each individual selection with "[" to turn it into an array. We're almost done here. We just need to transform the first item in each sub-array into a string.</li>
-<li><code>l</code> moves 1 character forward, replacing the selection with just a 1-width selection</li>
-<li><code>e</code> selects until the end of each word. Since we start at the first character and select until the end, this selects the entire word.</li>
-<li><code>ms"</code> surrounds each word with double quotes to make strings</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="csv-to-sql-1"><a class="header" href="#csv-to-sql-1">CSV to SQL</a></h1>
 <h2 id="before-5"><a class="header" href="#before-5">Before</a></h2>

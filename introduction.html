@@ -277,6 +277,49 @@ Helix
 1. `&lt;alt-J&gt;i,` join lines inside selection, select the inserted space, and insert ","s
 1. `&lt;esc&gt;xms[` surround by "[]"
 
+# Object into Array
+
+Convert object into a list of tuples representing the field and the value.
+
+## Before
+
+```js
+const palette = {
+  apricot: "#f47868",
+  lightning: "#ffcd1c",
+  delta: "6f44f0",
+};
+```
+
+## After
+
+```js
+const palette = [
+  ["apricot", "#f47868"],
+  ["lightning", "#ffcd1c"],
+  ["delta", "6f44f0"],
+];
+```
+
+## Command
+
+```
+jmr{[mi[s:&lt;enter&gt;
+
+r,bems"vt,ms[
+```
+
+1. Go to the line below with `j`, this is because we need to be inside of the object for the next step.
+1. `mr{[` replaces the nearest pair of curly braces "\{" with square brackets "["
+1. `mi[` selects inside the entire array
+1. Use `s` to enter select mode, which searches inside our selection and creates sub-selections based on a pattern
+1. Input `:` and then hit `&lt;enter&gt;`, which will place a cursor on every ":" creating many single-width selections
+1. `r,` replaces each selection with a ",". Essentially we've replaced each colon with a comma
+1. `be` selects the previous word on each line and moves each cursor to the end of each word
+1. `ms"` surrounds each word with double quotes to make strings
+1. `vt,` selects each line excluding the final comma
+1. `ms[` surrounds each individual selection with "[" to turn it into an array
+
 # Export from Rust Module
 
 Each module contains a function, which we want to export.
@@ -379,52 +422,6 @@ Add a new field `rank` to each object, it starts at 1 and increments and align f
 1.  Use `%s` to enter select mode again
 1.  Input ` |\d+` which is a regular expression selecting all spaces and numbers, then hit `&lt;enter&gt;`
 1.  `&amp;` to align all selections in columns, note that the numbers get right-aligned
-
-# Object into Array
-
-Convert object into a list of tuples representing the field and the value.
-
-## Before
-
-```js
-const palette = {
-  apricot: "#f47868",
-  lightning: "#ffcd1c",
-  delta: "6f44f0",
-};
-```
-
-## After
-
-```js
-const palette = [
-  ["apricot", "#f47868"],
-  ["lightning", "#ffcd1c"],
-  ["delta", "6f44f0"],
-];
-```
-
-## Command
-
-```
-jmr{[mi[s:&lt;enter&gt;
-
-r,t,;vgsms[lems"
-```
-
-1. Go to the line below with `j`, this is because we need to be inside of the object for the next step.
-1. `mr{[` replaces the nearest pair of curly braces "\{" with square brackets "["
-1. `mi[` selects inside the entire array
-1. Use `s` to enter select mode, which searches inside our selection and creates sub-selections based on a pattern
-1. Input `:` and then hit `&lt;enter&gt;`, which will place a cursor on every ":" creating many single-width selections
-1. `r,` replaces each selection with a ",". Essentially we've replaced each colon with a comma
-1. `t,` moves the cursor on each line to the ending comma
-1. `;` collapses the selection around each cursor into a single selection
-1. `vgs` selects each line excluding the final comma
-1. `ms[` surrounds each individual selection with "[" to turn it into an array. We're almost done here. We just need to transform the first item in each sub-array into a string.
-1. `l` moves 1 character forward, replacing the selection with just a 1-width selection
-1. `e` selects until the end of each word. Since we start at the first character and select until the end, this selects the entire word.
-1. `ms"` surrounds each word with double quotes to make strings
 
 # CSV to SQL
 
@@ -609,6 +606,11 @@ class Calculator:
 <video autoplay controls loop>
   <source src="generated/text_into_array.mp4">
 </video>
+<h2 id="object-into-array"><a class="header" href="#object-into-array"><a href="object_into_array.html">Object into Array</a></a></h2>
+<p>Convert object into a list of tuples representing the field and the value.</p>
+<video autoplay controls loop>
+  <source src="generated/object_into_array.mp4">
+</video>
 <h2 id="export-from-rust-module"><a class="header" href="#export-from-rust-module"><a href="export_from_mod.html">Export from Rust Module</a></a></h2>
 <p>Each module contains a function, which we want to export.</p>
 <video autoplay controls loop>
@@ -618,11 +620,6 @@ class Calculator:
 <p>Add a new field <code>rank</code> to each object, it starts at 1 and increments and align fields to look neat.</p>
 <video autoplay controls loop>
   <source src="generated/enumerate_and_align.mp4">
-</video>
-<h2 id="object-into-array"><a class="header" href="#object-into-array"><a href="object_into_array.html">Object into Array</a></a></h2>
-<p>Convert object into a list of tuples representing the field and the value.</p>
-<video autoplay controls loop>
-  <source src="generated/object_into_array.mp4">
 </video>
 <h2 id="csv-to-sql"><a class="header" href="#csv-to-sql"><a href="csv_to_sql.html">CSV to SQL</a></a></h2>
 <video autoplay controls loop>

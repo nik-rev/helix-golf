@@ -195,7 +195,7 @@
 <h2 id="command"><a class="header" href="#command">Command</a></h2>
 <pre><code>jmr{[mi[s:&lt;enter&gt;
 
-r,t,;vgsms[lems"
+r,bems"vt,ms[
 </code></pre>
 <ol>
 <li>Go to the line below with <code>j</code>, this is because we need to be inside of the object for the next step.</li>
@@ -204,24 +204,21 @@ r,t,;vgsms[lems"
 <li>Use <code>s</code> to enter select mode, which searches inside our selection and creates sub-selections based on a pattern</li>
 <li>Input <code>:</code> and then hit <code>&lt;enter&gt;</code>, which will place a cursor on every ":" creating many single-width selections</li>
 <li><code>r,</code> replaces each selection with a ",". Essentially we've replaced each colon with a comma</li>
-<li><code>t,</code> moves the cursor on each line to the ending comma</li>
-<li><code>;</code> collapses the selection around each cursor into a single selection</li>
-<li><code>vgs</code> selects each line excluding the final comma</li>
-<li><code>ms[</code> surrounds each individual selection with "[" to turn it into an array. We're almost done here. We just need to transform the first item in each sub-array into a string.</li>
-<li><code>l</code> moves 1 character forward, replacing the selection with just a 1-width selection</li>
-<li><code>e</code> selects until the end of each word. Since we start at the first character and select until the end, this selects the entire word.</li>
+<li><code>be</code> selects the previous word on each line and moves each cursor to the end of each word</li>
 <li><code>ms"</code> surrounds each word with double quotes to make strings</li>
+<li><code>vt,</code> selects each line excluding the final comma</li>
+<li><code>ms[</code> surrounds each individual selection with "[" to turn it into an array</li>
 </ol>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="enumerate_and_align.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="text_into_array.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="csv_to_sql.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="export_from_mod.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -231,11 +228,11 @@ r,t,;vgsms[lems"
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="enumerate_and_align.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="text_into_array.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="csv_to_sql.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="export_from_mod.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
