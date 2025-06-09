@@ -10,6 +10,7 @@ pub fn remap(mods: &str, ch: char) -> Option<String> {
         ("Alt+", 's') => r#"Ctrl+"s""#.to_string(),
         ("Alt+", 'J') => r#"Ctrl+"y""#.to_string(),
         ("Alt+", '(') => r#"Ctrl+"z""#.to_string(),
+        ("Alt+", 'd') => r#"Ctrl+"d""#.to_string(),
         _ => return None,
     }
     .pipe(Some)
@@ -28,6 +29,9 @@ C-z = "rotate_selection_contents_backward"
 
 # Original: Alt + )
 #"C-g" = "rotate_selection_contents_forward"
+
+# Original: Alt + d
+C-d = "delete_selection_noyank"
 
 #"C-M" = "remove_primary_selection"
 
