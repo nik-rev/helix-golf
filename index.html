@@ -543,17 +543,13 @@ class Calculator:
 ```
 %scalculate&lt;enter&gt;cget&lt;esc&gt;
 
-O@staticmethod
+O@staticmethod&lt;esc&gt;jj
 
-&lt;esc&gt;jxxs\w+&lt;enter&gt;s
+vglyx&lt;alt-d&gt;xbRkxx
 
-length|width|height&lt;enter&gt;
+slength|width|height&lt;enter&gt;
 
-bllled%sresult =&lt;enter&gt;C
-
-&lt;alt-(&gt;;ddss&lt;enter&gt;
-
-xd%&gt;O&lt;backspace&gt;
+bllled%&gt;O&lt;backspace&gt;
 
 class Calculator:
 ```
@@ -569,22 +565,17 @@ class Calculator:
     ```
 
 1.  Hit `&lt;esc&gt;` to go into normal mode.
-1.  We need to select 2 lines below the current line, first go down with `j` and then press `xx` which will select the current line, and then select the next line
-    In total we now have 3 cursors each with 2 lines selected, which includes the first line of the bodies of each function and the function definition themselves
-
-1.  `s` brings up a prompt to select sub-selections by a given regex. The `\w+` regex selects each word, type it and then `&lt;enter&gt;`
-1.  `s` again then type `length|width|height` followed by `&lt;enter&gt;`. This will look at the contents of the current selections, and create sub-selections where it finds the regex which means "length or width or height". So we select each instance of those 3 words
+1. `jj` moves each cursor down two lines
+1. `vgl` selects the rest of each line past each cursor
+1. `y` copies each selection
+1. `x&lt;alt-d&gt;` selects each cursor's line and deletes the line without copying the selection
+1. `xb` selects the last word of each cursor's line
+1. `R` replaces each selection with the copied selections from earlier
+1. `kxx` moves each cursor up one line and selects that line as well as the line below
+1.  `s` brings up a prompt to select sub-selections by a given regex. Typing `length|width|height` followed by `&lt;enter&gt;` will select each instance of those 3 words: length, width, and height
 1.  Our cursor is currently at the end of each word. Let's go to the beginning with `b`
 1.  We want to keep the first 3 characters and discard the rest from each of the parameters. To do this, move to the 4th character with `lll`
 1.  Use `e` to select until the end of each word and then `d` to delete it
-1.  Select the entire file again with `%` followed by `s` to bring up selection prompt again
-1.  Write `result =` followed by `&lt;enter&gt;` to select all instances of that string
-1.  `C` creates a new selection on the line directly below, for each cursor
-1.  Use `&lt;alt-(&gt;` to rotate the _contents_ of the selection backward
-1.  `;` collapses each cursor into a single selection
-1.  `dd` deletes two characters on each of the 6 lines
-1.  `s` to bring up the prompt, then input `s` followed by `&lt;enter&gt;` to select all "s" characters
-1.  Select each of the lines with `x` followed by `d` to delete
 1.  Select whole file with `%` and indent with `&gt;`
 1.  `O` creates a newline above and enters Insert mode, then `&lt;backspace&gt;` to delete an extra tab
 1.  Write this:

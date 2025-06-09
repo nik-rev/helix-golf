@@ -208,17 +208,13 @@ def calculate_volume(length, width, height):
 <h2 id="command"><a class="header" href="#command">Command</a></h2>
 <pre><code>%scalculate&lt;enter&gt;cget&lt;esc&gt;
 
-O@staticmethod
+O@staticmethod&lt;esc&gt;jj
 
-&lt;esc&gt;jxxs\w+&lt;enter&gt;s
+vglyx&lt;alt-d&gt;xbRkxx
 
-length|width|height&lt;enter&gt;
+slength|width|height&lt;enter&gt;
 
-bllled%sresult =&lt;enter&gt;C
-
-&lt;alt-(&gt;;ddss&lt;enter&gt;
-
-xd%&gt;O&lt;backspace&gt;
+bllled%&gt;O&lt;backspace&gt;
 
 class Calculator:
 </code></pre>
@@ -244,14 +240,28 @@ class Calculator:
 <p>Hit <code>&lt;esc&gt;</code> to go into normal mode.</p>
 </li>
 <li>
-<p>We need to select 2 lines below the current line, first go down with <code>j</code> and then press <code>xx</code> which will select the current line, and then select the next line
-In total we now have 3 cursors each with 2 lines selected, which includes the first line of the bodies of each function and the function definition themselves</p>
+<p><code>jj</code> moves each cursor down two lines</p>
 </li>
 <li>
-<p><code>s</code> brings up a prompt to select sub-selections by a given regex. The <code>\w+</code> regex selects each word, type it and then <code>&lt;enter&gt;</code></p>
+<p><code>vgl</code> selects the rest of each line past each cursor</p>
 </li>
 <li>
-<p><code>s</code> again then type <code>length|width|height</code> followed by <code>&lt;enter&gt;</code>. This will look at the contents of the current selections, and create sub-selections where it finds the regex which means "length or width or height". So we select each instance of those 3 words</p>
+<p><code>y</code> copies each selection</p>
+</li>
+<li>
+<p><code>x&lt;alt-d&gt;</code> selects each cursor's line and deletes the line without copying the selection</p>
+</li>
+<li>
+<p><code>xb</code> selects the last word of each cursor's line</p>
+</li>
+<li>
+<p><code>R</code> replaces each selection with the copied selections from earlier</p>
+</li>
+<li>
+<p><code>kxx</code> moves each cursor up one line and selects that line as well as the line below</p>
+</li>
+<li>
+<p><code>s</code> brings up a prompt to select sub-selections by a given regex. Typing <code>length|width|height</code> followed by <code>&lt;enter&gt;</code> will select each instance of those 3 words: length, width, and height</p>
 </li>
 <li>
 <p>Our cursor is currently at the end of each word. Let's go to the beginning with <code>b</code></p>
@@ -261,30 +271,6 @@ In total we now have 3 cursors each with 2 lines selected, which includes the fi
 </li>
 <li>
 <p>Use <code>e</code> to select until the end of each word and then <code>d</code> to delete it</p>
-</li>
-<li>
-<p>Select the entire file again with <code>%</code> followed by <code>s</code> to bring up selection prompt again</p>
-</li>
-<li>
-<p>Write <code>result =</code> followed by <code>&lt;enter&gt;</code> to select all instances of that string</p>
-</li>
-<li>
-<p><code>C</code> creates a new selection on the line directly below, for each cursor</p>
-</li>
-<li>
-<p>Use <code>&lt;alt-(&gt;</code> to rotate the <em>contents</em> of the selection backward</p>
-</li>
-<li>
-<p><code>;</code> collapses each cursor into a single selection</p>
-</li>
-<li>
-<p><code>dd</code> deletes two characters on each of the 6 lines</p>
-</li>
-<li>
-<p><code>s</code> to bring up the prompt, then input <code>s</code> followed by <code>&lt;enter&gt;</code> to select all "s" characters</p>
-</li>
-<li>
-<p>Select each of the lines with <code>x</code> followed by <code>d</code> to delete</p>
 </li>
 <li>
 <p>Select whole file with <code>%</code> and indent with <code>&gt;</code></p>
