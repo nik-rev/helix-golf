@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Text into Array - Helix Golf</title>
+        <title>Reverse Golf Example - Helix Golf</title>
 
 
         <!-- Custom HTML head -->
@@ -143,7 +143,7 @@
                         <a href="https://github.com/nik-rev/helix-golf" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/nik-rev/helix-golf/edit/main/src/text_into_array.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/nik-rev/helix-golf/edit/main/src/reverse_golf_example.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -172,41 +172,76 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="text-into-array"><a class="header" href="#text-into-array">Text into Array</a></h1>
-<p>Join newline-separated data into an array of strings</p>
+                        <h1 id="reverse-golf-example"><a class="header" href="#reverse-golf-example">Reverse Golf Example</a></h1>
+<p>Switch the "Before" and "After" cases for a Helix Golf example.</p>
 <h2 id="before"><a class="header" href="#before">Before</a></h2>
-<pre><code>Hello
-This
-Is
-Helix
+<pre><code class="language-md"># snake_case to camelCase
+
+Rename all fields to be camelCase.
+
+## Before
+
+```js
+const user_profile = {first_name: "John"};
+```
+
+## After
+
+```js
+const userProfile = {firstName: "John"};
+```
 </code></pre>
 <h2 id="after"><a class="header" href="#after">After</a></h2>
-<pre><code class="language-js">["Hello", "This", "Is", "Helix"]
+<pre><code class="language-md"># camelCase to snake_case
+
+Rename all fields to be snake_case.
+
+## Before
+
+```js
+const userProfile = {firstName: "John"};
+```
+
+## After
+
+```js
+const user_profile = {first_name: "John"};
+```
 </code></pre>
 <h2 id="preview"><a class="header" href="#preview">Preview</a></h2>
 <video controls>
-  <source src="generated/text_into_array.mp4" type="video/mp4">
+  <source src="generated/reverse_golf_example.mp4" type="video/mp4">
 </video>
 <h2 id="command"><a class="header" href="#command">Command</a></h2>
-<pre><code>%&lt;alt-s&gt;ms"&lt;alt-J&gt;i,&lt;esc&gt;xms[
+<pre><code>ebyxb*Rv""Nn&lt;alt-)&gt;
+
+%s`+j&lt;enter&gt;f;&lt;alt-(&gt;
 </code></pre>
 <ol>
-<li><code>%</code> selects full file</li>
-<li><code>&lt;alt-s&gt;</code> split selection into multiple selections on newlines</li>
-<li><code>ms"</code> surrounds each word with quotes</li>
-<li><code>&lt;alt-J&gt;i,</code> join lines inside selection, select the inserted space, and insert ","s</li>
-<li><code>&lt;esc&gt;xms[</code> surround by "[]"</li>
+<li><code>eb</code> selects the next word and trims whitespace</li>
+<li><code>y</code> copies the selected word and yanks it into the " (double quote) register</li>
+<li><code>xb</code> selects the last word in the line</li>
+<li><code>*</code> sets the current selection as the search pattern</li>
+<li><code>R</code> replaces the selected word with the copied selection from earlier</li>
+<li><code>v</code> enters select mode</li>
+<li><code>""</code> selects the " (double quote) register. Pressing <code>N</code> will add a new selection at the previous occurrence of the word saved to the register</li>
+<li><code>n</code> adds a new selection at the next occurrence of the search pattern assigned earlier</li>
+<li><code>&lt;alt-)&gt;</code> rotates the contents of the selections forward</li>
+<li><code>%</code> selects the entire contents of the file</li>
+<li><code>s</code> brings up a prompt to select sub-selections by a given regex. We type in <code>`+j</code> for the regex and select all matches with <code>&lt;enter&gt;</code></li>
+<li>Since we're still in select mode, typing <code>f;</code> moves each cursor to select up until (and including) the next occurrence of a semicolon</li>
+<li><code>&lt;alt-(&gt;</code> rotates the contents of the selections backwards</li>
 </ol>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="snake_case_to_camel_case.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="text_into_array.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="reverse_golf_example.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="object_into_array.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -216,11 +251,11 @@ Helix
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="snake_case_to_camel_case.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="text_into_array.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="reverse_golf_example.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="object_into_array.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

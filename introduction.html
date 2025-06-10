@@ -277,6 +277,72 @@ Helix
 1. `&lt;alt-J&gt;i,` join lines inside selection, select the inserted space, and insert ","s
 1. `&lt;esc&gt;xms[` surround by "[]"
 
+# Reverse Golf Example
+
+Switch the "Before" and "After" cases for a Helix Golf example.
+
+## Before
+
+````md
+# snake_case to camelCase
+
+Rename all fields to be camelCase.
+
+## Before
+
+```js
+const user_profile = {first_name: "John"};
+```
+
+## After
+
+```js
+const userProfile = {firstName: "John"};
+```
+````
+
+## After
+
+````md
+# camelCase to snake_case
+
+Rename all fields to be snake_case.
+
+## Before
+
+```js
+const userProfile = {firstName: "John"};
+```
+
+## After
+
+```js
+const user_profile = {first_name: "John"};
+```
+````
+
+## Command
+
+```
+ebyxb*Rv""Nn&lt;alt-)&gt;
+
+%s`+j&lt;enter&gt;f;&lt;alt-(&gt;
+```
+
+1. `eb` selects the next word and trims whitespace
+1. `y` copies the selected word and yanks it into the " (double quote) register
+1. `xb` selects the last word in the line
+1. `*` sets the current selection as the search pattern
+1. `R` replaces the selected word with the copied selection from earlier
+1. `v` enters select mode
+1. `""` selects the " (double quote) register. Pressing `N` will add a new selection at the previous occurrence of the word saved to the register
+1. `n` adds a new selection at the next occurrence of the search pattern assigned earlier
+1. `&lt;alt-)&gt;` rotates the contents of the selections forward
+1. `%` selects the entire contents of the file
+1. `s` brings up a prompt to select sub-selections by a given regex. We type in `` `+j `` for the regex and select all matches with `&lt;enter&gt;` 
+1. Since we're still in select mode, typing `f;` moves each cursor to select up until (and including) the next occurrence of a semicolon
+1. `&lt;alt-(&gt;` rotates the contents of the selections backwards 
+
 # Object into Array
 
 Convert object into a list of tuples representing the field and the value.
@@ -596,6 +662,11 @@ class Calculator:
 <p>Join newline-separated data into an array of strings</p>
 <video autoplay controls loop>
   <source src="generated/text_into_array.mp4">
+</video>
+<h2 id="reverse-golf-example"><a class="header" href="#reverse-golf-example"><a href="reverse_golf_example.html">Reverse Golf Example</a></a></h2>
+<p>Switch the "Before" and "After" cases for a Helix Golf example.</p>
+<video autoplay controls loop>
+  <source src="generated/reverse_golf_example.mp4">
 </video>
 <h2 id="object-into-array"><a class="header" href="#object-into-array"><a href="object_into_array.html">Object into Array</a></a></h2>
 <p>Convert object into a list of tuples representing the field and the value.</p>

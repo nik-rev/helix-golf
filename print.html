@@ -275,6 +275,72 @@ Helix
 1. `&lt;alt-J&gt;i,` join lines inside selection, select the inserted space, and insert ","s
 1. `&lt;esc&gt;xms[` surround by "[]"
 
+# Reverse Golf Example
+
+Switch the "Before" and "After" cases for a Helix Golf example.
+
+## Before
+
+````md
+# snake_case to camelCase
+
+Rename all fields to be camelCase.
+
+## Before
+
+```js
+const user_profile = {first_name: "John"};
+```
+
+## After
+
+```js
+const userProfile = {firstName: "John"};
+```
+````
+
+## After
+
+````md
+# camelCase to snake_case
+
+Rename all fields to be snake_case.
+
+## Before
+
+```js
+const userProfile = {firstName: "John"};
+```
+
+## After
+
+```js
+const user_profile = {first_name: "John"};
+```
+````
+
+## Command
+
+```
+ebyxb*Rv""Nn&lt;alt-)&gt;
+
+%s`+j&lt;enter&gt;f;&lt;alt-(&gt;
+```
+
+1. `eb` selects the next word and trims whitespace
+1. `y` copies the selected word and yanks it into the " (double quote) register
+1. `xb` selects the last word in the line
+1. `*` sets the current selection as the search pattern
+1. `R` replaces the selected word with the copied selection from earlier
+1. `v` enters select mode
+1. `""` selects the " (double quote) register. Pressing `N` will add a new selection at the previous occurrence of the word saved to the register
+1. `n` adds a new selection at the next occurrence of the search pattern assigned earlier
+1. `&lt;alt-)&gt;` rotates the contents of the selections forward
+1. `%` selects the entire contents of the file
+1. `s` brings up a prompt to select sub-selections by a given regex. We type in `` `+j `` for the regex and select all matches with `&lt;enter&gt;` 
+1. Since we're still in select mode, typing `f;` moves each cursor to select up until (and including) the next occurrence of a semicolon
+1. `&lt;alt-(&gt;` rotates the contents of the selections backwards 
+
 # Object into Array
 
 Convert object into a list of tuples representing the field and the value.
@@ -595,6 +661,11 @@ class Calculator:
 <video autoplay controls loop>
   <source src="generated/text_into_array.mp4">
 </video>
+<h2 id="reverse-golf-example"><a class="header" href="#reverse-golf-example"><a href="reverse_golf_example.html">Reverse Golf Example</a></a></h2>
+<p>Switch the "Before" and "After" cases for a Helix Golf example.</p>
+<video autoplay controls loop>
+  <source src="generated/reverse_golf_example.mp4">
+</video>
 <h2 id="object-into-array"><a class="header" href="#object-into-array"><a href="object_into_array.html">Object into Array</a></a></h2>
 <p>Convert object into a list of tuples representing the field and the value.</p>
 <video autoplay controls loop>
@@ -693,27 +764,87 @@ Helix
 <li><code>&lt;alt-J&gt;i,</code> join lines inside selection, select the inserted space, and insert ","s</li>
 <li><code>&lt;esc&gt;xms[</code> surround by "[]"</li>
 </ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="reverse-golf-example-1"><a class="header" href="#reverse-golf-example-1">Reverse Golf Example</a></h1>
+<p>Switch the "Before" and "After" cases for a Helix Golf example.</p>
+<h2 id="before-2"><a class="header" href="#before-2">Before</a></h2>
+<pre><code class="language-md"># snake_case to camelCase
+
+Rename all fields to be camelCase.
+
+## Before
+
+```js
+const user_profile = {first_name: "John"};
+```
+
+## After
+
+```js
+const userProfile = {firstName: "John"};
+```
+</code></pre>
+<h2 id="after-2"><a class="header" href="#after-2">After</a></h2>
+<pre><code class="language-md"># camelCase to snake_case
+
+Rename all fields to be snake_case.
+
+## Before
+
+```js
+const userProfile = {firstName: "John"};
+```
+
+## After
+
+```js
+const user_profile = {first_name: "John"};
+```
+</code></pre>
+<h2 id="preview-2"><a class="header" href="#preview-2">Preview</a></h2>
+<video controls>
+  <source src="generated/reverse_golf_example.mp4" type="video/mp4">
+</video>
+<h2 id="command-2"><a class="header" href="#command-2">Command</a></h2>
+<pre><code>ebyxb*Rv""Nn&lt;alt-)&gt;
+
+%s`+j&lt;enter&gt;f;&lt;alt-(&gt;
+</code></pre>
+<ol>
+<li><code>eb</code> selects the next word and trims whitespace</li>
+<li><code>y</code> copies the selected word and yanks it into the " (double quote) register</li>
+<li><code>xb</code> selects the last word in the line</li>
+<li><code>*</code> sets the current selection as the search pattern</li>
+<li><code>R</code> replaces the selected word with the copied selection from earlier</li>
+<li><code>v</code> enters select mode</li>
+<li><code>""</code> selects the " (double quote) register. Pressing <code>N</code> will add a new selection at the previous occurrence of the word saved to the register</li>
+<li><code>n</code> adds a new selection at the next occurrence of the search pattern assigned earlier</li>
+<li><code>&lt;alt-)&gt;</code> rotates the contents of the selections forward</li>
+<li><code>%</code> selects the entire contents of the file</li>
+<li><code>s</code> brings up a prompt to select sub-selections by a given regex. We type in <code>`+j</code> for the regex and select all matches with <code>&lt;enter&gt;</code></li>
+<li>Since we're still in select mode, typing <code>f;</code> moves each cursor to select up until (and including) the next occurrence of a semicolon</li>
+<li><code>&lt;alt-(&gt;</code> rotates the contents of the selections backwards</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="object-into-array-1"><a class="header" href="#object-into-array-1">Object into Array</a></h1>
 <p>Convert object into a list of tuples representing the field and the value.</p>
-<h2 id="before-2"><a class="header" href="#before-2">Before</a></h2>
+<h2 id="before-3"><a class="header" href="#before-3">Before</a></h2>
 <pre><code class="language-js">const palette = {
   apricot: "#f47868",
   lightning: "#ffcd1c",
   delta: "6f44f0",
 };
 </code></pre>
-<h2 id="after-2"><a class="header" href="#after-2">After</a></h2>
+<h2 id="after-3"><a class="header" href="#after-3">After</a></h2>
 <pre><code class="language-js">const palette = [
   ["apricot", "#f47868"],
   ["lightning", "#ffcd1c"],
   ["delta", "6f44f0"],
 ];
 </code></pre>
-<h2 id="preview-2"><a class="header" href="#preview-2">Preview</a></h2>
+<h2 id="preview-3"><a class="header" href="#preview-3">Preview</a></h2>
 <video controls>
   <source src="generated/object_into_array.mp4" type="video/mp4">
 </video>
-<h2 id="command-2"><a class="header" href="#command-2">Command</a></h2>
+<h2 id="command-3"><a class="header" href="#command-3">Command</a></h2>
 <pre><code>jmr{[mi[s:&lt;enter&gt;
 
 r,bems"vt,ms[
@@ -732,12 +863,12 @@ r,bems"vt,ms[
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="export-from-rust-module-1"><a class="header" href="#export-from-rust-module-1">Export from Rust Module</a></h1>
 <p>Each module contains a function, which we want to export.</p>
-<h2 id="before-3"><a class="header" href="#before-3">Before</a></h2>
+<h2 id="before-4"><a class="header" href="#before-4">Before</a></h2>
 <pre><code class="language-rs">mod generate_demos;
 mod mdbook_preprocessor;
 mod validate;
 </code></pre>
-<h2 id="after-3"><a class="header" href="#after-3">After</a></h2>
+<h2 id="after-4"><a class="header" href="#after-4">After</a></h2>
 <pre><code class="language-rs">mod generate_demos;
 mod mdbook_preprocessor;
 mod validate;
@@ -746,11 +877,11 @@ pub use generate_demos::generate_demos;
 pub use mdbook_preprocessor::mdbook_preprocessor;
 pub use validate::validate;
 </code></pre>
-<h2 id="preview-3"><a class="header" href="#preview-3">Preview</a></h2>
+<h2 id="preview-4"><a class="header" href="#preview-4">Preview</a></h2>
 <video controls>
   <source src="generated/export_from_mod.mp4" type="video/mp4">
 </video>
-<h2 id="command-3"><a class="header" href="#command-3">Command</a></h2>
+<h2 id="command-4"><a class="header" href="#command-4">Command</a></h2>
 <pre><code>%yp[&lt;space&gt;
 
 &lt;alt-s&gt;gse
@@ -769,7 +900,7 @@ cpub use&lt;esc&gt;leypi::
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="enumerate-and-align-1"><a class="header" href="#enumerate-and-align-1">Enumerate and Align</a></h1>
 <p>Add a new field <code>rank</code> to each object, it starts at 1 and increments and align fields to look neat.</p>
-<h2 id="before-4"><a class="header" href="#before-4">Before</a></h2>
+<h2 id="before-5"><a class="header" href="#before-5">Before</a></h2>
 <pre><code class="language-js">[
   { word: "a", count: 2565 },
   { word: "and", count: 1777 },
@@ -784,7 +915,7 @@ cpub use&lt;esc&gt;leypi::
   { word: "for", count: 630 },
 ];
 </code></pre>
-<h2 id="after-4"><a class="header" href="#after-4">After</a></h2>
+<h2 id="after-5"><a class="header" href="#after-5">After</a></h2>
 <pre><code class="language-js">[
   { rank:  1, word: "a",    count: 2565 },
   { rank:  2, word: "and",  count: 1777 },
@@ -799,11 +930,11 @@ cpub use&lt;esc&gt;leypi::
   { rank: 11, word: "for",  count:  630 },
 ];
 </code></pre>
-<h2 id="preview-4"><a class="header" href="#preview-4">Preview</a></h2>
+<h2 id="preview-5"><a class="header" href="#preview-5">Preview</a></h2>
 <video controls>
   <source src="generated/enumerate_and_align.mp4" type="video/mp4">
 </video>
-<h2 id="command-4"><a class="header" href="#command-4">Command</a></h2>
+<h2 id="command-5"><a class="header" href="#command-5">Command</a></h2>
 <pre><code>%s\{&lt;enter&gt;a rank: &lt;ctrl-r&gt;
 
 #,&lt;esc&gt;%s |\d+&lt;enter&gt;&amp;
@@ -822,21 +953,21 @@ cpub use&lt;esc&gt;leypi::
 <li><code>&amp;</code> to align all selections in columns, note that the numbers get right-aligned</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="csv-to-sql-1"><a class="header" href="#csv-to-sql-1">CSV to SQL</a></h1>
-<h2 id="before-5"><a class="header" href="#before-5">Before</a></h2>
+<h2 id="before-6"><a class="header" href="#before-6">Before</a></h2>
 <pre><code class="language-csv">id 1,Item 1,cost 1,location 1
 id 2,Item 2,cost 2,location 2
 id 10,Item 10,cost 10,location 10
 </code></pre>
-<h2 id="after-5"><a class="header" href="#after-5">After</a></h2>
+<h2 id="after-6"><a class="header" href="#after-6">After</a></h2>
 <pre><code class="language-sql">INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 1','Item 1','cost 1','Location 1');
 INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 2','Item 2','cost 2','Location 2');
 INSERT INTO `database`.`table` (`id` ,`item` ,`cost` ,`location`) VALUES ('id 10','Item 10','cost 10','Location 10');
 </code></pre>
-<h2 id="preview-5"><a class="header" href="#preview-5">Preview</a></h2>
+<h2 id="preview-6"><a class="header" href="#preview-6">Preview</a></h2>
 <video controls>
   <source src="generated/csv_to_sql.mp4" type="video/mp4">
 </video>
-<h2 id="command-5"><a class="header" href="#command-5">Command</a></h2>
+<h2 id="command-6"><a class="header" href="#command-6">Command</a></h2>
 <pre><code>%&lt;alt-s&gt;"yys\d&lt;enter&gt;
 
 dhhbms
@@ -939,7 +1070,7 @@ AVALUES (&lt;esc&gt;
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-into-class-1"><a class="header" href="#function-into-class-1">Function into Class</a></h1>
 <p>Convert 3 functions into a class with 3 methods.</p>
-<h2 id="before-6"><a class="header" href="#before-6">Before</a></h2>
+<h2 id="before-7"><a class="header" href="#before-7">Before</a></h2>
 <pre><code class="language-py">def calculate_area(length, width):
     result = length * width
     return result
@@ -952,7 +1083,7 @@ def calculate_volume(length, width, height):
     result = length * width * height
     return result
 </code></pre>
-<h2 id="after-6"><a class="header" href="#after-6">After</a></h2>
+<h2 id="after-7"><a class="header" href="#after-7">After</a></h2>
 <pre><code class="language-py">class Calculator:
     @staticmethod
     def get_area(len, wid):
@@ -966,11 +1097,11 @@ def calculate_volume(length, width, height):
     def get_volume(len, wid, hei):
         return len * wid * hei
 </code></pre>
-<h2 id="preview-6"><a class="header" href="#preview-6">Preview</a></h2>
+<h2 id="preview-7"><a class="header" href="#preview-7">Preview</a></h2>
 <video controls>
   <source src="generated/function_into_class.mp4" type="video/mp4">
 </video>
-<h2 id="command-6"><a class="header" href="#command-6">Command</a></h2>
+<h2 id="command-7"><a class="header" href="#command-7">Command</a></h2>
 <pre><code>%scalculate&lt;enter&gt;cget&lt;esc&gt;
 
 O@staticmethod&lt;esc&gt;jj

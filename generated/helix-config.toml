@@ -20,7 +20,7 @@ C-y = "join_selections_space"
 C-z = "rotate_selection_contents_backward"
 
 # Original: Alt + )
-#"C-g" = "rotate_selection_contents_forward"
+"C-g" = "rotate_selection_contents_forward"
 
 # Original: Alt + d
 C-d = "delete_selection_noyank"
@@ -41,7 +41,7 @@ C-y = "join_selections_space"
 C-z = "rotate_selection_contents_backward"
 
 # Original: Alt + )
-#"C-g" = "rotate_selection_contents_forward"
+"C-g" = "rotate_selection_contents_forward"
 
 # Original: Alt + d
 C-d = "delete_selection_noyank"
