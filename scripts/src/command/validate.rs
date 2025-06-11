@@ -9,7 +9,7 @@ use crate::{
 use miette::miette;
 use tap::Pipe as _;
 
-/// Make sure eacrh example has the required structure
+/// Make sure each example has the required structure
 pub fn validate() -> miette::Result<Vec<Example>> {
     // If user passes any examples, those will be the only ones that are included.
     //
