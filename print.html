@@ -275,6 +275,58 @@ Helix
 1. `&lt;alt-J&gt;i,` join lines inside selection, select the inserted space, and insert ","s
 1. `&lt;esc&gt;xms[` surround by "[]"
 
+# Invert Dictionary
+
+Switch the key-value pairs of a dictionary.
+
+## Before
+
+```gdscript
+var color_to_points = {
+    "red" = 0,
+    "orange" = 5,
+    "yellow" = 10,
+    "green" = 15,
+    "blue" = 20,
+    "purple" = 30,
+    "black" = 50,
+}
+```
+
+## After
+
+```gdscript
+var points_to_color = {
+    0 = "red",
+    5 = "orange",
+    10 = "yellow",
+    15 = "green",
+    20 = "blue",
+    30 = "purple",
+    50 = "black",
+}
+```
+
+## Command
+
+```
+webS_to_&lt;enter&gt;&lt;alt-(&gt;
+
+Qxt,S=&lt;enter&gt;_&lt;alt-(&gt;Q6q
+```
+
+1. `web` selects the second word without whitespace
+1. `S` splits the selection on regex match. We type in `_to_` for the regex and hit `&lt;enter&gt;` to split it into two sections
+1. `&lt;alt-(&gt;` rotates the contents of the selections
+1. Pressing `Q` for the first time begins recording a macro
+1. `x` selects the whole line
+1. `t,` selects until (but not including) the next comma
+1. `S` splits the whole line on regex match. We type in `=` for the regex and hit `&lt;enter&gt;` to split it into two sections
+1. `_` trims trailing whitespace on all selections
+1. `&lt;alt-(&gt;` rotates the contents of the selections
+1. Pressing `Q` for the second time ends the recording of the macro
+1. `6q` repeats the recorded macro sequence 6 times
+
 # Reverse Golf Example
 
 Switch the "Before" and "After" cases for a Helix Golf example.
@@ -487,61 +539,6 @@ Add a new field `rank` to each object, it starts at 1 and increments and align f
 1.  Input ` |\d+` which is a regular expression selecting all spaces and numbers, then hit `&lt;enter&gt;`
 1.  `&amp;` to align all selections in columns, note that the numbers get right-aligned
 
-# Invert Dictionary
-
-Switch the key-value pairs of a dictionary.
-
-## Before
-
-```gdscript
-var color_to_points = {
-    "red" = 0,
-    "orange" = 5,
-    "yellow" = 10,
-    "green" = 15,
-    "blue" = 20,
-    "purple" = 30,
-    "black" = 50,
-}
-```
-
-## After
-
-```gdscript
-var points_to_color = {
-    0 = "red",
-    5 = "orange",
-    10 = "yellow",
-    15 = "green",
-    20 = "blue",
-    30 = "purple",
-    50 = "black",
-}
-```
-
-## Command
-
-```
-webS_to_&lt;enter&gt;&lt;alt-(&gt;
-
-QjxhdT"PxS=&lt;enter&gt;_&lt;alt-(&gt;Q6q
-```
-
-1. `web` selects the second word without whitespace
-1. `S` splits the selection on regex match. We type in `_to_` for the regex and hit `&lt;enter&gt;` to split it into two sections
-1. `&lt;alt-(&gt;` rotates the contents of the selections
-1. Pressing `Q` for the first time begins recording a macro
-1. `j` moves down a line
-1. `xh` selects the last comma on the current line
-1. `d` deletes the selected comma and copies it
-1. `T"` selects until (but not including) the closest previous double quote
-1. `P` pastes the copied comma before the current selection
-1. `xS` splits the whole line on regex match. We type in `=` for the regex and hit `&lt;enter&gt;` to split it into two sections
-1. `_` trims trailing whitespace on all selections
-1. `&lt;alt-(&gt;` rotates the contents of the selections
-1. Pressing `Q` for the second time ends the recording of the macro
-1. `6q` repeats the recorded macro sequence 6 times
-
 # CSV to SQL
 
 ## Before
@@ -716,6 +713,11 @@ class Calculator:
 <video autoplay controls loop>
   <source src="generated/text_into_array.mp4">
 </video>
+<h2 id="invert-dictionary"><a class="header" href="#invert-dictionary"><a href="invert_dictionary.html">Invert Dictionary</a></a></h2>
+<p>Switch the key-value pairs of a dictionary.</p>
+<video autoplay controls loop>
+  <source src="generated/invert_dictionary.mp4">
+</video>
 <h2 id="reverse-golf-example"><a class="header" href="#reverse-golf-example"><a href="reverse_golf_example.html">Reverse Golf Example</a></a></h2>
 <p>Switch the "Before" and "After" cases for a Helix Golf example.</p>
 <video autoplay controls loop>
@@ -735,11 +737,6 @@ class Calculator:
 <p>Add a new field <code>rank</code> to each object, it starts at 1 and increments and align fields to look neat.</p>
 <video autoplay controls loop>
   <source src="generated/enumerate_and_align.mp4">
-</video>
-<h2 id="invert-dictionary"><a class="header" href="#invert-dictionary"><a href="invert_dictionary.html">Invert Dictionary</a></a></h2>
-<p>Switch the key-value pairs of a dictionary.</p>
-<video autoplay controls loop>
-  <source src="generated/invert_dictionary.mp4">
 </video>
 <h2 id="csv-to-sql"><a class="header" href="#csv-to-sql"><a href="csv_to_sql.html">CSV to SQL</a></a></h2>
 <video autoplay controls loop>
@@ -824,9 +821,55 @@ Helix
 <li><code>&lt;alt-J&gt;i,</code> join lines inside selection, select the inserted space, and insert ","s</li>
 <li><code>&lt;esc&gt;xms[</code> surround by "[]"</li>
 </ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="invert-dictionary-1"><a class="header" href="#invert-dictionary-1">Invert Dictionary</a></h1>
+<p>Switch the key-value pairs of a dictionary.</p>
+<h2 id="before-2"><a class="header" href="#before-2">Before</a></h2>
+<pre><code class="language-gdscript">var color_to_points = {
+    "red" = 0,
+    "orange" = 5,
+    "yellow" = 10,
+    "green" = 15,
+    "blue" = 20,
+    "purple" = 30,
+    "black" = 50,
+}
+</code></pre>
+<h2 id="after-2"><a class="header" href="#after-2">After</a></h2>
+<pre><code class="language-gdscript">var points_to_color = {
+    0 = "red",
+    5 = "orange",
+    10 = "yellow",
+    15 = "green",
+    20 = "blue",
+    30 = "purple",
+    50 = "black",
+}
+</code></pre>
+<h2 id="preview-2"><a class="header" href="#preview-2">Preview</a></h2>
+<video controls>
+  <source src="generated/invert_dictionary.mp4" type="video/mp4">
+</video>
+<h2 id="command-2"><a class="header" href="#command-2">Command</a></h2>
+<pre><code>webS_to_&lt;enter&gt;&lt;alt-(&gt;
+
+Qxt,S=&lt;enter&gt;_&lt;alt-(&gt;Q6q
+</code></pre>
+<ol>
+<li><code>web</code> selects the second word without whitespace</li>
+<li><code>S</code> splits the selection on regex match. We type in <code>_to_</code> for the regex and hit <code>&lt;enter&gt;</code> to split it into two sections</li>
+<li><code>&lt;alt-(&gt;</code> rotates the contents of the selections</li>
+<li>Pressing <code>Q</code> for the first time begins recording a macro</li>
+<li><code>x</code> selects the whole line</li>
+<li><code>t,</code> selects until (but not including) the next comma</li>
+<li><code>S</code> splits the whole line on regex match. We type in <code>=</code> for the regex and hit <code>&lt;enter&gt;</code> to split it into two sections</li>
+<li><code>_</code> trims trailing whitespace on all selections</li>
+<li><code>&lt;alt-(&gt;</code> rotates the contents of the selections</li>
+<li>Pressing <code>Q</code> for the second time ends the recording of the macro</li>
+<li><code>6q</code> repeats the recorded macro sequence 6 times</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="reverse-golf-example-1"><a class="header" href="#reverse-golf-example-1">Reverse Golf Example</a></h1>
 <p>Switch the "Before" and "After" cases for a Helix Golf example.</p>
-<h2 id="before-2"><a class="header" href="#before-2">Before</a></h2>
+<h2 id="before-3"><a class="header" href="#before-3">Before</a></h2>
 <pre><code class="language-md"># snake_case to camelCase
 
 Rename all fields to be camelCase.
@@ -843,7 +886,7 @@ const user_profile = {first_name: "John"};
 const userProfile = {firstName: "John"};
 ```
 </code></pre>
-<h2 id="after-2"><a class="header" href="#after-2">After</a></h2>
+<h2 id="after-3"><a class="header" href="#after-3">After</a></h2>
 <pre><code class="language-md"># camelCase to snake_case
 
 Rename all fields to be snake_case.
@@ -860,11 +903,11 @@ const userProfile = {firstName: "John"};
 const user_profile = {first_name: "John"};
 ```
 </code></pre>
-<h2 id="preview-2"><a class="header" href="#preview-2">Preview</a></h2>
+<h2 id="preview-3"><a class="header" href="#preview-3">Preview</a></h2>
 <video controls>
   <source src="generated/reverse_golf_example.mp4" type="video/mp4">
 </video>
-<h2 id="command-2"><a class="header" href="#command-2">Command</a></h2>
+<h2 id="command-3"><a class="header" href="#command-3">Command</a></h2>
 <pre><code>ebyxb*Rv""Nn&lt;alt-)&gt;
 
 %s`+j&lt;enter&gt;f;&lt;alt-(&gt;
@@ -886,25 +929,25 @@ const user_profile = {first_name: "John"};
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="object-into-array-1"><a class="header" href="#object-into-array-1">Object into Array</a></h1>
 <p>Convert object into a list of tuples representing the field and the value.</p>
-<h2 id="before-3"><a class="header" href="#before-3">Before</a></h2>
+<h2 id="before-4"><a class="header" href="#before-4">Before</a></h2>
 <pre><code class="language-js">const palette = {
   apricot: "#f47868",
   lightning: "#ffcd1c",
   delta: "6f44f0",
 };
 </code></pre>
-<h2 id="after-3"><a class="header" href="#after-3">After</a></h2>
+<h2 id="after-4"><a class="header" href="#after-4">After</a></h2>
 <pre><code class="language-js">const palette = [
   ["apricot", "#f47868"],
   ["lightning", "#ffcd1c"],
   ["delta", "6f44f0"],
 ];
 </code></pre>
-<h2 id="preview-3"><a class="header" href="#preview-3">Preview</a></h2>
+<h2 id="preview-4"><a class="header" href="#preview-4">Preview</a></h2>
 <video controls>
   <source src="generated/object_into_array.mp4" type="video/mp4">
 </video>
-<h2 id="command-3"><a class="header" href="#command-3">Command</a></h2>
+<h2 id="command-4"><a class="header" href="#command-4">Command</a></h2>
 <pre><code>jmr{[mi[s:&lt;enter&gt;
 
 r,bems"vt,ms[
@@ -923,12 +966,12 @@ r,bems"vt,ms[
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="export-from-rust-module-1"><a class="header" href="#export-from-rust-module-1">Export from Rust Module</a></h1>
 <p>Each module contains a function, which we want to export.</p>
-<h2 id="before-4"><a class="header" href="#before-4">Before</a></h2>
+<h2 id="before-5"><a class="header" href="#before-5">Before</a></h2>
 <pre><code class="language-rs">mod generate_demos;
 mod mdbook_preprocessor;
 mod validate;
 </code></pre>
-<h2 id="after-4"><a class="header" href="#after-4">After</a></h2>
+<h2 id="after-5"><a class="header" href="#after-5">After</a></h2>
 <pre><code class="language-rs">mod generate_demos;
 mod mdbook_preprocessor;
 mod validate;
@@ -937,11 +980,11 @@ pub use generate_demos::generate_demos;
 pub use mdbook_preprocessor::mdbook_preprocessor;
 pub use validate::validate;
 </code></pre>
-<h2 id="preview-4"><a class="header" href="#preview-4">Preview</a></h2>
+<h2 id="preview-5"><a class="header" href="#preview-5">Preview</a></h2>
 <video controls>
   <source src="generated/export_from_mod.mp4" type="video/mp4">
 </video>
-<h2 id="command-4"><a class="header" href="#command-4">Command</a></h2>
+<h2 id="command-5"><a class="header" href="#command-5">Command</a></h2>
 <pre><code>%yp[&lt;space&gt;
 
 &lt;alt-s&gt;gse
@@ -960,7 +1003,7 @@ cpub use&lt;esc&gt;leypi::
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="enumerate-and-align-1"><a class="header" href="#enumerate-and-align-1">Enumerate and Align</a></h1>
 <p>Add a new field <code>rank</code> to each object, it starts at 1 and increments and align fields to look neat.</p>
-<h2 id="before-5"><a class="header" href="#before-5">Before</a></h2>
+<h2 id="before-6"><a class="header" href="#before-6">Before</a></h2>
 <pre><code class="language-js">[
   { word: "a", count: 2565 },
   { word: "and", count: 1777 },
@@ -975,7 +1018,7 @@ cpub use&lt;esc&gt;leypi::
   { word: "for", count: 630 },
 ];
 </code></pre>
-<h2 id="after-5"><a class="header" href="#after-5">After</a></h2>
+<h2 id="after-6"><a class="header" href="#after-6">After</a></h2>
 <pre><code class="language-js">[
   { rank:  1, word: "a",    count: 2565 },
   { rank:  2, word: "and",  count: 1777 },
@@ -990,11 +1033,11 @@ cpub use&lt;esc&gt;leypi::
   { rank: 11, word: "for",  count:  630 },
 ];
 </code></pre>
-<h2 id="preview-5"><a class="header" href="#preview-5">Preview</a></h2>
+<h2 id="preview-6"><a class="header" href="#preview-6">Preview</a></h2>
 <video controls>
   <source src="generated/enumerate_and_align.mp4" type="video/mp4">
 </video>
-<h2 id="command-5"><a class="header" href="#command-5">Command</a></h2>
+<h2 id="command-6"><a class="header" href="#command-6">Command</a></h2>
 <pre><code>%s\{&lt;enter&gt;a rank: &lt;ctrl-r&gt;
 
 #,&lt;esc&gt;%s |\d+&lt;enter&gt;&amp;
@@ -1011,55 +1054,6 @@ cpub use&lt;esc&gt;leypi::
 <li>Use <code>%s</code> to enter select mode again</li>
 <li>Input <code> |\d+</code> which is a regular expression selecting all spaces and numbers, then hit <code>&lt;enter&gt;</code></li>
 <li><code>&amp;</code> to align all selections in columns, note that the numbers get right-aligned</li>
-</ol>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="invert-dictionary-1"><a class="header" href="#invert-dictionary-1">Invert Dictionary</a></h1>
-<p>Switch the key-value pairs of a dictionary.</p>
-<h2 id="before-6"><a class="header" href="#before-6">Before</a></h2>
-<pre><code class="language-gdscript">var color_to_points = {
-    "red" = 0,
-    "orange" = 5,
-    "yellow" = 10,
-    "green" = 15,
-    "blue" = 20,
-    "purple" = 30,
-    "black" = 50,
-}
-</code></pre>
-<h2 id="after-6"><a class="header" href="#after-6">After</a></h2>
-<pre><code class="language-gdscript">var points_to_color = {
-    0 = "red",
-    5 = "orange",
-    10 = "yellow",
-    15 = "green",
-    20 = "blue",
-    30 = "purple",
-    50 = "black",
-}
-</code></pre>
-<h2 id="preview-6"><a class="header" href="#preview-6">Preview</a></h2>
-<video controls>
-  <source src="generated/invert_dictionary.mp4" type="video/mp4">
-</video>
-<h2 id="command-6"><a class="header" href="#command-6">Command</a></h2>
-<pre><code>webS_to_&lt;enter&gt;&lt;alt-(&gt;
-
-QjxhdT"PxS=&lt;enter&gt;_&lt;alt-(&gt;Q6q
-</code></pre>
-<ol>
-<li><code>web</code> selects the second word without whitespace</li>
-<li><code>S</code> splits the selection on regex match. We type in <code>_to_</code> for the regex and hit <code>&lt;enter&gt;</code> to split it into two sections</li>
-<li><code>&lt;alt-(&gt;</code> rotates the contents of the selections</li>
-<li>Pressing <code>Q</code> for the first time begins recording a macro</li>
-<li><code>j</code> moves down a line</li>
-<li><code>xh</code> selects the last comma on the current line</li>
-<li><code>d</code> deletes the selected comma and copies it</li>
-<li><code>T"</code> selects until (but not including) the closest previous double quote</li>
-<li><code>P</code> pastes the copied comma before the current selection</li>
-<li><code>xS</code> splits the whole line on regex match. We type in <code>=</code> for the regex and hit <code>&lt;enter&gt;</code> to split it into two sections</li>
-<li><code>_</code> trims trailing whitespace on all selections</li>
-<li><code>&lt;alt-(&gt;</code> rotates the contents of the selections</li>
-<li>Pressing <code>Q</code> for the second time ends the recording of the macro</li>
-<li><code>6q</code> repeats the recorded macro sequence 6 times</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="csv-to-sql-1"><a class="header" href="#csv-to-sql-1">CSV to SQL</a></h1>
 <h2 id="before-7"><a class="header" href="#before-7">Before</a></h2>

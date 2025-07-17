@@ -26,14 +26,9 @@ Type "_"
 Enter
 Ctrl+"z"
 Type "Q"
-Type "j"
 Type "x"
-Type "h"
-Type "d"
-Type "T"
-Type `"`
-Type "P"
-Type "x"
+Type "t"
+Type ","
 Type "S"
 Type "="
 Enter
