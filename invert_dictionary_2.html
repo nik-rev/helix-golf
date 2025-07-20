@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Invert Dictionary - Helix Golf</title>
+        <title>Invert Dictionary 2 - Helix Golf</title>
 
 
         <!-- Custom HTML head -->
@@ -143,7 +143,7 @@
                         <a href="https://github.com/nik-rev/helix-golf" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/nik-rev/helix-golf/edit/main/src/invert_dictionary.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/nik-rev/helix-golf/edit/main/src/invert_dictionary_2.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -172,8 +172,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="invert-dictionary"><a class="header" href="#invert-dictionary">Invert Dictionary</a></h1>
-<p>Switch the key-value pairs of a dictionary.</p>
+                        <h1 id="invert-dictionary-2"><a class="header" href="#invert-dictionary-2">Invert Dictionary 2</a></h1>
+<p>Another way to switch the key-value pairs of a dictionary.</p>
 <h2 id="before"><a class="header" href="#before">Before</a></h2>
 <pre><code class="language-gdscript">var color_to_points = {
     "red" = 0,
@@ -198,36 +198,33 @@
 </code></pre>
 <h2 id="preview"><a class="header" href="#preview">Preview</a></h2>
 <video controls>
-  <source src="generated/invert_dictionary.mp4" type="video/mp4">
+  <source src="generated/invert_dictionary_2.mp4" type="video/mp4">
 </video>
 <h2 id="command"><a class="header" href="#command">Command</a></h2>
 <pre><code>webS_to_&lt;enter&gt;&lt;alt-(&gt;
 
-Qxt,S=&lt;enter&gt;_&lt;alt-(&gt;Q6q
+xt}S,|=&lt;enter&gt;_2&lt;alt-(&gt;
 </code></pre>
 <ol>
 <li><code>web</code> selects the second word without whitespace</li>
 <li><code>S</code> splits the selection on regex match. We type in <code>_to_</code> for the regex and hit <code>&lt;enter&gt;</code> to split it into two sections</li>
 <li><code>&lt;alt-(&gt;</code> rotates the contents of the selections</li>
-<li>Pressing <code>Q</code> for the first time begins recording a macro</li>
 <li><code>x</code> selects the whole line</li>
-<li><code>t,</code> selects until (but not including) the next comma</li>
-<li><code>S</code> splits the whole line on regex match. We type in <code>=</code> for the regex and hit <code>&lt;enter&gt;</code> to split it into two sections</li>
+<li><code>t}</code> selects until (but not including) the next "}" character</li>
+<li><code>S</code> splits the selection on regex match. We type in <code>,|=</code> for the regex and hit <code>&lt;enter&gt;</code> to split it into sub-selections</li>
 <li><code>_</code> trims trailing whitespace on all selections</li>
-<li><code>&lt;alt-(&gt;</code> rotates the contents of the selections</li>
-<li>Pressing <code>Q</code> for the second time ends the recording of the macro</li>
-<li><code>6q</code> repeats the recorded macro sequence 6 times</li>
+<li><code>2&lt;alt-(&gt;</code> rotates the contents of selections, but only between pairs of selections.</li>
 </ol>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="invert_dictionary_2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="text_into_array.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="reverse_golf_example.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="invert_dictionary.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -237,11 +234,11 @@ Qxt,S=&lt;enter&gt;_&lt;alt-(&gt;Q6q
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="invert_dictionary_2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="text_into_array.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="reverse_golf_example.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="invert_dictionary.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
